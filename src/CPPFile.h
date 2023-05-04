@@ -18,7 +18,7 @@ private:
 
 public:
 	CPPFile(std::filesystem::path new_path,
-			std::filesystem::file_time_type new_last_write_time,
+			std::string new_last_write_time,
 			size_t new_size,
 			size_t new_keyword_count,
 			std::set<std::string> new_includes);

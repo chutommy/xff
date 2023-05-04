@@ -10,11 +10,11 @@
 #include <fstream>
 
 CPPFile::CPPFile(std::filesystem::path new_path,
-		std::filesystem::file_time_type new_last_write_time,
+		std::string new_last_write_time,
 		size_t new_size,
 		size_t new_keyword_count,
 		std::set<std::string> new_includes)
-		: File(std::move(new_path), new_last_write_time, new_size),
+		: File(std::move(new_path), std::move(new_last_write_time), new_size),
 		  keyword_count(new_keyword_count),
 		  includes(std::move(new_includes))
 {
@@ -24,7 +24,7 @@ std::ostream& CPPFile::print(std::ostream& os, int width) const
 {
 	File::print(os, width) << std::setw(width) << std::right << "Keywords: " << keyword_count << "\n"
 						   << std::setw(width) << std::right << "Includes: ";
-	for (auto it = includes.begin(); it != includes.end(); )
+	for (auto it = includes.begin(); it != includes.end();)
 	{
 		for (size_t i = 0; i < 5 && it != includes.end(); ++i)
 		{

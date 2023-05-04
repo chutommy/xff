@@ -30,7 +30,7 @@ int main()
 			if (ext == ".txt")
 				files.insert(std::make_unique<TXTFile>(
 						path,
-						last_write_time(path),
+						fs_time_to_str(last_write_time(path)),
 						file_size(path),
 						get_word_count(path),
 						get_readability_score(path),
@@ -38,18 +38,20 @@ int main()
 			else if (ext == ".csv")
 				files.insert(std::make_unique<CSVFile>(
 						path,
-						last_write_time(path),
+						fs_time_to_str(last_write_time(path)),
 						file_size(path),
 						get_row_count(path)));
 			else if (ext == ".cpp")
 				files.insert(std::make_unique<CPPFile>(
 						path,
-						last_write_time(path),
+						fs_time_to_str(last_write_time(path)),
 						file_size(path),
 						get_keyword_count(path),
 						get_includes(path)));
 			else
-				files.insert(std::make_unique<File>(path, last_write_time(path),
+				files.insert(std::make_unique<File>(
+						path,
+						fs_time_to_str(last_write_time(path)),
 						file_size(path)));
 		}
 	}
