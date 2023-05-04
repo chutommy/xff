@@ -24,9 +24,26 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 
 std::ostream& TXTFile::print(std::ostream& os, int width) const
 {
-	return File::print(os, width)
+	File::print(os, width)
 			<< std::setw(width) << std::right << "Words: " << word_count << "\n"
 			<< std::setw(width) << std::right << "Readability: " << readability << "\n";
+	for (const auto& p: most_frequent_words)
+	{
+		std::stringstream ss;
+		ss << "(" << p.second << ") ";
+		os << std::setw(width) << std::right << ss.str() << p.first << "\n";
+	}
+	return os;
+}
+
+std::ostream& TXTFile::store(std::ostream& os) const
+{
+	File::store(os) << word_count << "\n"
+					<< readability << "\n";
+	for (const auto& p: most_frequent_words)
+		os << p.first << " " << p.second << " ";
+
+	return os << "\n";
 }
 
 double flesh_kincaid_score(int words, int sentences, int syllables)

@@ -43,8 +43,6 @@ std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 
 std::ostream& File::print(std::ostream& os, int width) const
 {
-
-
 	return os << absolute(path) << "\n"
 			  << std::setw(width) << std::right << "File: " << path.filename() << "\n"
 			  << std::setw(width) << std::right << "Type: " << format_type(path.extension()) << "\n"
@@ -52,3 +50,9 @@ std::ostream& File::print(std::ostream& os, int width) const
 			  << std::setw(width) << std::right << "Modify: " << last_write_time << "\n";
 }
 
+std::ostream& File::store(std::ostream& os) const
+{
+	return os << path.relative_path() << "\n"
+			  << size << "\n"
+			  << last_write_time << "\n";
+}

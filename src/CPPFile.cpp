@@ -38,6 +38,14 @@ std::ostream& CPPFile::print(std::ostream& os, int width) const
 	return os << "\n";
 }
 
+std::ostream& CPPFile::store(std::ostream& os) const
+{
+	File::store(os) << keyword_count << "\n";
+	for (const auto& name: includes)
+		os << name << " ";
+	return os << "\n";
+}
+
 const std::unordered_set<std::string>& get_keywords()
 {
 	static const std::unordered_set<std::string> keywords{

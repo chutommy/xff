@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 const int TOP_WORDS_SIZE = 5;
 const int LABEL_COLUMN_WIDTH = 14;
@@ -57,9 +58,10 @@ int main()
 	}
 
 	for (const auto& file: files)
-	{
 		file->print(std::cout, LABEL_COLUMN_WIDTH) << std::endl;
-	}
-
 	std::cout << "Number of matching files: " << files.size() << std::endl;
+
+	std::ofstream xff_file(".xff");
+	for (const auto& file: files)
+		file->store(xff_file);
 }

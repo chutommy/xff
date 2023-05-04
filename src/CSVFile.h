@@ -20,6 +20,8 @@ public:
 			size_t new_row_count);
 
 	std::ostream& print(std::ostream& os, int width) const override;
+
+	std::ostream& store(std::ostream& os) const override;
 };
 
 size_t get_row_count(const std::filesystem::path& path);

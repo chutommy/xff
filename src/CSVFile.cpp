@@ -22,6 +22,11 @@ std::ostream& CSVFile::print(std::ostream& os, int width) const
 			<< std::setw(width) << std::right << "Rows: " << row_count << "\n";
 }
 
+std::ostream& CSVFile::store(std::ostream& os) const
+{
+	return File::store(os) << row_count << "\n";
+}
+
 size_t get_row_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);

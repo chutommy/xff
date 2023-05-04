@@ -24,6 +24,8 @@ public:
 			std::set<std::string> new_includes);
 
 	std::ostream& print(std::ostream& os, int width) const override;
+
+	std::ostream& store(std::ostream& os) const override;
 };
 
 size_t get_keyword_count(const std::filesystem::path& path);

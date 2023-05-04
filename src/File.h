@@ -24,7 +24,7 @@ public:
 
 	virtual std::ostream& print(std::ostream& os, int width) const;
 
-//	virtual std::ostream& store(std::ostream& os) const;
+	virtual std::ostream& store(std::ostream& os) const;
 };
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime);
