@@ -45,7 +45,7 @@ V indexu jsou uložené následující údaje (v hranatých závorkách je zobra
     * `cpp` = CPP soubor
     * `*` = ostatní
 2. název souboru `[string]`
-3. cesta adresáře, ve kterém soubor existuje `[string/.../string]`
+3. cesta adresáře, ve kterém soubor existuje `[string]`
 4. velikost v bajtech `[int]`
 5. čas poslední modifikace `[time]`
 
@@ -63,7 +63,9 @@ Tyto atributy se evidují u všech souborů. Nicméně existují i speciální t
 
 3. CPP soubor:
     1. počet použitých C++ keywordů `[int]`
-    2. seznam includovaných souborů (#include direktivů) `[int, string, ...]`
+    2. seznam includovaných souborů (#include direktivů) `[string, ...]`
+
+Indexují se pouze takzvané `regular files`, tzn. adresáře, symbolické linky, sockety, či jiné Linux soubory spadající do kategorie `special files` (character, FIFO, descriptor, system console, ...) nástroj ignoruje.
 
 Index je uložený jako čitelný soubor a jednotlivé položky jsou oddělené novou řádkou. Fragment z obsahu souboru `$XFF_DIR/.xff` by mohl vypadat takto:
 
@@ -75,6 +77,7 @@ dir1/dir2                                 // relativní cesta od $XFF_DIR/ k rod
 13328                                     // velikost v B(ytes)
 2023-03-28 19:54:59 +0200                 // naposledny modifikován
 2430                                      // (txt) počet slov
+68 ahoj 32 jak 20 se 13 mas 6 ?           // (txt) nejčastější slova
 56.73                                     // (txt) Flesh-Kincaid skóre
 ... začátek následujícího záznamu ...
 ```
@@ -124,7 +127,7 @@ readability: (3.14) Extremely difficult to read.
        type: CPP
        size: 2038 B
      modify: 2022-11-09 13:53:03 +0200
-   keywords: 304
+   keyword_count: 304
    includes: <cstdlib>,<cstdio>,<cassert>,<cctype>,<cmath>,
              <iostream>,<iomanip>,<sstream>,<set>,<list>,
              <map>,<vector>,<queue>,<string>,<stack>,
@@ -155,7 +158,7 @@ readability: (3.14) Extremely difficult to read.
 * CSV soubory s počtem záznamů rovno/méně než/více než: `xxf rows/rows-/rows+ 42`
 
 
-* CPP soubory s počtem keywordů rovno/méně než/více než: `xxf keywords/keywords-/keywords+ 42`
+* CPP soubory s počtem keywordů rovno/méně než/více než: `xxf keyword_count/keyword_count-/keyword_count+ 42`
 * CPP soubory s includovanou knihovnou: `xxf include vector`
 
 #### Spojování dotazů
