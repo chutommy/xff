@@ -17,11 +17,11 @@ private:
 public:
 	Timestamp() = default;
 
-	Timestamp(int year, int month, int day, int hour, int minute, int second);
-
 	explicit Timestamp(const std::string& str);
 
 	explicit Timestamp(const std::filesystem::file_time_type& filetime);
+
+	void verify() const;
 
 	std::string str() const;
 
