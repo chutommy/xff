@@ -47,6 +47,7 @@ int main()
 	buffer << xff_ifile.rdbuf();
 	std::string file_contents = buffer.str();
 	std::istringstream iss(file_contents);
+	size_t counter = 1;
 	while (iss.rdbuf()->in_avail())
 	{
 		File f(iss);
@@ -60,6 +61,6 @@ int main()
 			file = std::make_shared<CSVFile>(f, iss);
 		else
 			file = std::make_shared<File>(f);
-		file->print(std::cout) << std::endl;
+		file->print(std::cout << counter++ << ") ") << std::endl;
 	}
 }
