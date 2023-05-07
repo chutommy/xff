@@ -4,10 +4,12 @@
  */
 
 
-#include "File.h"
-#include "TXTFile.h"
-#include "CSVFile.h"
-#include "CPPFile.h"
+#include "filetype/File.h"
+#include "filetype/TXTFile.h"
+#include "filetype/CSVFile.h"
+#include "filetype/CPPFile.h"
+#include "query/SizeQuery.h"
+#include "query/IncludeQuery.h"
 
 #include <filesystem>
 #include <iostream>
@@ -15,7 +17,7 @@
 
 int main()
 {
-	std::set<std::unique_ptr<File>> files;
+	std::set<std::shared_ptr<File>> files;
 
 	std::ifstream file(".xff");
 	if (!file.is_open())
@@ -34,17 +36,20 @@ int main()
 		File f(iss);
 		const std::filesystem::path& ext = f.extension();
 		if (ext == ".cpp")
-			files.insert(std::make_unique<File>(CPPFile(f, iss)));
+			files.insert(std::make_shared<CPPFile>(f, iss));
 		else if (ext == ".txt")
-			files.insert(std::make_unique<File>(TXTFile(f, iss)));
+			files.insert(std::make_shared<TXTFile>(f, iss));
 		else if (ext == ".csv")
-			files.insert(std::make_unique<File>(CSVFile(f, iss)));
+			files.insert(std::make_shared<CSVFile>(f, iss));
 		else
-			files.insert(std::make_unique<File>(f));
+			files.insert(std::make_shared<File>(f));
 	}
 
+	std::shared_ptr<Query> q1 = std::make_shared<SizeQuery>(IntTerm{ 700, gt });
+	std::shared_ptr<Query> q2 = std::make_shared<IncludeQuery>(StringTerm{ "vector" });
+
 	for (const auto& f: files)
-		if (f->MatchSize(IntTerm{ 700, gt }))
+		if (q1->evaluate(f) && q2->evaluate(f))
 			f->print(std::cout) << std::endl;
 
 //	for (const std::filesystem::directory_entry& entry:
@@ -55,21 +60,21 @@ int main()
 //			const std::filesystem::path& path = entry.path();
 //			const std::filesystem::path& ext = path.extension();
 //			if (ext == ".txt")
-//				files.insert(std::make_unique<TXTFile>(path));
+//				filetype.insert(std::make_shared<TXTFile>(path));
 //			else if (ext == ".csv")
-//				files.insert(std::make_unique<CSVFile>(CSVFile(path)));
+//				filetype.insert(std::make_shared<CSVFile>(CSVFile(path)));
 //			else if (ext == ".cpp")
-//				files.insert(std::make_unique<CPPFile>(path));
+//				filetype.insert(std::make_shared<CPPFile>(path));
 //			else
-//				files.insert(std::make_unique<File>(File(path)));
+//				filetype.insert(std::make_shared<File>(File(path)));
 //		}
 //	}
 //
-//	for (const auto& file: files)
+//	for (const auto& file: filetype)
 //		file->print(std::cout) << std::endl;
-//	std::cout << "Number of matching files: " << files.size() << std::endl;
+//	std::cout << "Number of matching filetype: " << filetype.size() << std::endl;
 //
 //	std::ofstream xff_file(".xff");
-//	for (const auto& file: files)
+//	for (const auto& file: filetype)
 //		file->store(xff_file);
 }

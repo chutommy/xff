@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include "File.h"
+#include "filetype/File.h"
 
 #include <vector>
 #include <set>
@@ -14,7 +14,7 @@
 class Index
 {
 private:
-	std::set<std::unique_ptr<File>> files;
+	std::set<std::shared_ptr<File>> files;
 
 public:
 
