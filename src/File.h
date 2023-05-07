@@ -18,6 +18,8 @@ protected:
 	size_t size;
 
 public:
+	explicit File(const std::filesystem::path& file_path);
+
 	File(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size);
@@ -25,6 +27,8 @@ public:
 	virtual std::ostream& print(std::ostream& os, int width) const;
 
 	virtual std::ostream& store(std::ostream& os) const;
+
+//	virtual std::istream& load(std::istream& is);
 };
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime);

@@ -12,14 +12,18 @@
 #include <unordered_set>
 #include <unordered_map>
 
+const int TOP_WORDS_SIZE = 5;
+
 class TXTFile : public File
 {
 private:
 	size_t word_count;
-	float readability;
+	double readability;
 	std::vector<std::pair<std::string, int>> most_frequent_words;
 
 public:
+	explicit TXTFile(const std::filesystem::path& file_path);
+
 	TXTFile(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size,

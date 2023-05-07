@@ -22,6 +22,16 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 {
 }
 
+TXTFile::TXTFile(const std::filesystem::path& file_path)
+		: TXTFile(file_path,
+		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		file_size(file_path),
+		get_word_count(file_path),
+		get_readability_score(file_path),
+		get_most_frequent_words(file_path, TOP_WORDS_SIZE))
+{
+}
+
 std::ostream& TXTFile::print(std::ostream& os, int width) const
 {
 	File::print(os, width)

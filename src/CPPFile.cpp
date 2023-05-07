@@ -20,6 +20,15 @@ CPPFile::CPPFile(std::filesystem::path new_path,
 {
 }
 
+CPPFile::CPPFile(const std::filesystem::path& file_path)
+		: CPPFile(file_path,
+		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		file_size(file_path),
+		get_keyword_count(file_path),
+		get_includes(file_path))
+{
+}
+
 std::ostream& CPPFile::print(std::ostream& os, int width) const
 {
 	File::print(os, width) << std::setw(width) << std::right << "Keywords: " << keyword_count << "\n"

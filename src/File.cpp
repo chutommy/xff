@@ -17,6 +17,13 @@ File::File(std::filesystem::path new_path,
 {
 }
 
+File::File(const std::filesystem::path& file_path)
+		: File(file_path,
+		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		file_size(file_path))
+{
+}
+
 std::string format_type(const std::string& extension)
 {
 	size_t size = extension.size();
@@ -42,6 +49,11 @@ std::ostream& File::store(std::ostream& os) const
 			  << size << "\n"
 			  << last_write_time << "\n";
 }
+
+//std::istream& File::load(std::istream& is)
+//{
+//	is.getline()
+//}
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 {

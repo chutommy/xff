@@ -16,6 +16,14 @@ CSVFile::CSVFile(std::filesystem::path new_path,
 {
 }
 
+CSVFile::CSVFile(const std::filesystem::path& file_path)
+		: CSVFile(file_path,
+		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		file_size(file_path),
+		get_row_count(file_path))
+{
+}
+
 std::ostream& CSVFile::print(std::ostream& os, int width) const
 {
 	return File::print(os, width)

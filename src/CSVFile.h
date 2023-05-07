@@ -14,6 +14,8 @@ private:
 	size_t row_count;
 
 public:
+	explicit CSVFile(const std::filesystem::path& file_path);
+
 	CSVFile(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size,

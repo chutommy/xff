@@ -14,7 +14,6 @@
 #include <vector>
 #include <fstream>
 
-const int TOP_WORDS_SIZE = 5;
 const int LABEL_COLUMN_WIDTH = 14;
 
 int main()
@@ -29,31 +28,13 @@ int main()
 			const std::filesystem::path& path = entry.path();
 			const std::filesystem::path& ext = path.extension();
 			if (ext == ".txt")
-				files.insert(std::make_unique<TXTFile>(
-						path,
-						fs_time_to_str(last_write_time(path)),
-						file_size(path),
-						get_word_count(path),
-						get_readability_score(path),
-						get_most_frequent_words(path, TOP_WORDS_SIZE)));
+				files.insert(std::make_unique<TXTFile>(path));
 			else if (ext == ".csv")
-				files.insert(std::make_unique<CSVFile>(
-						path,
-						fs_time_to_str(last_write_time(path)),
-						file_size(path),
-						get_row_count(path)));
+				files.insert(std::make_unique<CSVFile>(CSVFile(path)));
 			else if (ext == ".cpp")
-				files.insert(std::make_unique<CPPFile>(
-						path,
-						fs_time_to_str(last_write_time(path)),
-						file_size(path),
-						get_keyword_count(path),
-						get_includes(path)));
+				files.insert(std::make_unique<CPPFile>(path));
 			else
-				files.insert(std::make_unique<File>(
-						path,
-						fs_time_to_str(last_write_time(path)),
-						file_size(path)));
+				files.insert(std::make_unique<File>(File(path)));
 		}
 	}
 
