@@ -12,8 +12,8 @@
 
 TXTFile::TXTFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
-		size_t new_size,
-		size_t new_word_count,
+		int new_size,
+		int new_word_count,
 		double new_readability,
 		std::vector<std::pair<std::string, int>> new_most_frequent_words)
 		: File(std::move(new_path), new_last_write_time, new_size),
@@ -171,11 +171,11 @@ int count_syllables(const std::string& word)
 	return group_count;
 }
 
-size_t get_word_count(const std::filesystem::path& path)
+int get_word_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
 	std::string word;
-	size_t word_count = 0;
+	int word_count = 0;
 	while (file >> word)
 		++word_count;
 	return word_count;

@@ -12,7 +12,7 @@
 
 File::File(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
-		size_t new_size)
+		int new_size)
 		: path(std::move(new_path)),
 		  last_write_time(new_last_write_time),
 		  size(new_size)
@@ -53,7 +53,7 @@ bool onlyDigits(const std::string& size_str)
 
 std::string format_type(const std::string& extension)
 {
-	size_t size = extension.size();
+	int size = extension.size();
 	if (size < 2)
 		return "[unspecified]";
 	std::string type = extension.substr(1, size - 1);

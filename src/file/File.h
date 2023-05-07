@@ -22,7 +22,7 @@ class File
 protected:
 	std::filesystem::path path;
 	Timestamp last_write_time;
-	size_t size;
+	int size;
 
 public:
 	explicit File(const std::filesystem::path& file_path);
@@ -31,7 +31,7 @@ public:
 
 	File(std::filesystem::path new_path,
 			const Timestamp& new_last_write_time,
-			size_t new_size);
+			int new_size);
 
 	virtual std::ostream& print(std::ostream& os) const;
 

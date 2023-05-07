@@ -10,8 +10,8 @@
 
 CSVFile::CSVFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
-		size_t new_size,
-		size_t new_row_count)
+		int new_size,
+		int new_row_count)
 		: File(std::move(new_path), new_last_write_time, new_size),
 		  row_count(new_row_count)
 {
@@ -62,7 +62,7 @@ bool CSVFile::MatchRowCount(const IntTerm& term) const
 	}
 }
 
-size_t get_row_count(const std::filesystem::path& path)
+int get_row_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
 	return std::count(std::istreambuf_iterator<char>(file),

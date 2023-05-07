@@ -13,7 +13,7 @@
 class CPPFile : public File
 {
 private:
-	size_t keyword_count;
+	int keyword_count;
 	std::set<std::string> includes;
 
 public:
@@ -23,8 +23,8 @@ public:
 
 	CPPFile(std::filesystem::path new_path,
 			const Timestamp& new_last_write_time,
-			size_t new_size,
-			size_t new_keyword_count,
+			int new_size,
+			int new_keyword_count,
 			std::set<std::string> new_includes);
 
 	std::ostream& print(std::ostream& os) const override;
@@ -36,6 +36,6 @@ public:
 	bool MatchInclude(const StringTerm& term) const override;
 };
 
-size_t get_keyword_count(const std::filesystem::path& path);
+int get_keyword_count(const std::filesystem::path& path);
 
 std::set<std::string> get_includes(const std::filesystem::path& path);

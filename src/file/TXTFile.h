@@ -17,7 +17,7 @@ const int TOP_WORDS_SIZE = 5;
 class TXTFile : public File
 {
 private:
-	size_t word_count;
+	int word_count;
 	double readability;
 	std::vector<std::pair<std::string, int>> most_frequent_words;
 
@@ -28,8 +28,8 @@ public:
 
 	TXTFile(std::filesystem::path new_path,
 			const Timestamp& new_last_write_time,
-			size_t new_size,
-			size_t new_word_count,
+			int new_size,
+			int new_word_count,
 			double new_readability,
 			std::vector<std::pair<std::string, int>> new_most_frequent_words);
 
@@ -44,7 +44,7 @@ public:
 	bool MatchReadability(const DoubleTerm& term) const override;
 };
 
-size_t get_word_count(const std::filesystem::path& path);
+int get_word_count(const std::filesystem::path& path);
 
 double get_readability_score(const std::filesystem::path& path);
 

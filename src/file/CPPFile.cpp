@@ -12,8 +12,8 @@
 
 CPPFile::CPPFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
-		size_t new_size,
-		size_t new_keyword_count,
+		int new_size,
+		int new_keyword_count,
 		std::set<std::string> new_includes)
 		: File(std::move(new_path), new_last_write_time, new_size),
 		  keyword_count(new_keyword_count),
@@ -36,7 +36,7 @@ std::ostream& CPPFile::print(std::ostream& os) const
 					<< std::setw(LABEL_WIDTH) << std::right << "Includes: ";
 	for (auto it = includes.begin(); it != includes.end();)
 	{
-		for (size_t i = 0; i < 5 && it != includes.end(); ++i)
+		for (int i = 0; i < 5 && it != includes.end(); ++i)
 		{
 			os << *it << " ";
 			++it;
@@ -120,7 +120,7 @@ const std::unordered_set<std::string>& get_keywords()
 
 }
 
-size_t get_keyword_count(const std::filesystem::path& path)
+int get_keyword_count(const std::filesystem::path& path)
 {
 	const std::unordered_set<std::string>& keywords = get_keywords();
 

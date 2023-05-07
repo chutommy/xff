@@ -18,7 +18,7 @@ std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 	std::tm tm_filetime_t = *std::localtime(&filetime_t);
 
 	char buffer[20];
-	size_t buflen = std::strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &tm_filetime_t);
+	int buflen = std::strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &tm_filetime_t);
 	std::string filetime_str(buffer, buflen);
 
 	return filetime_str;
