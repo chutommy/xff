@@ -140,7 +140,8 @@ double flesh_kincaid_score(int words, int sentences, int syllables)
 {
 	double avg_words_per_sentence = static_cast<double>(words) / std::max(sentences, 1);
 	double avg_syllables_per_word = static_cast<double>(syllables) / words;
-	return 206.835 - 1.015 * avg_words_per_sentence - 84.6 * avg_syllables_per_word;
+	double score = 206.835 - 1.015 * avg_words_per_sentence - 84.6 * avg_syllables_per_word;
+	return std::max(score, 0.0);
 }
 
 bool is_vowel(char c)
