@@ -7,12 +7,10 @@
 
 
 #include "Query.h"
+#include "MainQuery.h"
 
-class ORQuery : public Query
+class ORQuery : public MainQuery
 {
-private:
-	std::vector<std::shared_ptr<Query>> queries;
-
 public:
 	bool evaluate(std::shared_ptr<File> file) override;
 };
