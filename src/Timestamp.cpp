@@ -57,3 +57,36 @@ std::string Timestamp::str() const
 			year, month, day, hour, minute, second);
 	return buffer;
 }
+
+bool operator<(const Timestamp& lhs, const Timestamp& rhs)
+{
+	if (lhs.year != rhs.year) return lhs.year < rhs.year;
+	if (lhs.month != rhs.month) return lhs.month < rhs.month;
+	if (lhs.day != rhs.day) return lhs.day < rhs.day;
+	if (lhs.hour != rhs.hour) return lhs.hour < rhs.hour;
+	if (lhs.minute != rhs.minute) return lhs.minute < rhs.minute;
+	return lhs.second < rhs.second;
+}
+
+bool operator==(const Timestamp& lhs, const Timestamp& rhs)
+{
+	return !(lhs < rhs)
+		   && !(rhs < lhs);
+}
+
+bool operator<=(const Timestamp& lhs, const Timestamp& rhs)
+{
+	return lhs < rhs
+		   || lhs == rhs;
+}
+
+bool operator>=(const Timestamp& lhs, const Timestamp& rhs)
+{
+	return rhs < lhs
+		   || rhs == lhs;
+}
+
+bool operator>(const Timestamp& lhs, const Timestamp& rhs)
+{
+	return rhs < lhs;
+}

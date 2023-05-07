@@ -24,4 +24,15 @@ public:
 	explicit Timestamp(const std::filesystem::file_time_type& filetime);
 
 	std::string str() const;
+
+	friend bool operator<(const Timestamp& lhs, const Timestamp& rhs);
+
+	friend bool operator<=(const Timestamp& lhs, const Timestamp& rhs);
+
+	friend bool operator==(const Timestamp& lhs, const Timestamp& rhs);
+
+	friend bool operator>=(const Timestamp& lhs, const Timestamp& rhs);
+
+	friend bool operator>(const Timestamp& lhs, const Timestamp& rhs);
+
 };

@@ -10,6 +10,10 @@
 #include <filesystem>
 #include <vector>
 #include "Timestamp.h"
+#include "IntTerm.h"
+#include "StringTerm.h"
+#include "DoubleTerm.h"
+#include "TimestampTerm.h"
 
 class File
 {
@@ -35,6 +39,26 @@ public:
 	{
 		return path.extension();
 	}
+
+	bool MatchName(const StringTerm& term) const;
+
+	bool MatchNameRegex(const StringTerm& term) const;
+
+	bool MatchSize(const IntTerm& term) const;
+
+	bool MatchLastWriteTime(const TimestampTerm& term) const;
+
+	bool MatchWordsCount(const IntTerm& term) const;
+
+	bool MatchFrequentWord(const StringTerm& term) const;
+
+	bool MatchReadability(const DoubleTerm& term) const;
+
+	bool MatchRowCount(const IntTerm& term) const;
+
+	bool MatchKeywordCount(const IntTerm& term) const;
+
+	bool MatchInclude(const StringTerm& term) const;
 };
 
 bool onlyDigits(const std::string& size_str);

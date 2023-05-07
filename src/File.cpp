@@ -76,3 +76,54 @@ std::ostream& File::store(std::ostream& os) const
 			  << size << "\n"
 			  << last_write_time.str() << "\n";
 }
+
+bool File::MatchName(const StringTerm& term) const
+{
+	return path.stem().string() == term.value
+		   || path.filename().string() == term.value;
+}
+
+bool File::MatchNameRegex(const StringTerm& term) const
+{
+	const std::basic_regex<char>& query = std::regex(term.value);
+	return std::regex_match(path.stem().string(), query)
+		   || std::regex_match(path.filename().string(), query);
+}
+
+bool File::MatchSize(const IntTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return size < term.value;
+	case lte:
+		return size <= term.value;
+	case eq:
+		return size == term.value;
+	case gte:
+		return size >= term.value;
+	case gt:
+		return size > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
+
+bool File::MatchLastWriteTime(const TimestampTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return last_write_time < term.value;
+	case lte:
+		return last_write_time <= term.value;
+	case eq:
+		return last_write_time == term.value;
+	case gte:
+		return last_write_time >= term.value;
+	case gt:
+		return last_write_time > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
