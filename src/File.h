@@ -37,6 +37,4 @@ public:
 	}
 };
 
-std::string fs_time_to_str(const std::filesystem::file_time_type& filetime);
-
 bool onlyDigits(const std::string& size_str);

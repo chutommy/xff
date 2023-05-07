@@ -19,7 +19,7 @@ CSVFile::CSVFile(std::filesystem::path new_path,
 
 CSVFile::CSVFile(const std::filesystem::path& file_path)
 		: CSVFile(file_path,
-		Timestamp(fs_time_to_str(std::filesystem::last_write_time(file_path))),
+		Timestamp(std::filesystem::last_write_time(file_path)),
 		file_size(file_path),
 		get_row_count(file_path))
 {

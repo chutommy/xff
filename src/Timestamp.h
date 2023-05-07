@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <filesystem>
 
 class Timestamp
 {
@@ -19,6 +20,8 @@ public:
 	Timestamp(int year, int month, int day, int hour, int minute, int second);
 
 	explicit Timestamp(const std::string& str);
+
+	explicit Timestamp(const std::filesystem::file_time_type& filetime);
 
 	std::string str() const;
 };
