@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include "CSVFile.h"
+#include "DataFileCorrupted.h"
 
 CSVFile::CSVFile(std::filesystem::path new_path,
 		std::string new_last_write_time,
@@ -33,6 +34,17 @@ std::ostream& CSVFile::print(std::ostream& os, int width) const
 std::ostream& CSVFile::store(std::ostream& os) const
 {
 	return File::store(os) << row_count << "\n";
+}
+
+CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
+{
+	std::string row_count_str;
+	if (!std::getline(iss, row_count_str))
+		throw DataFileCorrupted("Invalid format");
+
+	if (!onlyDigits(row_count_str))
+		throw DataFileCorrupted("Invalid row count");
+	row_count = std::stoi(row_count_str);
 }
 
 size_t get_row_count(const std::filesystem::path& path)

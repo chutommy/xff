@@ -17,7 +17,9 @@ private:
 	std::set<std::string> includes;
 
 public:
-	explicit CPPFile(const std::filesystem::path &file_path);
+	explicit CPPFile(const std::filesystem::path& file_path);
+
+	explicit CPPFile(File& file, std::istringstream& iss);
 
 	CPPFile(std::filesystem::path new_path,
 			std::string new_last_write_time,

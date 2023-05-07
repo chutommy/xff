@@ -24,6 +24,8 @@ private:
 public:
 	explicit TXTFile(const std::filesystem::path& file_path);
 
+	explicit TXTFile(File& file, std::istringstream& iss);
+
 	TXTFile(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size,

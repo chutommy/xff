@@ -20,6 +20,8 @@ protected:
 public:
 	explicit File(const std::filesystem::path& file_path);
 
+	explicit File(std::istringstream& iss);
+
 	File(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size);
@@ -28,7 +30,12 @@ public:
 
 	virtual std::ostream& store(std::ostream& os) const;
 
-//	virtual std::istream& load(std::istream& is);
+	std::string extension() const
+	{
+		return path.extension();
+	}
 };
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime);
+
+bool onlyDigits(const std::string& size_str);

@@ -4,6 +4,7 @@
  */
 
 #include "CPPFile.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <unordered_set>
@@ -53,6 +54,26 @@ std::ostream& CPPFile::store(std::ostream& os) const
 	for (const auto& name: includes)
 		os << name << " ";
 	return os << "\n";
+}
+
+CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
+{
+	std::string keyword_count_str, includes_str;
+	if (!std::getline(iss, keyword_count_str)
+		|| !std::getline(iss, includes_str))
+		throw DataFileCorrupted("Invalid format");
+
+	if (!onlyDigits(keyword_count_str))
+		throw DataFileCorrupted("Invalid keyword count");
+	keyword_count = std::stoi(keyword_count_str);
+
+	std::stringstream includes_ss(includes_str);
+	while (includes_ss.rdbuf()->in_avail())
+	{
+		std::string include;
+		includes_ss >> include;
+		includes.insert(include);
+	}
 }
 
 const std::unordered_set<std::string>& get_keywords()

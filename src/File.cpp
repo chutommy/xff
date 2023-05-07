@@ -4,9 +4,11 @@
  */
 
 #include "File.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <algorithm>
+#include <regex>
 
 File::File(std::filesystem::path new_path,
 		std::string new_last_write_time,
@@ -22,6 +24,29 @@ File::File(const std::filesystem::path& file_path)
 		fs_time_to_str(std::filesystem::last_write_time(file_path)),
 		file_size(file_path))
 {
+}
+
+File::File(std::istringstream& iss)
+{
+	std::string path_str, size_str;
+	if (!std::getline(iss, path_str)
+		|| !std::getline(iss, size_str)
+		|| !std::getline(iss, last_write_time))
+		throw DataFileCorrupted("Invalid format");
+
+	if (path_str.size() >= 2)
+		path = path_str.substr(1, path_str.size() - 2);;
+	if (!exists(path) || !is_regular_file(path))
+		throw DataFileCorrupted("Invalid filepath");
+
+	if (!onlyDigits(size_str))
+		throw DataFileCorrupted("Invalid size value");
+	size = std::stoi(size_str);
+}
+
+bool onlyDigits(const std::string& size_str)
+{
+	return std::regex_match(size_str, std::regex("^[0-9]+(\\.[0-9]+)?$"));
 }
 
 std::string format_type(const std::string& extension)
@@ -45,15 +70,10 @@ std::ostream& File::print(std::ostream& os, int width) const
 
 std::ostream& File::store(std::ostream& os) const
 {
-	return os << path.relative_path() << "\n"
+	return os << absolute(path) << "\n"
 			  << size << "\n"
 			  << last_write_time << "\n";
 }
-
-//std::istream& File::load(std::istream& is)
-//{
-//	is.getline()
-//}
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 {

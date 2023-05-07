@@ -16,6 +16,8 @@ private:
 public:
 	explicit CSVFile(const std::filesystem::path& file_path);
 
+	explicit CSVFile(File& file, std::istringstream& iss);
+
 	CSVFile(std::filesystem::path new_path,
 			std::string new_last_write_time,
 			size_t new_size,

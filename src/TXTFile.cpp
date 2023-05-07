@@ -4,6 +4,7 @@
  */
 
 #include "TXTFile.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <fstream>
@@ -54,6 +55,39 @@ std::ostream& TXTFile::store(std::ostream& os) const
 		os << p.first << " " << p.second << " ";
 
 	return os << "\n";
+}
+
+TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
+{
+	std::string word_count_str, readability_str, most_frequent_str;
+	if (!std::getline(iss, word_count_str)
+		|| !std::getline(iss, readability_str)
+		|| !std::getline(iss, most_frequent_str))
+		throw DataFileCorrupted("Invalid format");
+
+	if (!onlyDigits(word_count_str))
+		throw DataFileCorrupted("Invalid word count");
+	word_count = std::stoi(word_count_str);
+
+	if (!onlyDigits(readability_str))
+		throw DataFileCorrupted("Invalid readability score");
+	readability = std::stod(readability_str);
+
+	std::stringstream mf_ss(most_frequent_str);
+	while (mf_ss.rdbuf()->in_avail())
+	{
+		std::string word, count_str;
+		mf_ss >> word;
+		mf_ss >> count_str;
+		if (word.empty())
+			break;
+
+		if (!onlyDigits(readability_str))
+			throw DataFileCorrupted("Invalid frequent word count");
+		int count = std::stoi(count_str);
+
+		most_frequent_words.emplace_back(word, count);
+	}
 }
 
 double flesh_kincaid_score(int words, int sentences, int syllables)
