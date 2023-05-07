@@ -96,12 +96,8 @@ bool TXTFile::MatchWordsCount(const IntTerm& term) const
 	{
 	case lt:
 		return word_count < term.value;
-	case lte:
-		return word_count <= term.value;
 	case eq:
 		return word_count == term.value;
-	case gte:
-		return word_count >= term.value;
 	case gt:
 		return word_count > term.value;
 	default:
@@ -123,12 +119,8 @@ bool TXTFile::MatchReadability(const DoubleTerm& term) const
 	{
 	case lt:
 		return readability < term.value;
-	case lte:
-		return readability <= term.value;
 	case eq:
 		return readability == term.value;
-	case gte:
-		return readability >= term.value;
 	case gt:
 		return readability > term.value;
 	default:

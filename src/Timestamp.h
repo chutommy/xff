@@ -27,11 +27,7 @@ public:
 
 	friend bool operator<(const Timestamp& lhs, const Timestamp& rhs);
 
-	friend bool operator<=(const Timestamp& lhs, const Timestamp& rhs);
-
 	friend bool operator==(const Timestamp& lhs, const Timestamp& rhs);
-
-	friend bool operator>=(const Timestamp& lhs, const Timestamp& rhs);
 
 	friend bool operator>(const Timestamp& lhs, const Timestamp& rhs);
 

@@ -82,12 +82,8 @@ bool CPPFile::MatchKeywordCount(const IntTerm& term) const
 	{
 	case lt:
 		return keyword_count < term.value;
-	case lte:
-		return keyword_count <= term.value;
 	case eq:
 		return keyword_count == term.value;
-	case gte:
-		return keyword_count >= term.value;
 	case gt:
 		return keyword_count > term.value;
 	default:

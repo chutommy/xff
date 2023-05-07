@@ -53,12 +53,8 @@ bool CSVFile::MatchRowCount(const IntTerm& term) const
 	{
 	case lt:
 		return row_count < term.value;
-	case lte:
-		return row_count <= term.value;
 	case eq:
 		return row_count == term.value;
-	case gte:
-		return row_count >= term.value;
 	case gt:
 		return row_count > term.value;
 	default:

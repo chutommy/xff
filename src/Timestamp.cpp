@@ -74,18 +74,6 @@ bool operator==(const Timestamp& lhs, const Timestamp& rhs)
 		   && !(rhs < lhs);
 }
 
-bool operator<=(const Timestamp& lhs, const Timestamp& rhs)
-{
-	return lhs < rhs
-		   || lhs == rhs;
-}
-
-bool operator>=(const Timestamp& lhs, const Timestamp& rhs)
-{
-	return rhs < lhs
-		   || rhs == lhs;
-}
-
 bool operator>(const Timestamp& lhs, const Timestamp& rhs)
 {
 	return rhs < lhs;

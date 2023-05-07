@@ -8,5 +8,5 @@
 
 enum CompareOpt
 {
-	lt, lte, eq, gte, gt
+	lt, eq, gt
 };

@@ -96,12 +96,8 @@ bool File::MatchSize(const IntTerm& term) const
 	{
 	case lt:
 		return size < term.value;
-	case lte:
-		return size <= term.value;
 	case eq:
 		return size == term.value;
-	case gte:
-		return size >= term.value;
 	case gt:
 		return size > term.value;
 	default:
@@ -115,12 +111,8 @@ bool File::MatchLastWriteTime(const TimestampTerm& term) const
 	{
 	case lt:
 		return last_write_time < term.value;
-	case lte:
-		return last_write_time <= term.value;
 	case eq:
 		return last_write_time == term.value;
-	case gte:
-		return last_write_time >= term.value;
 	case gt:
 		return last_write_time > term.value;
 	default:
