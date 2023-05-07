@@ -25,10 +25,10 @@ CSVFile::CSVFile(const std::filesystem::path& file_path)
 {
 }
 
-std::ostream& CSVFile::print(std::ostream& os, int width) const
+std::ostream& CSVFile::print(std::ostream& os) const
 {
-	return File::print(os, width)
-			<< std::setw(width) << std::right << "Rows: " << row_count << "\n";
+	return File::print(os)
+			<< std::setw(LABEL_WIDTH) << std::right << "Rows: " << row_count << "\n";
 }
 
 std::ostream& CSVFile::store(std::ostream& os) const

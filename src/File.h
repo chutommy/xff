@@ -15,6 +15,8 @@
 #include "DoubleTerm.h"
 #include "TimestampTerm.h"
 
+const int LABEL_WIDTH = 14;
+
 class File
 {
 protected:
@@ -31,7 +33,7 @@ public:
 			const Timestamp& new_last_write_time,
 			size_t new_size);
 
-	virtual std::ostream& print(std::ostream& os, int width) const;
+	virtual std::ostream& print(std::ostream& os) const;
 
 	virtual std::ostream& store(std::ostream& os) const;
 

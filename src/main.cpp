@@ -13,8 +13,6 @@
 #include <iostream>
 #include <fstream>
 
-const int LABEL_COLUMN_WIDTH = 14;
-
 int main()
 {
 	std::set<std::unique_ptr<File>> files;
@@ -36,15 +34,18 @@ int main()
 		File f(iss);
 		const std::filesystem::path& ext = f.extension();
 		if (ext == ".cpp")
-			CPPFile(f, iss).print(std::cout, LABEL_COLUMN_WIDTH);
+			files.insert(std::make_unique<File>(CPPFile(f, iss)));
 		else if (ext == ".txt")
-			TXTFile(f, iss).print(std::cout, LABEL_COLUMN_WIDTH);
+			files.insert(std::make_unique<File>(TXTFile(f, iss)));
 		else if (ext == ".csv")
-			CSVFile(f, iss).print(std::cout, LABEL_COLUMN_WIDTH);
+			files.insert(std::make_unique<File>(CSVFile(f, iss)));
 		else
-			f.print(std::cout, LABEL_COLUMN_WIDTH);
-		std::cout << std::endl;
+			files.insert(std::make_unique<File>(f));
 	}
+
+	for (const auto& f: files)
+		if (f->MatchSize(IntTerm{ 700, gt }))
+			f->print(std::cout) << std::endl;
 
 //	for (const std::filesystem::directory_entry& entry:
 //			std::filesystem::recursive_directory_iterator("."))
@@ -65,7 +66,7 @@ int main()
 //	}
 //
 //	for (const auto& file: files)
-//		file->print(std::cout, LABEL_COLUMN_WIDTH) << std::endl;
+//		file->print(std::cout) << std::endl;
 //	std::cout << "Number of matching files: " << files.size() << std::endl;
 //
 //	std::ofstream xff_file(".xff");

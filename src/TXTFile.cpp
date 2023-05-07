@@ -33,18 +33,18 @@ TXTFile::TXTFile(const std::filesystem::path& file_path)
 {
 }
 
-std::ostream& TXTFile::print(std::ostream& os, int width) const
+std::ostream& TXTFile::print(std::ostream& os) const
 {
-	File::print(os, width)
-			<< std::setw(width) << std::right << "Words: " << word_count << "\n";
+	File::print(os)
+			<< std::setw(LABEL_WIDTH) << std::right << "Words: " << word_count << "\n";
 	for (const auto& p: most_frequent_words)
 	{
 		std::stringstream ss;
 		ss << "(" << p.second << ") ";
-		os << std::setw(width) << std::right << ss.str() << p.first << "\n";
+		os << std::setw(LABEL_WIDTH) << std::right << ss.str() << p.first << "\n";
 	}
 
-	return os << std::setw(width) << std::right << "Readability: " << readability << "\n";
+	return os << std::setw(LABEL_WIDTH) << std::right << "Readability: " << readability << "\n";
 }
 
 std::ostream& TXTFile::store(std::ostream& os) const

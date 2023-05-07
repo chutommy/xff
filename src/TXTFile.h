@@ -33,7 +33,7 @@ public:
 			double new_readability,
 			std::vector<std::pair<std::string, int>> new_most_frequent_words);
 
-	std::ostream& print(std::ostream& os, int width) const override;
+	std::ostream& print(std::ostream& os) const override;
 
 	std::ostream& store(std::ostream& os) const override;
 

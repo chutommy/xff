@@ -61,13 +61,13 @@ std::string format_type(const std::string& extension)
 	return type;
 }
 
-std::ostream& File::print(std::ostream& os, int width) const
+std::ostream& File::print(std::ostream& os) const
 {
 	return os << absolute(path) << "\n"
-			  << std::setw(width) << std::right << "File: " << path.filename() << "\n"
-			  << std::setw(width) << std::right << "Type: " << format_type(path.extension()) << "\n"
-			  << std::setw(width) << std::right << "Size: " << size << "\n"
-			  << std::setw(width) << std::right << "Modify: " << last_write_time.str() << "\n";
+			  << std::setw(LABEL_WIDTH) << std::right << "File: " << path.filename() << "\n"
+			  << std::setw(LABEL_WIDTH) << std::right << "Type: " << format_type(path.extension()) << "\n"
+			  << std::setw(LABEL_WIDTH) << std::right << "Size: " << size << "\n"
+			  << std::setw(LABEL_WIDTH) << std::right << "Modify: " << last_write_time.str() << "\n";
 }
 
 std::ostream& File::store(std::ostream& os) const

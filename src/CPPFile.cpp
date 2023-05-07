@@ -30,10 +30,10 @@ CPPFile::CPPFile(const std::filesystem::path& file_path)
 {
 }
 
-std::ostream& CPPFile::print(std::ostream& os, int width) const
+std::ostream& CPPFile::print(std::ostream& os) const
 {
-	File::print(os, width) << std::setw(width) << std::right << "Keywords: " << keyword_count << "\n"
-						   << std::setw(width) << std::right << "Includes: ";
+	File::print(os) << std::setw(LABEL_WIDTH) << std::right << "Keywords: " << keyword_count << "\n"
+					<< std::setw(LABEL_WIDTH) << std::right << "Includes: ";
 	for (auto it = includes.begin(); it != includes.end();)
 	{
 		for (size_t i = 0; i < 5 && it != includes.end(); ++i)
@@ -42,7 +42,7 @@ std::ostream& CPPFile::print(std::ostream& os, int width) const
 			++it;
 		}
 		if (it != includes.end())
-			os << "\n" << std::setw(width) << " ";
+			os << "\n" << std::setw(LABEL_WIDTH) << " ";
 	}
 
 	return os << "\n";

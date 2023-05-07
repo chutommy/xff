@@ -27,7 +27,7 @@ public:
 			size_t new_keyword_count,
 			std::set<std::string> new_includes);
 
-	std::ostream& print(std::ostream& os, int width) const override;
+	std::ostream& print(std::ostream& os) const override;
 
 	std::ostream& store(std::ostream& os) const override;
 

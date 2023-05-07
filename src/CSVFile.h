@@ -23,7 +23,7 @@ public:
 			size_t new_size,
 			size_t new_row_count);
 
-	std::ostream& print(std::ostream& os, int width) const override;
+	std::ostream& print(std::ostream& os) const override;
 
 	std::ostream& store(std::ostream& os) const override;
 
