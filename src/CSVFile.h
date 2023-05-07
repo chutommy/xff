@@ -26,6 +26,8 @@ public:
 	std::ostream& print(std::ostream& os, int width) const override;
 
 	std::ostream& store(std::ostream& os) const override;
+
+	bool MatchRowCount(const IntTerm& term) const override;
 };
 
 size_t get_row_count(const std::filesystem::path& path);

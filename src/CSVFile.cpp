@@ -47,6 +47,25 @@ CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
 	row_count = std::stoi(row_count_str);
 }
 
+bool CSVFile::MatchRowCount(const IntTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return row_count < term.value;
+	case lte:
+		return row_count <= term.value;
+	case eq:
+		return row_count == term.value;
+	case gte:
+		return row_count >= term.value;
+	case gt:
+		return row_count > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
+
 size_t get_row_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);

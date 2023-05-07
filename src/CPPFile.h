@@ -30,6 +30,10 @@ public:
 	std::ostream& print(std::ostream& os, int width) const override;
 
 	std::ostream& store(std::ostream& os) const override;
+
+	bool MatchKeywordCount(const IntTerm& term) const override;
+
+	bool MatchInclude(const StringTerm& term) const override;
 };
 
 size_t get_keyword_count(const std::filesystem::path& path);

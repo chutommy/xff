@@ -9,4 +9,5 @@
 struct DoubleTerm
 {
 	double value;
+	CompareOpt opt;
 };

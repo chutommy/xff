@@ -76,6 +76,33 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
+bool CPPFile::MatchKeywordCount(const IntTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return keyword_count < term.value;
+	case lte:
+		return keyword_count <= term.value;
+	case eq:
+		return keyword_count == term.value;
+	case gte:
+		return keyword_count >= term.value;
+	case gt:
+		return keyword_count > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
+
+bool CPPFile::MatchInclude(const StringTerm& term) const
+{
+	for (const std::string& s: includes)
+		if (s == term.value)
+			return true;
+	return false;
+}
+
 const std::unordered_set<std::string>& get_keywords()
 {
 	static const std::unordered_set<std::string> keywords{

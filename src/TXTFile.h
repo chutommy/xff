@@ -36,6 +36,12 @@ public:
 	std::ostream& print(std::ostream& os, int width) const override;
 
 	std::ostream& store(std::ostream& os) const override;
+
+	bool MatchWordsCount(const IntTerm& term) const override;
+
+	bool MatchFrequentWord(const StringTerm& term) const override;
+
+	bool MatchReadability(const DoubleTerm& term) const override;
 };
 
 size_t get_word_count(const std::filesystem::path& path);

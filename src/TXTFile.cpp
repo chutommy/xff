@@ -90,6 +90,52 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
+bool TXTFile::MatchWordsCount(const IntTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return word_count < term.value;
+	case lte:
+		return word_count <= term.value;
+	case eq:
+		return word_count == term.value;
+	case gte:
+		return word_count >= term.value;
+	case gt:
+		return word_count > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
+
+bool TXTFile::MatchFrequentWord(const StringTerm& term) const
+{
+	for (const auto& p: most_frequent_words)
+		if (p.first == term.value)
+			return true;
+	return false;
+}
+
+bool TXTFile::MatchReadability(const DoubleTerm& term) const
+{
+	switch (term.opt)
+	{
+	case lt:
+		return readability < term.value;
+	case lte:
+		return readability <= term.value;
+	case eq:
+		return readability == term.value;
+	case gte:
+		return readability >= term.value;
+	case gt:
+		return readability > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
+	}
+}
+
 double flesh_kincaid_score(int words, int sentences, int syllables)
 {
 	double avg_words_per_sentence = static_cast<double>(words) / std::max(sentences, 1);

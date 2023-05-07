@@ -124,6 +124,36 @@ bool File::MatchLastWriteTime(const TimestampTerm& term) const
 	case gt:
 		return last_write_time > term.value;
 	default:
-		throw std::runtime_error("Unexpected integer term option value");
+		throw std::runtime_error("Unexpected timestamp term option value");
 	}
+}
+
+bool File::MatchWordsCount(const IntTerm& term) const
+{
+	return false;
+}
+
+bool File::MatchFrequentWord(const StringTerm& term) const
+{
+	return false;
+}
+
+bool File::MatchReadability(const DoubleTerm& term) const
+{
+	return false;
+}
+
+bool File::MatchRowCount(const IntTerm& term) const
+{
+	return false;
+}
+
+bool File::MatchKeywordCount(const IntTerm& term) const
+{
+	return false;
+}
+
+bool File::MatchInclude(const StringTerm& term) const
+{
+	return false;
 }
