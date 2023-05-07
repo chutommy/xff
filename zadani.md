@@ -158,7 +158,7 @@ readability: (3.14) Extremely difficult to read.
 * CSV soubory s počtem záznamů rovno/méně než/více než: `xxf rows/rows-/rows+ 42`
 
 
-* CPP soubory s počtem keywordů rovno/méně než/více než: `xxf keyword_count/keyword_count-/keyword_count+ 42`
+* CPP soubory s počtem keywordů rovno/méně než/více než: `xxf keyword/keyword-/keyword+ 42`
 * CPP soubory s includovanou knihovnou: `xxf include vector`
 
 #### Spojování dotazů

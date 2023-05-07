@@ -8,34 +8,36 @@
 #include "file/TXTFile.h"
 #include "file/CSVFile.h"
 #include "file/CPPFile.h"
+#include "query/Query.h"
 
 #include <filesystem>
 #include <iostream>
 #include <fstream>
 
-int main()
+int main(int argc, char** argv)
 {
-	std::ofstream xff_file(".xff");
-	for (const std::filesystem::directory_entry& entry:
-			std::filesystem::recursive_directory_iterator("."))
-	{
-		if (entry.is_regular_file())
-		{
-			const std::filesystem::path& path = entry.path();
-			const std::filesystem::path& ext = path.extension();
-			std::shared_ptr<File> file;
-			if (ext == ".txt")
-				file = std::make_shared<TXTFile>(path);
-			else if (ext == ".csv")
-				file = std::make_shared<CSVFile>(CSVFile(path));
-			else if (ext == ".cpp")
-				file = std::make_shared<CPPFile>(path);
-			else
-				file = std::make_shared<File>(File(path));
-			file->store(xff_file);
-		}
-	}
-	xff_file.close();
+//	std::ofstream xff_file(".xff");
+//	for (const std::filesystem::directory_entry& entry:
+//			std::filesystem::recursive_directory_iterator("."))
+//	{
+//		if (entry.is_regular_file())
+//		{
+//			const std::filesystem::path& path = entry.path();
+//			const std::filesystem::path& ext = path.extension();
+//			std::shared_ptr<File> file;
+//			if (ext == ".txt")
+//				file = std::make_shared<TXTFile>(path);
+//			else if (ext == ".csv")
+//				file = std::make_shared<CSVFile>(CSVFile(path));
+//			else if (ext == ".cpp")
+//				file = std::make_shared<CPPFile>(path);
+//			else
+//				file = std::make_shared<File>(File(path));
+//			file->store(xff_file);
+//		}
+//	}
+//	xff_file.close();
+	auto q = parse(argv[1], argv[2]);
 
 	std::ifstream xff_ifile(".xff");
 	if (!xff_ifile.is_open())
@@ -47,7 +49,7 @@ int main()
 	buffer << xff_ifile.rdbuf();
 	std::string file_contents = buffer.str();
 	std::istringstream iss(file_contents);
-	size_t counter = 1;
+	int counter = 1;
 	while (iss.rdbuf()->in_avail())
 	{
 		File f(iss);
@@ -61,6 +63,8 @@ int main()
 			file = std::make_shared<CSVFile>(f, iss);
 		else
 			file = std::make_shared<File>(f);
-		file->print(std::cout << counter++ << ") ") << std::endl;
+
+		if (q->evaluate(file))
+			file->print(std::cout << counter++ << ") ") << std::endl;
 	}
 }

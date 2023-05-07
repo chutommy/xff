@@ -13,3 +13,5 @@ class Query
 public:
 	virtual bool evaluate(std::shared_ptr<File> file) = 0;
 };
+
+std::shared_ptr<Query> parse(const std::string &cmd, const std::string &arg);
