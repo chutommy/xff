@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include "CSVFile.h"
-#include "DataFileCorrupted.h"
+#include "../DataFileCorrupted.h"
 
 CSVFile::CSVFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,

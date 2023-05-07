@@ -4,7 +4,7 @@
  */
 
 #include "TXTFile.h"
-#include "DataFileCorrupted.h"
+#include "../DataFileCorrupted.h"
 
 #include <utility>
 #include <fstream>

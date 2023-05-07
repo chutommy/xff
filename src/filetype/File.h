@@ -9,11 +9,11 @@
 #include <string>
 #include <filesystem>
 #include <vector>
-#include "Timestamp.h"
-#include "IntTerm.h"
-#include "StringTerm.h"
-#include "DoubleTerm.h"
-#include "TimestampTerm.h"
+#include "../Timestamp.h"
+#include "../IntTerm.h"
+#include "../StringTerm.h"
+#include "../DoubleTerm.h"
+#include "../TimestampTerm.h"
 
 const int LABEL_WIDTH = 14;
 
