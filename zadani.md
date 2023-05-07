@@ -178,4 +178,7 @@ Help se zobrazení po spuštění nástroje s argumentem help: `xxf help` nebo p
 
 ## Kde mám polymorfismus?
 
-
+1. file - CPPFile, TXTFile, CSVFile
+   - matchAttribute, store, load, print
+2. query - NameQuery, SizeQuery, IncludeQuery
+   - evaluate
