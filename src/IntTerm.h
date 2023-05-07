@@ -9,6 +9,6 @@
 
 struct IntTerm
 {
-	int value;
+	size_t value;
 	CompareOpt opt;
 };
