@@ -11,7 +11,6 @@
 
 #include <filesystem>
 #include <iostream>
-#include <vector>
 #include <fstream>
 
 const int LABEL_COLUMN_WIDTH = 14;

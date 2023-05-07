@@ -38,7 +38,7 @@ File::File(std::istringstream& iss)
 	last_write_time = Timestamp(last_write_time_str);
 
 	if (path_str.size() >= 2)
-		path = path_str.substr(1, path_str.size() - 2);;
+		path = path_str.substr(1, path_str.size() - 2);
 	if (!exists(path) || !is_regular_file(path))
 		throw DataFileCorrupted("Invalid filepath");
 

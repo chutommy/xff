@@ -14,7 +14,7 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
 		size_t new_size,
 		size_t new_word_count,
-		float new_readability,
+		double new_readability,
 		std::vector<std::pair<std::string, int>> new_most_frequent_words)
 		: File(std::move(new_path), new_last_write_time, new_size),
 		  word_count(new_word_count),

@@ -30,7 +30,7 @@ public:
 			const Timestamp& new_last_write_time,
 			size_t new_size,
 			size_t new_word_count,
-			float new_readability,
+			double new_readability,
 			std::vector<std::pair<std::string, int>> new_most_frequent_words);
 
 	std::ostream& print(std::ostream& os, int width) const override;
