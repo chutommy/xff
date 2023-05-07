@@ -27,7 +27,7 @@ public:
 	explicit TXTFile(File& file, std::istringstream& iss);
 
 	TXTFile(std::filesystem::path new_path,
-			std::string new_last_write_time,
+			const Timestamp& new_last_write_time,
 			size_t new_size,
 			size_t new_word_count,
 			float new_readability,

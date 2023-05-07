@@ -11,12 +11,12 @@
 #include <algorithm>
 
 TXTFile::TXTFile(std::filesystem::path new_path,
-		std::string new_last_write_time,
+		const Timestamp& new_last_write_time,
 		size_t new_size,
 		size_t new_word_count,
 		float new_readability,
 		std::vector<std::pair<std::string, int>> new_most_frequent_words)
-		: File(std::move(new_path), std::move(new_last_write_time), new_size),
+		: File(std::move(new_path), new_last_write_time, new_size),
 		  word_count(new_word_count),
 		  readability(new_readability),
 		  most_frequent_words(std::move(new_most_frequent_words))
@@ -25,7 +25,7 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 
 TXTFile::TXTFile(const std::filesystem::path& file_path)
 		: TXTFile(file_path,
-		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		Timestamp(fs_time_to_str(std::filesystem::last_write_time(file_path))),
 		file_size(file_path),
 		get_word_count(file_path),
 		get_readability_score(file_path),

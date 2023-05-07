@@ -11,28 +11,31 @@
 #include <regex>
 
 File::File(std::filesystem::path new_path,
-		std::string new_last_write_time,
+		const Timestamp& new_last_write_time,
 		size_t new_size)
 		: path(std::move(new_path)),
-		  last_write_time(std::move(new_last_write_time)),
+		  last_write_time(new_last_write_time),
 		  size(new_size)
 {
 }
 
 File::File(const std::filesystem::path& file_path)
 		: File(file_path,
-		fs_time_to_str(std::filesystem::last_write_time(file_path)),
+		Timestamp(fs_time_to_str(
+				std::filesystem::last_write_time(file_path))),
 		file_size(file_path))
 {
 }
 
 File::File(std::istringstream& iss)
 {
-	std::string path_str, size_str;
+	std::string path_str, size_str, last_write_time_str;
 	if (!std::getline(iss, path_str)
 		|| !std::getline(iss, size_str)
-		|| !std::getline(iss, last_write_time))
+		|| !std::getline(iss, last_write_time_str))
 		throw DataFileCorrupted("Invalid format");
+
+	last_write_time = Timestamp(last_write_time_str);
 
 	if (path_str.size() >= 2)
 		path = path_str.substr(1, path_str.size() - 2);;
@@ -65,14 +68,14 @@ std::ostream& File::print(std::ostream& os, int width) const
 			  << std::setw(width) << std::right << "File: " << path.filename() << "\n"
 			  << std::setw(width) << std::right << "Type: " << format_type(path.extension()) << "\n"
 			  << std::setw(width) << std::right << "Size: " << size << "\n"
-			  << std::setw(width) << std::right << "Modify: " << last_write_time << "\n";
+			  << std::setw(width) << std::right << "Modify: " << last_write_time.str() << "\n";
 }
 
 std::ostream& File::store(std::ostream& os) const
 {
 	return os << absolute(path) << "\n"
 			  << size << "\n"
-			  << last_write_time << "\n";
+			  << last_write_time.str() << "\n";
 }
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
@@ -82,7 +85,7 @@ std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 	auto filetime_t = std::chrono::system_clock::to_time_t(sys_time);
 	std::tm tm_filetime_t = *std::localtime(&filetime_t);
 
-	char buffer[80];
+	char buffer[20];
 	size_t buflen = std::strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &tm_filetime_t);
 	std::string filetime_str(buffer, buflen);
 

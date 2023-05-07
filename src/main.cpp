@@ -44,6 +44,7 @@ int main()
 			CSVFile(f, iss).print(std::cout, LABEL_COLUMN_WIDTH);
 		else
 			f.print(std::cout, LABEL_COLUMN_WIDTH);
+		std::cout << std::endl;
 	}
 
 //	for (const std::filesystem::directory_entry& entry:
