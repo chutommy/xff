@@ -27,20 +27,6 @@ std::string format_type(const std::string& extension)
 	return type;
 }
 
-std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
-{
-	auto sys_time = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
-			filetime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
-	auto filetime_t = std::chrono::system_clock::to_time_t(sys_time);
-	std::tm tm_filetime_t = *std::localtime(&filetime_t);
-
-	char buffer[80];
-	size_t buflen = std::strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &tm_filetime_t);
-	std::string filetime_str(buffer, buflen);
-
-	return filetime_str;
-}
-
 std::ostream& File::print(std::ostream& os, int width) const
 {
 	return os << absolute(path) << "\n"
@@ -55,4 +41,18 @@ std::ostream& File::store(std::ostream& os) const
 	return os << path.relative_path() << "\n"
 			  << size << "\n"
 			  << last_write_time << "\n";
+}
+
+std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
+{
+	auto sys_time = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
+			filetime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
+	auto filetime_t = std::chrono::system_clock::to_time_t(sys_time);
+	std::tm tm_filetime_t = *std::localtime(&filetime_t);
+
+	char buffer[80];
+	size_t buflen = std::strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", &tm_filetime_t);
+	std::string filetime_str(buffer, buflen);
+
+	return filetime_str;
 }

@@ -25,15 +25,15 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 std::ostream& TXTFile::print(std::ostream& os, int width) const
 {
 	File::print(os, width)
-			<< std::setw(width) << std::right << "Words: " << word_count << "\n"
-			<< std::setw(width) << std::right << "Readability: " << readability << "\n";
+			<< std::setw(width) << std::right << "Words: " << word_count << "\n";
 	for (const auto& p: most_frequent_words)
 	{
 		std::stringstream ss;
 		ss << "(" << p.second << ") ";
 		os << std::setw(width) << std::right << ss.str() << p.first << "\n";
 	}
-	return os;
+
+	return os << std::setw(width) << std::right << "Readability: " << readability << "\n";
 }
 
 std::ostream& TXTFile::store(std::ostream& os) const
