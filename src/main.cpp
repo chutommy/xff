@@ -15,8 +15,7 @@
 
 int main()
 {
-	std::set<std::shared_ptr<File>> files;
-
+	std::ofstream xff_file(".xff");
 	for (const std::filesystem::directory_entry& entry:
 			std::filesystem::recursive_directory_iterator("."))
 	{
@@ -24,44 +23,43 @@ int main()
 		{
 			const std::filesystem::path& path = entry.path();
 			const std::filesystem::path& ext = path.extension();
+			std::shared_ptr<File> file;
 			if (ext == ".txt")
-				files.insert(std::make_shared<TXTFile>(path));
+				file = std::make_shared<TXTFile>(path);
 			else if (ext == ".csv")
-				files.insert(std::make_shared<CSVFile>(CSVFile(path)));
+				file = std::make_shared<CSVFile>(CSVFile(path));
 			else if (ext == ".cpp")
-				files.insert(std::make_shared<CPPFile>(path));
+				file = std::make_shared<CPPFile>(path);
 			else
-				files.insert(std::make_shared<File>(File(path)));
+				file = std::make_shared<File>(File(path));
+			file->store(xff_file);
 		}
 	}
-	std::ofstream xff_file(".xff");
-	for (const auto& f: files)
-		f->store(xff_file);
+	xff_file.close();
 
-	std::ifstream file(".xff");
-	if (!file.is_open())
+	std::ifstream xff_ifile(".xff");
+	if (!xff_ifile.is_open())
 	{
-		std::cout << "Failed to open file" << std::endl;
+		std::cout << "Failed to open xff_ifile" << std::endl;
 		return 1;
 	}
 	std::stringstream buffer;
-	buffer << file.rdbuf();
+	buffer << xff_ifile.rdbuf();
 	std::string file_contents = buffer.str();
 	std::istringstream iss(file_contents);
 	while (iss.rdbuf()->in_avail())
 	{
 		File f(iss);
+		std::shared_ptr<File> file;
 		const std::filesystem::path& ext = f.extension();
 		if (ext == ".cpp")
-			files.insert(std::make_shared<CPPFile>(f, iss));
+			file = std::make_shared<CPPFile>(f, iss);
 		else if (ext == ".txt")
-			files.insert(std::make_shared<TXTFile>(f, iss));
+			file = std::make_shared<TXTFile>(f, iss);
 		else if (ext == ".csv")
-			files.insert(std::make_shared<CSVFile>(f, iss));
+			file = std::make_shared<CSVFile>(f, iss);
 		else
-			files.insert(std::make_shared<File>(f));
+			file = std::make_shared<File>(f);
+		file->print(std::cout) << std::endl;
 	}
-
-	for (const auto& f: files)
-		f->print(std::cout) << std::endl;
 }
