@@ -6,7 +6,7 @@
 #pragma once
 
 
-#include "../filetype/File.h"
+#include "../file/File.h"
 
 class Query
 {

@@ -4,10 +4,10 @@
  */
 
 
-#include "filetype/File.h"
-#include "filetype/TXTFile.h"
-#include "filetype/CSVFile.h"
-#include "filetype/CPPFile.h"
+#include "file/File.h"
+#include "file/TXTFile.h"
+#include "file/CSVFile.h"
+#include "file/CPPFile.h"
 #include "query/SizeQuery.h"
 #include "query/IncludeQuery.h"
 
@@ -60,21 +60,21 @@ int main()
 //			const std::filesystem::path& path = entry.path();
 //			const std::filesystem::path& ext = path.extension();
 //			if (ext == ".txt")
-//				filetype.insert(std::make_shared<TXTFile>(path));
+//				file.insert(std::make_shared<TXTFile>(path));
 //			else if (ext == ".csv")
-//				filetype.insert(std::make_shared<CSVFile>(CSVFile(path)));
+//				file.insert(std::make_shared<CSVFile>(CSVFile(path)));
 //			else if (ext == ".cpp")
-//				filetype.insert(std::make_shared<CPPFile>(path));
+//				file.insert(std::make_shared<CPPFile>(path));
 //			else
-//				filetype.insert(std::make_shared<File>(File(path)));
+//				file.insert(std::make_shared<File>(File(path)));
 //		}
 //	}
 //
-//	for (const auto& file: filetype)
+//	for (const auto& file: file)
 //		file->print(std::cout) << std::endl;
-//	std::cout << "Number of matching filetype: " << filetype.size() << std::endl;
+//	std::cout << "Number of matching file: " << file.size() << std::endl;
 //
 //	std::ofstream xff_file(".xff");
-//	for (const auto& file: filetype)
+//	for (const auto& file: file)
 //		file->store(xff_file);
 }
