@@ -19,18 +19,37 @@ int main()
 {
 	std::set<std::shared_ptr<File>> files;
 
+	for (const std::filesystem::directory_entry& entry:
+			std::filesystem::recursive_directory_iterator("."))
+	{
+		if (entry.is_regular_file())
+		{
+			const std::filesystem::path& path = entry.path();
+			const std::filesystem::path& ext = path.extension();
+			if (ext == ".txt")
+				files.insert(std::make_shared<TXTFile>(path));
+			else if (ext == ".csv")
+				files.insert(std::make_shared<CSVFile>(CSVFile(path)));
+			else if (ext == ".cpp")
+				files.insert(std::make_shared<CPPFile>(path));
+			else
+				files.insert(std::make_shared<File>(File(path)));
+		}
+	}
+	std::ofstream xff_file(".xff");
+	for (const auto& f: files)
+		f->store(xff_file);
+
 	std::ifstream file(".xff");
 	if (!file.is_open())
 	{
 		std::cout << "Failed to open file" << std::endl;
 		return 1;
 	}
-
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	std::string file_contents = buffer.str();
 	std::istringstream iss(file_contents);
-
 	while (iss.rdbuf()->in_avail())
 	{
 		File f(iss);
@@ -45,36 +64,6 @@ int main()
 			files.insert(std::make_shared<File>(f));
 	}
 
-	std::shared_ptr<Query> q1 = std::make_shared<SizeQuery>(IntTerm{ 700, gt });
-	std::shared_ptr<Query> q2 = std::make_shared<IncludeQuery>(StringTerm{ "vector" });
-
 	for (const auto& f: files)
-		if (q1->evaluate(f) && q2->evaluate(f))
-			f->print(std::cout) << std::endl;
-
-//	for (const std::filesystem::directory_entry& entry:
-//			std::filesystem::recursive_directory_iterator("."))
-//	{
-//		if (entry.is_regular_file())
-//		{
-//			const std::filesystem::path& path = entry.path();
-//			const std::filesystem::path& ext = path.extension();
-//			if (ext == ".txt")
-//				file.insert(std::make_shared<TXTFile>(path));
-//			else if (ext == ".csv")
-//				file.insert(std::make_shared<CSVFile>(CSVFile(path)));
-//			else if (ext == ".cpp")
-//				file.insert(std::make_shared<CPPFile>(path));
-//			else
-//				file.insert(std::make_shared<File>(File(path)));
-//		}
-//	}
-//
-//	for (const auto& file: file)
-//		file->print(std::cout) << std::endl;
-//	std::cout << "Number of matching file: " << file.size() << std::endl;
-//
-//	std::ofstream xff_file(".xff");
-//	for (const auto& file: file)
-//		file->store(xff_file);
+		f->print(std::cout) << std::endl;
 }
