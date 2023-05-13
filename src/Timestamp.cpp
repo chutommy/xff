@@ -45,7 +45,7 @@ std::string Timestamp::str() const
 {
 	char buffer[20];
 	snprintf(buffer, sizeof(buffer),
-			"%d-%d-%d %d:%d:%d",
+			"%04d-%02d-%02d %02d:%02d:%02d",
 			year, month, day, hour, minute, second);
 	return buffer;
 }
@@ -69,6 +69,11 @@ bool operator==(const Timestamp& lhs, const Timestamp& rhs)
 bool operator>(const Timestamp& lhs, const Timestamp& rhs)
 {
 	return rhs < lhs;
+}
+
+bool operator!=(const Timestamp& lhs, const Timestamp& rhs)
+{
+	return !(lhs == rhs);
 }
 
 void Timestamp::verify() const

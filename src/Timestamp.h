@@ -39,3 +39,7 @@ bool operator<(const Timestamp& lhs, const Timestamp& rhs);
 bool operator==(const Timestamp& lhs, const Timestamp& rhs);
 
 bool operator>(const Timestamp& lhs, const Timestamp& rhs);
+
+bool operator!=(const Timestamp& lhs, const Timestamp& rhs);
+
+std::string fs_time_to_str(const std::filesystem::file_time_type& filetime);
