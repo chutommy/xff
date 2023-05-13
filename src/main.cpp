@@ -10,6 +10,8 @@
 #include "Query.h"
 #include "ANDQuery.h"
 #include "ORQuery.h"
+#include "DataFileCorrupted.h"
+#include "Index.h"
 
 #include <filesystem>
 #include <iostream>
@@ -19,11 +21,6 @@
 void load_and_print(std::shared_ptr<MainQuery>& query)
 {
 	std::ifstream xff_ifile(".xff");
-	if (!xff_ifile.is_open())
-	{
-		std::cout << "Failed to open xff_ifile" << std::endl;
-		return;
-	}
 	std::stringstream buffer;
 	buffer << xff_ifile.rdbuf();
 	std::string file_contents = buffer.str();
@@ -82,34 +79,90 @@ std::shared_ptr<MainQuery> create_query(int argc, char* const* argv)
 	return query;
 }
 
-void create_index(std::ofstream& xff_file)
+void index_filepath(std::ofstream& os, const std::filesystem::path& path)
 {
-	for (const std::filesystem::directory_entry& entry:
-			std::filesystem::recursive_directory_iterator("."))
-	{
-		if (entry.is_regular_file())
-		{
-			const std::filesystem::path& path = entry.path();
-			const std::filesystem::path& ext = path.extension();
-			std::shared_ptr<File> file;
-			if (ext == ".txt")
-				file = std::make_shared<TXTFile>(path);
-			else if (ext == ".csv")
-				file = std::make_shared<CSVFile>(CSVFile(path));
-			else if (ext == ".cpp")
-				file = std::make_shared<CPPFile>(path);
-			else
-				file = std::make_shared<File>(File(path));
-			file->store(xff_file);
-		}
-	}
-	xff_file.close();
+	const std::filesystem::path& ext = path.extension();
+	std::shared_ptr<File> file;
+	if (ext == ".txt")
+		file = std::make_shared<TXTFile>(path);
+	else if (ext == ".csv")
+		file = std::make_shared<CSVFile>(CSVFile(path));
+	else if (ext == ".cpp")
+		file = std::make_shared<CPPFile>(path);
+	else
+		file = std::make_shared<File>(File(path));
+	file->store(os);
 }
 
 int main(int argc, char** argv)
 {
-	std::ofstream xff_file(".xff");
-	create_index(xff_file);
-	std::shared_ptr<MainQuery> query = create_query(argc, argv);
-	load_and_print(query);
+	Index index(".dummy");
+
+	std::ifstream orig_xff(".xff");
+	std::ofstream new_xff(".xff.new");
+	if (!orig_xff.is_open() || !new_xff.is_open())
+	{
+		std::cout << "Failed to open index file" << std::endl;
+		return 1;
+	}
+
+	std::stringstream buffer;
+	buffer << orig_xff.rdbuf();
+	std::string index_str = buffer.str();
+	std::istringstream iss(index_str);
+
+	std::set<std::string> indexed;
+
+	while (iss.rdbuf()->in_avail())
+	{
+		File f(iss);
+		std::shared_ptr<File> file;
+		const std::filesystem::path& ext = f.extension();
+		if (ext == ".cpp")
+			file = std::make_shared<CPPFile>(f, iss);
+		else if (ext == ".txt")
+			file = std::make_shared<TXTFile>(f, iss);
+		else if (ext == ".csv")
+			file = std::make_shared<CSVFile>(f, iss);
+		else
+			file = std::make_shared<File>(f);
+
+		std::filesystem::path path = file->get_path();
+		if (!exists(path))
+		{
+			std::cout << "removed: " << path.filename() << std::endl;
+			continue;
+		}
+		if (!is_regular_file(path))
+		{
+			std::cout << "not supported: " << path.filename() << std::endl;
+			continue;
+		}
+		if (file->up_to_date())
+		{
+			file->store(new_xff);
+			indexed.insert(absolute(path));
+		}
+		else
+		{
+			std::cout << "reindexing: " << path.filename() << std::endl;
+			index_filepath(new_xff, path);
+			indexed.insert(absolute(path));
+		}
+	}
+
+	for (const std::filesystem::directory_entry& entry:
+			std::filesystem::recursive_directory_iterator("."))
+	{
+		const std::filesystem::path& path = entry.path();
+		if (is_regular_file(path) && !indexed.count(absolute(path)))
+		{
+			std::cout << "indexing: " << path.filename() << std::endl;
+			index_filepath(new_xff, path);
+		}
+	}
+
+//	create_index(orig_xff);
+//	std::shared_ptr<MainQuery> query = create_query(argc, argv);
+//	load_and_print(query);
 }
