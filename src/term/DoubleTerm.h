@@ -5,9 +5,11 @@
 
 #pragma once
 
-
+/**
+ * Represents a double logic term.
+ */
 struct DoubleTerm
 {
 	double value;
-	CompareOpt opt;
+	CompareOpt opt = eq;
 };

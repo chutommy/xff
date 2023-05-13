@@ -7,8 +7,11 @@
 
 #include "CompareOpt.h"
 
+/**
+ * Represents a int logic term.
+ */
 struct IntTerm
 {
 	int value;
-	CompareOpt opt;
+	CompareOpt opt = eq;
 };

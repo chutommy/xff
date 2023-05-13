@@ -5,12 +5,14 @@
 
 #pragma once
 
-
 #include "Timestamp.h"
 #include "CompareOpt.h"
 
+/**
+ * Represents a timestamp logic term.
+ */
 struct TimestampTerm
 {
 	Timestamp value;
-	CompareOpt opt;
+	CompareOpt opt = eq;
 };

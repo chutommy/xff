@@ -5,8 +5,12 @@
 
 #pragma once
 
-
+/**
+ * Represents a compare relationship.
+ */
 enum CompareOpt
 {
-	lt, eq, gt
+	lt, // less than
+	eq, // equal
+	gt, // greater than
 };
