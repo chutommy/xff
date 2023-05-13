@@ -4,11 +4,12 @@
  */
 
 #include "CPPFile.h"
-#include "../DataFileCorrupted.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <unordered_set>
 #include <fstream>
+#include <algorithm>
 
 CPPFile::CPPFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
@@ -24,7 +25,7 @@ CPPFile::CPPFile(std::filesystem::path new_path,
 CPPFile::CPPFile(const std::filesystem::path& file_path)
 		: CPPFile(file_path,
 		Timestamp(std::filesystem::last_write_time(file_path)),
-		file_size(file_path),
+		static_cast<int>(file_size(file_path)),
 		get_keyword_count(file_path),
 		get_includes(file_path))
 {
@@ -51,8 +52,13 @@ std::ostream& CPPFile::print(std::ostream& os) const
 std::ostream& CPPFile::store(std::ostream& os) const
 {
 	File::store(os) << keyword_count << "\n";
+	bool first = true;
 	for (const auto& name: includes)
-		os << name << " ";
+	{
+		if (!first) os << " ";
+		first = false;
+		os << name;
+	}
 	return os << "\n";
 }
 
@@ -76,7 +82,7 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
-bool CPPFile::MatchKeywordCount(const IntTerm& term) const
+bool CPPFile::matchKeywordCount(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -91,12 +97,29 @@ bool CPPFile::MatchKeywordCount(const IntTerm& term) const
 	}
 }
 
-bool CPPFile::MatchInclude(const StringTerm& term) const
+bool CPPFile::matchInclude(const StringTerm& term) const
 {
 	for (const std::string& s: includes)
 		if (s == term.value)
 			return true;
 	return false;
+}
+
+std::set<std::string> get_includes(const std::filesystem::path& path)
+{
+	std::set<std::string> includes;
+	std::ifstream file(path);
+	std::string line;
+	while (std::getline(file, line))
+		if (line.rfind("#include", 0) == 0)
+		{
+			std::stringstream ss(line);
+			std::string include_direct, name;
+			ss >> include_direct >> name;
+			includes.insert(name.substr(1, name.size() - 2));
+		}
+
+	return includes;
 }
 
 const std::unordered_set<std::string>& get_keywords()
@@ -117,7 +140,6 @@ const std::unordered_set<std::string>& get_keywords()
 	};
 
 	return keywords;
-
 }
 
 int get_keyword_count(const std::filesystem::path& path)
@@ -132,21 +154,4 @@ int get_keyword_count(const std::filesystem::path& path)
 			++count;
 
 	return count;
-}
-
-std::set<std::string> get_includes(const std::filesystem::path& path)
-{
-	std::set<std::string> includes;
-	std::ifstream file(path);
-	std::string line;
-	while (std::getline(file, line))
-		if (line.rfind("#include", 0) == 0)
-		{
-			std::stringstream ss(line);
-			std::string include_direct, name;
-			ss >> include_direct >> name;
-			includes.insert(name.substr(1, name.size() - 2));
-		}
-
-	return includes;
 }

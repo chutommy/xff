@@ -4,7 +4,7 @@
  */
 
 #include "TXTFile.h"
-#include "../DataFileCorrupted.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <fstream>
@@ -26,7 +26,7 @@ TXTFile::TXTFile(std::filesystem::path new_path,
 TXTFile::TXTFile(const std::filesystem::path& file_path)
 		: TXTFile(file_path,
 		Timestamp(std::filesystem::last_write_time(file_path)),
-		file_size(file_path),
+		static_cast<int>(file_size(file_path)),
 		get_word_count(file_path),
 		get_readability_score(file_path),
 		get_most_frequent_words(file_path, TOP_WORDS_SIZE))
@@ -90,7 +90,7 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
-bool TXTFile::MatchWordsCount(const IntTerm& term) const
+bool TXTFile::matchWordsCount(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -105,7 +105,7 @@ bool TXTFile::MatchWordsCount(const IntTerm& term) const
 	}
 }
 
-bool TXTFile::MatchFrequentWord(const StringTerm& term) const
+bool TXTFile::matchFrequentWord(const StringTerm& term) const
 {
 	for (const auto& p: most_frequent_words)
 		if (p.first == term.value)
@@ -113,7 +113,7 @@ bool TXTFile::MatchFrequentWord(const StringTerm& term) const
 	return false;
 }
 
-bool TXTFile::MatchReadability(const DoubleTerm& term) const
+bool TXTFile::matchReadability(const DoubleTerm& term) const
 {
 	switch (term.opt)
 	{

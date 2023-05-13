@@ -5,13 +5,12 @@
 
 #pragma once
 
-
 #include "File.h"
 
 class CSVFile : public File
 {
 private:
-	int row_count;
+	long row_count;
 
 public:
 	explicit CSVFile(const std::filesystem::path& file_path);
@@ -21,13 +20,18 @@ public:
 	CSVFile(std::filesystem::path new_path,
 			const Timestamp& new_last_write_time,
 			int new_size,
-			int new_row_count);
+			long new_row_count);
 
 	std::ostream& print(std::ostream& os) const override;
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool MatchRowCount(const IntTerm& term) const override;
+	bool matchRowCount(const IntTerm& term) const override;
 };
 
-int get_row_count(const std::filesystem::path& path);
+/**
+ * Counts the number of records (rows) in the file.
+ * @param path path to the file
+ * @return row count
+ */
+long get_row_count(const std::filesystem::path& path);

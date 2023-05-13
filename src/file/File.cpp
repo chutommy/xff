@@ -4,7 +4,7 @@
  */
 
 #include "File.h"
-#include "../DataFileCorrupted.h"
+#include "DataFileCorrupted.h"
 
 #include <utility>
 #include <algorithm>
@@ -22,7 +22,7 @@ File::File(std::filesystem::path new_path,
 File::File(const std::filesystem::path& file_path)
 		: File(file_path,
 		Timestamp(std::filesystem::last_write_time(file_path)),
-		file_size(file_path))
+		static_cast<int>(file_size(file_path)))
 {
 }
 
@@ -32,7 +32,7 @@ File::File(std::istringstream& iss)
 	if (!std::getline(iss, path_str)
 		|| !std::getline(iss, size_str)
 		|| !std::getline(iss, last_write_time_str))
-		throw DataFileCorrupted("Invalid format");
+		throw DataFileCorrupted("Invalid index format");
 
 	last_write_time = Timestamp(last_write_time_str);
 
@@ -42,18 +42,23 @@ File::File(std::istringstream& iss)
 		throw DataFileCorrupted("Invalid filepath");
 
 	if (!onlyDigits(size_str))
-		throw DataFileCorrupted("Invalid size value");
+		throw DataFileCorrupted("Invalid size value (illegal digit)");
 	size = std::stoi(size_str);
 }
 
-bool onlyDigits(const std::string& size_str)
+std::string File::extension() const
 {
-	return std::regex_match(size_str, std::regex("^[0-9]+(\\.[0-9]+)?$"));
+	return path.extension();
+}
+
+bool onlyDigits(const std::string& str)
+{
+	return std::regex_match(str, std::regex("^[0-9]+(\\.[0-9]+)?$"));
 }
 
 std::string format_type(const std::string& extension)
 {
-	int size = extension.size();
+	int size = static_cast<int>(extension.size());
 	if (size < 2)
 		return "[unspecified]";
 	std::string type = extension.substr(1, size - 1);
@@ -77,20 +82,20 @@ std::ostream& File::store(std::ostream& os) const
 			  << last_write_time.str() << "\n";
 }
 
-bool File::MatchName(const StringTerm& term) const
+bool File::matchName(const StringTerm& term) const
 {
 	return path.stem().string() == term.value
 		   || path.filename().string() == term.value;
 }
 
-bool File::MatchNameRegex(const StringTerm& term) const
+bool File::matchNameRegex(const StringTerm& term) const
 {
 	const std::basic_regex<char>& query = std::regex(term.value);
 	return std::regex_match(path.stem().string(), query)
 		   || std::regex_match(path.filename().string(), query);
 }
 
-bool File::MatchSize(const IntTerm& term) const
+bool File::matchSize(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -105,7 +110,7 @@ bool File::MatchSize(const IntTerm& term) const
 	}
 }
 
-bool File::MatchLastWriteTime(const TimestampTerm& term) const
+bool File::matchLastWriteTime(const TimestampTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -120,32 +125,32 @@ bool File::MatchLastWriteTime(const TimestampTerm& term) const
 	}
 }
 
-bool File::MatchWordsCount(const IntTerm& term) const
+bool File::matchWordsCount(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::MatchFrequentWord(const StringTerm& term) const
+bool File::matchFrequentWord(const StringTerm& term) const
 {
 	return false;
 }
 
-bool File::MatchReadability(const DoubleTerm& term) const
+bool File::matchReadability(const DoubleTerm& term) const
 {
 	return false;
 }
 
-bool File::MatchRowCount(const IntTerm& term) const
+bool File::matchRowCount(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::MatchKeywordCount(const IntTerm& term) const
+bool File::matchKeywordCount(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::MatchInclude(const StringTerm& term) const
+bool File::matchInclude(const StringTerm& term) const
 {
 	return false;
 }

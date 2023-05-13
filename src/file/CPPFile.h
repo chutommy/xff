@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 #include "File.h"
 
 #include <set>
@@ -31,11 +30,21 @@ public:
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool MatchKeywordCount(const IntTerm& term) const override;
+	bool matchKeywordCount(const IntTerm& term) const override;
 
-	bool MatchInclude(const StringTerm& term) const override;
+	bool matchInclude(const StringTerm& term) const override;
 };
 
+/**
+ * Counts the number of C++ keyword in the file.
+ * @param path path to the file
+ * @return the number of keywords
+ */
 int get_keyword_count(const std::filesystem::path& path);
 
+/**
+ * Retrives the includes in the C++ file.
+ * @param path path to the file
+ * @return set of the includes
+ */
 std::set<std::string> get_includes(const std::filesystem::path& path);

@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 #include "File.h"
 
 #include <map>
@@ -37,15 +36,31 @@ public:
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool MatchWordsCount(const IntTerm& term) const override;
+	bool matchWordsCount(const IntTerm& term) const override;
 
-	bool MatchFrequentWord(const StringTerm& term) const override;
+	bool matchFrequentWord(const StringTerm& term) const override;
 
-	bool MatchReadability(const DoubleTerm& term) const override;
+	bool matchReadability(const DoubleTerm& term) const override;
 };
 
+/**
+ * Counts the number of words in the file.
+ * @param path path to the file
+ * @return the number of words
+ */
 int get_word_count(const std::filesystem::path& path);
 
+/**
+ * Evaluates readability of the file.
+ * @param path path to the file
+ * @return the readability score
+ */
 double get_readability_score(const std::filesystem::path& path);
 
+/**
+ * Retrieves the most frequent words in the file.
+ * @param path path to the file
+ * @param n the number of retrived words
+ * @return vector of most frequent words with its count
+ */
 std::vector<std::pair<std::string, int>> get_most_frequent_words(const std::filesystem::path& path, int n);

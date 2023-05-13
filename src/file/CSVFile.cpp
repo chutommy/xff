@@ -3,15 +3,16 @@
  * @date 3.5.23
  */
 
+#include "CSVFile.h"
+#include "DataFileCorrupted.h"
+
 #include <algorithm>
 #include <fstream>
-#include "CSVFile.h"
-#include "../DataFileCorrupted.h"
 
 CSVFile::CSVFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
 		int new_size,
-		int new_row_count)
+		long new_row_count)
 		: File(std::move(new_path), new_last_write_time, new_size),
 		  row_count(new_row_count)
 {
@@ -20,7 +21,7 @@ CSVFile::CSVFile(std::filesystem::path new_path,
 CSVFile::CSVFile(const std::filesystem::path& file_path)
 		: CSVFile(file_path,
 		Timestamp(std::filesystem::last_write_time(file_path)),
-		file_size(file_path),
+		static_cast<int>(file_size(file_path)),
 		get_row_count(file_path))
 {
 }
@@ -47,7 +48,7 @@ CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
 	row_count = std::stoi(row_count_str);
 }
 
-bool CSVFile::MatchRowCount(const IntTerm& term) const
+bool CSVFile::matchRowCount(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -62,7 +63,7 @@ bool CSVFile::MatchRowCount(const IntTerm& term) const
 	}
 }
 
-int get_row_count(const std::filesystem::path& path)
+long get_row_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
 	return std::count(std::istreambuf_iterator<char>(file),
