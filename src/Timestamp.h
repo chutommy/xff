@@ -5,30 +5,37 @@
 
 #pragma once
 
-
 #include <string>
 #include <filesystem>
 
-class Timestamp
+/**
+ * Represents a point of time.
+ */
+struct Timestamp
 {
-private:
-	int year{}, month{}, day{}, hour{}, minute{}, second{};
+	int year, month, day, hour, minute, second;
 
-public:
-	Timestamp() = default;
+	Timestamp();
 
 	explicit Timestamp(const std::string& str);
 
 	explicit Timestamp(const std::filesystem::file_time_type& filetime);
 
+	/**
+	 * Checks whether the time is valid.
+	 * Throws logic error if invalid.
+	 */
 	void verify() const;
 
+	/**
+	 * Return the string representation of the timestamp.
+	 * @return formatted string
+	 */
 	std::string str() const;
-
-	friend bool operator<(const Timestamp& lhs, const Timestamp& rhs);
-
-	friend bool operator==(const Timestamp& lhs, const Timestamp& rhs);
-
-	friend bool operator>(const Timestamp& lhs, const Timestamp& rhs);
-
 };
+
+bool operator<(const Timestamp& lhs, const Timestamp& rhs);
+
+bool operator==(const Timestamp& lhs, const Timestamp& rhs);
+
+bool operator>(const Timestamp& lhs, const Timestamp& rhs);

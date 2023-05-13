@@ -11,6 +11,8 @@
 #include <fstream>
 #include <algorithm>
 
+const int INCLUDE_LINE_COUNT = 5;
+
 CPPFile::CPPFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
 		int new_size,
@@ -37,7 +39,7 @@ std::ostream& CPPFile::print(std::ostream& os) const
 					<< std::setw(LABEL_WIDTH) << std::right << "Includes: ";
 	for (auto it = includes.begin(); it != includes.end();)
 	{
-		for (int i = 0; i < 5 && it != includes.end(); ++i)
+		for (int i = 0; i < INCLUDE_LINE_COUNT && it != includes.end(); ++i)
 		{
 			os << *it << " ";
 			++it;

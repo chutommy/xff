@@ -5,12 +5,10 @@
 
 #pragma once
 
-
 #include <stdexcept>
 
-class DataFileCorrupted : public std::runtime_error
+struct DataFileCorrupted : public std::runtime_error
 {
-public:
 	explicit DataFileCorrupted(const std::string& message)
 			: std::runtime_error(message)
 	{

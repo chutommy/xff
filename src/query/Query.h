@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include "file/File.h"
+#include "File.h"
 
-class Query
+struct Query
 {
-public:
 	/**
 	 * Evaluates whether the file satisfy query.
 	 * @param file file to evaluate

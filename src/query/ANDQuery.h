@@ -11,8 +11,7 @@
 /**
  * Represents a query joint by ANDs.
  */
-class ANDQuery : public MainQuery
+struct ANDQuery : public MainQuery
 {
-public:
 	bool evaluate(std::shared_ptr<File> file) override;
 };

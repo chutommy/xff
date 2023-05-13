@@ -11,8 +11,7 @@
 /**
  * Represents a query joint by ORs.
  */
-class ORQuery : public MainQuery
+struct ORQuery : public MainQuery
 {
-public:
 	bool evaluate(std::shared_ptr<File> file) override;
 };
