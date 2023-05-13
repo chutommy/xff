@@ -10,6 +10,10 @@
 #include <algorithm>
 #include <regex>
 
+File::File() : size(0)
+{
+}
+
 File::File(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
 		int new_size)
@@ -38,17 +42,28 @@ File::File(std::istringstream& iss)
 
 	if (path_str.size() >= 2)
 		path = path_str.substr(1, path_str.size() - 2);
-	if (!exists(path) || !is_regular_file(path))
-		throw DataFileCorrupted("Invalid filepath");
 
 	if (!only_digits(size_str))
 		throw DataFileCorrupted("Invalid size value (illegal digit)");
 	size = std::stoi(size_str);
 }
 
+const std::filesystem::path& File::get_path() const
+{
+	return path;
+}
+
 std::string File::extension() const
 {
 	return path.extension();
+}
+
+bool File::up_to_date() const
+{
+	if (!exists(path)) return false;
+	const Timestamp lwt = Timestamp(fs_time_to_str(std::filesystem::last_write_time(path)));
+	if (lwt != last_write_time) return false;
+	return true;
 }
 
 bool only_digits(const std::string& str)

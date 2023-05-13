@@ -28,6 +28,8 @@ protected:
 	int size;
 
 public:
+	File();
+
 	/**
 	 * Creates a new File instance from scratch.
 	 * @param new_path path of the file
@@ -48,7 +50,15 @@ public:
 	 */
 	explicit File(std::istringstream& iss);
 
+	const std::filesystem::path& get_path() const;
+
 	std::string extension() const;
+
+	/**
+	 * Checks out whether the file is up to date
+	 * @return false if outdated or not exist, true otherwise
+	 */
+	bool up_to_date() const;
 
 	/**
 	 * Prints out the data of the file.
