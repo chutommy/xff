@@ -71,7 +71,7 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 		|| !std::getline(iss, includes_str))
 		throw DataFileCorrupted("Invalid format");
 
-	if (!onlyDigits(keyword_count_str))
+	if (!only_digits(keyword_count_str))
 		throw DataFileCorrupted("Invalid keyword count");
 	keyword_count = std::stoi(keyword_count_str);
 
@@ -84,7 +84,7 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
-bool CPPFile::matchKeywordCount(const IntTerm& term) const
+bool CPPFile::match_keyword_count(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -99,7 +99,7 @@ bool CPPFile::matchKeywordCount(const IntTerm& term) const
 	}
 }
 
-bool CPPFile::matchInclude(const StringTerm& term) const
+bool CPPFile::match_include(const StringTerm& term) const
 {
 	for (const std::string& s: includes)
 		if (s == term.value)

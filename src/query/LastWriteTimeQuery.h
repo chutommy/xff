@@ -19,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchLastWriteTime(term);
+		return file->match_last_write_time(term);
 	}
 };

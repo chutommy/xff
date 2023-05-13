@@ -19,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchSize(term);
+		return file->match_size(term);
 	}
 };

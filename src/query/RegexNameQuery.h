@@ -21,6 +21,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchNameRegex(term);
+		return file->match_name_regex(term);
 	}
 };

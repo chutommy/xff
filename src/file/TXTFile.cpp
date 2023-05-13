@@ -65,11 +65,11 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 		|| !std::getline(iss, most_frequent_str))
 		throw DataFileCorrupted("Invalid format");
 
-	if (!onlyDigits(word_count_str))
+	if (!only_digits(word_count_str))
 		throw DataFileCorrupted("Invalid word count");
 	word_count = std::stoi(word_count_str);
 
-	if (!onlyDigits(readability_str))
+	if (!only_digits(readability_str))
 		throw DataFileCorrupted("Invalid readability score");
 	readability = std::stod(readability_str);
 
@@ -82,7 +82,7 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 		if (word.empty())
 			break;
 
-		if (!onlyDigits(readability_str))
+		if (!only_digits(readability_str))
 			throw DataFileCorrupted("Invalid frequent word count");
 		int count = std::stoi(count_str);
 
@@ -90,7 +90,7 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 	}
 }
 
-bool TXTFile::matchWordsCount(const IntTerm& term) const
+bool TXTFile::match_word_count(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -105,7 +105,7 @@ bool TXTFile::matchWordsCount(const IntTerm& term) const
 	}
 }
 
-bool TXTFile::matchFrequentWord(const StringTerm& term) const
+bool TXTFile::match_frequent_word(const StringTerm& term) const
 {
 	for (const auto& p: most_frequent_words)
 		if (p.first == term.value)
@@ -113,7 +113,7 @@ bool TXTFile::matchFrequentWord(const StringTerm& term) const
 	return false;
 }
 
-bool TXTFile::matchReadability(const DoubleTerm& term) const
+bool TXTFile::match_readability(const DoubleTerm& term) const
 {
 	switch (term.opt)
 	{

@@ -19,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchRowCount(term);
+		return file->match_row_count(term);
 	}
 };

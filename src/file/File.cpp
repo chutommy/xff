@@ -41,7 +41,7 @@ File::File(std::istringstream& iss)
 	if (!exists(path) || !is_regular_file(path))
 		throw DataFileCorrupted("Invalid filepath");
 
-	if (!onlyDigits(size_str))
+	if (!only_digits(size_str))
 		throw DataFileCorrupted("Invalid size value (illegal digit)");
 	size = std::stoi(size_str);
 }
@@ -51,7 +51,7 @@ std::string File::extension() const
 	return path.extension();
 }
 
-bool onlyDigits(const std::string& str)
+bool only_digits(const std::string& str)
 {
 	return std::regex_match(str, std::regex("^[0-9]+(\\.[0-9]+)?$"));
 }
@@ -82,20 +82,20 @@ std::ostream& File::store(std::ostream& os) const
 			  << last_write_time.str() << "\n";
 }
 
-bool File::matchName(const StringTerm& term) const
+bool File::match_name(const StringTerm& term) const
 {
 	return path.stem().string() == term.value
 		   || path.filename().string() == term.value;
 }
 
-bool File::matchNameRegex(const StringTerm& term) const
+bool File::match_name_regex(const StringTerm& term) const
 {
 	const std::basic_regex<char>& query = std::regex(term.value);
 	return std::regex_match(path.stem().string(), query)
 		   || std::regex_match(path.filename().string(), query);
 }
 
-bool File::matchSize(const IntTerm& term) const
+bool File::match_size(const IntTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -110,7 +110,7 @@ bool File::matchSize(const IntTerm& term) const
 	}
 }
 
-bool File::matchLastWriteTime(const TimestampTerm& term) const
+bool File::match_last_write_time(const TimestampTerm& term) const
 {
 	switch (term.opt)
 	{
@@ -125,32 +125,32 @@ bool File::matchLastWriteTime(const TimestampTerm& term) const
 	}
 }
 
-bool File::matchWordsCount(const IntTerm& term) const
+bool File::match_word_count(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::matchFrequentWord(const StringTerm& term) const
+bool File::match_frequent_word(const StringTerm& term) const
 {
 	return false;
 }
 
-bool File::matchReadability(const DoubleTerm& term) const
+bool File::match_readability(const DoubleTerm& term) const
 {
 	return false;
 }
 
-bool File::matchRowCount(const IntTerm& term) const
+bool File::match_row_count(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::matchKeywordCount(const IntTerm& term) const
+bool File::match_keyword_count(const IntTerm& term) const
 {
 	return false;
 }
 
-bool File::matchInclude(const StringTerm& term) const
+bool File::match_include(const StringTerm& term) const
 {
 	return false;
 }

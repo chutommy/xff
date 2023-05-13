@@ -19,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchReadability(term);
+		return file->match_readability(term);
 	}
 };

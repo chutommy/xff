@@ -43,12 +43,12 @@ CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
 	if (!std::getline(iss, row_count_str))
 		throw DataFileCorrupted("Invalid format");
 
-	if (!onlyDigits(row_count_str))
+	if (!only_digits(row_count_str))
 		throw DataFileCorrupted("Invalid row count");
 	row_count = std::stoi(row_count_str);
 }
 
-bool CSVFile::matchRowCount(const IntTerm& term) const
+bool CSVFile::match_row_count(const IntTerm& term) const
 {
 	switch (term.opt)
 	{

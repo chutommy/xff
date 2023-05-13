@@ -21,6 +21,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchName(term);
+		return file->match_name(term);
 	}
 };

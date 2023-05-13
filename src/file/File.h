@@ -64,25 +64,25 @@ public:
 	 */
 	virtual std::ostream& store(std::ostream& os) const;
 
-	virtual bool matchName(const StringTerm& term) const;
+	virtual bool match_name(const StringTerm& term) const;
 
-	virtual bool matchNameRegex(const StringTerm& term) const;
+	virtual bool match_name_regex(const StringTerm& term) const;
 
-	virtual bool matchSize(const IntTerm& term) const;
+	virtual bool match_size(const IntTerm& term) const;
 
-	virtual bool matchLastWriteTime(const TimestampTerm& term) const;
+	virtual bool match_last_write_time(const TimestampTerm& term) const;
 
-	virtual bool matchWordsCount(const IntTerm& term) const;
+	virtual bool match_word_count(const IntTerm& term) const;
 
-	virtual bool matchFrequentWord(const StringTerm& term) const;
+	virtual bool match_frequent_word(const StringTerm& term) const;
 
-	virtual bool matchReadability(const DoubleTerm& term) const;
+	virtual bool match_readability(const DoubleTerm& term) const;
 
-	virtual bool matchRowCount(const IntTerm& term) const;
+	virtual bool match_row_count(const IntTerm& term) const;
 
-	virtual bool matchKeywordCount(const IntTerm& term) const;
+	virtual bool match_keyword_count(const IntTerm& term) const;
 
-	virtual bool matchInclude(const StringTerm& term) const;
+	virtual bool match_include(const StringTerm& term) const;
 };
 
 /**
@@ -90,4 +90,4 @@ public:
  * @param str string to verify
  * @return true if only digits, false otherwise
  */
-bool onlyDigits(const std::string& str);
+bool only_digits(const std::string& str);

@@ -33,9 +33,9 @@ public:
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool matchKeywordCount(const IntTerm& term) const override;
+	bool match_keyword_count(const IntTerm& term) const override;
 
-	bool matchInclude(const StringTerm& term) const override;
+	bool match_include(const StringTerm& term) const override;
 };
 
 /**

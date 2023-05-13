@@ -39,11 +39,11 @@ public:
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool matchWordsCount(const IntTerm& term) const override;
+	bool match_word_count(const IntTerm& term) const override;
 
-	bool matchFrequentWord(const StringTerm& term) const override;
+	bool match_frequent_word(const StringTerm& term) const override;
 
-	bool matchReadability(const DoubleTerm& term) const override;
+	bool match_readability(const DoubleTerm& term) const override;
 };
 
 /**

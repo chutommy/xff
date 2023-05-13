@@ -19,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->matchWordsCount(term);
+		return file->match_word_count(term);
 	}
 };

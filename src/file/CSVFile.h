@@ -29,7 +29,7 @@ public:
 
 	std::ostream& store(std::ostream& os) const override;
 
-	bool matchRowCount(const IntTerm& term) const override;
+	bool match_row_count(const IntTerm& term) const override;
 };
 
 /**
