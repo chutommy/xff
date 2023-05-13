@@ -9,6 +9,9 @@
 
 #include <set>
 
+/**
+ * Represents a C++ source file.
+ */
 class CPPFile : public File
 {
 private:

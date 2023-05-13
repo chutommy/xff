@@ -13,6 +13,9 @@
 
 const int TOP_WORDS_SIZE = 5;
 
+/**
+ * Represents a readable text file.
+ */
 class TXTFile : public File
 {
 private:

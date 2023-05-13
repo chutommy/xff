@@ -7,6 +7,9 @@
 
 #include "File.h"
 
+/**
+ * Represents a comma-separated file.
+ */
 class CSVFile : public File
 {
 private:

@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 #include "Query.h"
 
 class LastWriteTimeQuery : public Query
@@ -20,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->MatchLastWriteTime(term);
+		return file->matchLastWriteTime(term);
 	}
 };

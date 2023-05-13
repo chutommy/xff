@@ -5,10 +5,12 @@
 
 #pragma once
 
-
 #include "Query.h"
 #include "MainQuery.h"
 
+/**
+ * Represents a query joint by ANDs.
+ */
 class ANDQuery : public MainQuery
 {
 public:

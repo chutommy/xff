@@ -5,13 +5,23 @@
 
 #pragma once
 
-
-#include "../file/File.h"
+#include "file/File.h"
 
 class Query
 {
 public:
+	/**
+	 * Evaluates whether the file satisfy query.
+	 * @param file file to evaluate
+	 * @return true if match, false otherwise
+	 */
 	virtual bool evaluate(std::shared_ptr<File> file) = 0;
 };
 
-std::shared_ptr<Query> parse(const std::string &cmd, const std::string &arg);
+/**
+ * Handles and parses the command into a query.
+ * @param cmd command name
+ * @param arg query argument
+ * @return Query
+ */
+std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg);

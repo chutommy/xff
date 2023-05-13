@@ -17,6 +17,9 @@
 
 const int LABEL_WIDTH = 14;
 
+/**
+ * Represents a generic file.
+ */
 class File
 {
 protected:

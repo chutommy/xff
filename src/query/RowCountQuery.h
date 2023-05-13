@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 #include "Query.h"
 
 class RowCountQuery : public Query
@@ -20,6 +19,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->MatchRowCount(term);
+		return file->matchRowCount(term);
 	}
 };

@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 #include "Query.h"
 
 #include <utility>
@@ -22,6 +21,6 @@ public:
 
 	bool evaluate(std::shared_ptr<File> file) override
 	{
-		return file->MatchFrequentWord(term);
+		return file->matchFrequentWord(term);
 	}
 };
