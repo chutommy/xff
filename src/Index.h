@@ -43,4 +43,9 @@ public:
 	 * @param query query for the file
 	 */
 	void search(std::shared_ptr<MainQuery>& query) const;
+
+	/**
+	 * Executes full indexation.
+	 */
+	void reset() const;
 };

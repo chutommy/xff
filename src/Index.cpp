@@ -151,3 +151,11 @@ void Index::search(std::shared_ptr<MainQuery>& query) const
 		   << " Search complete. Matched files: ["
 		   << idx - 1 << "/" << count << "] ===\n\n";
 }
+
+void Index::reset() const
+{
+	std::remove(index_path.c_str());
+	std::ofstream f(index_path.string());
+	f.close();
+	update();
+}
