@@ -4,10 +4,10 @@
  */
 
 #include "Timestamp.h"
+#include "InvalidTimestamp.h"
 
 #include <stdexcept>
 #include <chrono>
-#include <filesystem>
 
 Timestamp::Timestamp() : year(0), month(0), day(0), hour(0), minute(0), second(0)
 {
@@ -83,5 +83,5 @@ void Timestamp::verify() const
 		|| hour < 0 || hour > 23
 		|| minute < 0 || minute > 59
 		|| second < 0 || second > 59)
-		throw std::logic_error("Invalid datetime");
+		throw InvalidTimestamp("Invalid datetime: " + str());
 }

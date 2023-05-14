@@ -14,23 +14,32 @@ Logger::Logger(std::ostream& new_os) : os(new_os)
 
 void Logger::log(LogAction action, const std::string& str) const
 {
-	os << std::setw(LOG_WIDTH);
+	os << std::setw(LOG_WIDTH)
+	   << std::setfill(' ')
+	   << std::left;
 	switch (action)
 	{
 	case index_file:
-		os << "indexing | ";
+		os << "indexing";
 		break;
 	case reindex_file:
-		os << "reindexing | ";
+		os << "reindexing";
 		break;
 	case remove_file:
-		os << "removing | ";
+		os << "removing";
 		break;
 	case no_support_file:
-		os << "unfollow | ";
+		os << "unfollow";
 		break;
 	}
 	os << str << std::endl;
+}
+
+void Logger::log_err(const std::string& context, const std::exception& e) const
+{
+	std::string opt = e.what();
+	if (opt.empty()) opt = "[null]";
+	os << "\n  [ERROR] (" << context << ") " << opt << "\n" << std::endl;
 }
 
 void Logger::print_file(const std::shared_ptr<File>& file, int index) const

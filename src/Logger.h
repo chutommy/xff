@@ -9,7 +9,7 @@
 
 #include <iosfwd>
 
-const int LOG_WIDTH = 15;
+const int LOG_WIDTH = 12;
 
 enum LogAction
 {
@@ -36,6 +36,13 @@ public:
 	 * @param str additional log string
 	 */
 	void log(LogAction action, const std::string& str) const;
+
+	/**
+	 * Logs out an error message and help text.
+	 * @param context context in which the error occures
+	 * @param e exception
+	 */
+	void log_err(const std::string& context, const std::exception& e) const;
 
 	/**
 	 * Prints out a formatted file.

@@ -55,8 +55,10 @@ void Index::update() const
 {
 	std::ifstream orig_xff(index_path);
 	std::ofstream new_xff(temp_index_path);
-	if (!orig_xff.is_open() || !new_xff.is_open())
-		throw std::runtime_error("File can't be opened");
+	if (!orig_xff.is_open())
+		throw std::runtime_error("File inaccessible: " + index_path.string());
+	if (!new_xff.is_open())
+		throw std::runtime_error("File inaccessible: " + temp_index_path.string());
 
 	std::stringstream buffer;
 	buffer << orig_xff.rdbuf();
@@ -140,8 +142,8 @@ void Index::search(std::shared_ptr<MainQuery>& query) const
 		}
 	}
 
-	logger << static_cast<std::string>("===")
-		   << " Search complete. Matched files: ["
+	logger << static_cast<std::string>("\n")
+		   << "=== Search complete. Matched files: ["
 		   << idx - 1 << "/" << count << "] ===\n\n";
 }
 

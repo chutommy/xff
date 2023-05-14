@@ -5,6 +5,7 @@
 
 #include "File.h"
 #include "DataFileCorrupted.h"
+#include "InvalidTimestamp.h"
 
 #include <utility>
 #include <algorithm>
@@ -38,17 +39,20 @@ File::File(std::istringstream& iss)
 		|| !std::getline(iss, last_write_time_str))
 		throw DataFileCorrupted("Invalid index format");
 
-	last_write_time = Timestamp(last_write_time_str);
+	try
+	{ last_write_time = Timestamp(last_write_time_str); }
+	catch (InvalidTimestamp& e)
+	{ throw DataFileCorrupted("Invalid size value: ", e.what()); }
 
 	if (path_str.size() >= 2)
 		path = path_str.substr(1, path_str.size() - 2);
 
 	if (!only_digits(size_str))
-		throw DataFileCorrupted("Invalid size value (illegal digit)");
+		throw DataFileCorrupted("Invalid size value (illegal digit): ", size_str);
 	try
 	{ size = std::stoi(size_str); }
 	catch (std::exception& e)
-	{ throw DataFileCorrupted("Invalid size value: ", e.what()); }
+	{ throw DataFileCorrupted("Invalid size value: ", size_str); }
 }
 
 const std::filesystem::path& File::get_path() const
@@ -64,8 +68,13 @@ std::string File::extension() const
 bool File::up_to_date() const
 {
 	if (!exists(path)) return false;
-	const Timestamp lwt = Timestamp(fs_time_to_str(std::filesystem::last_write_time(path)));
-	if (lwt != last_write_time) return false;
+	try
+	{
+		const Timestamp lwt = Timestamp(fs_time_to_str(std::filesystem::last_write_time(path)));
+		if (lwt != last_write_time) return false;
+	}
+	catch (InvalidTimestamp& e)
+	{ throw std::runtime_error(e.what()); }
 	return true;
 }
 

@@ -69,14 +69,14 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 	std::string keyword_count_str, includes_str;
 	if (!std::getline(iss, keyword_count_str)
 		|| !std::getline(iss, includes_str))
-		throw DataFileCorrupted("Invalid format");
+		throw DataFileCorrupted("Invalid index format");
 
 	if (!only_digits(keyword_count_str))
-		throw DataFileCorrupted("Invalid keyword count (digits only)");
+		throw DataFileCorrupted("Invalid keyword count (digits only): ", keyword_count_str);
 	try
 	{ keyword_count = std::stoi(keyword_count_str); }
 	catch (std::exception& e)
-	{ throw DataFileCorrupted("Invalid keyword count: ", e.what()); }
+	{ throw DataFileCorrupted("Invalid keyword count: ", keyword_count_str); }
 
 
 	std::stringstream includes_ss(includes_str);

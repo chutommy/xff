@@ -41,14 +41,14 @@ CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
 {
 	std::string row_count_str;
 	if (!std::getline(iss, row_count_str))
-		throw DataFileCorrupted("Invalid format");
+		throw DataFileCorrupted("Invalid index format");
 
 	if (!only_digits(row_count_str))
-		throw DataFileCorrupted("Invalid row count");
+		throw DataFileCorrupted("Invalid row count format: ", row_count_str);
 	try
 	{ row_count = std::stoi(row_count_str); }
 	catch (std::exception& e)
-	{ throw DataFileCorrupted("Invalid row count: ", e.what()); }
+	{ throw DataFileCorrupted("Invalid row count: ", row_count_str); }
 }
 
 bool CSVFile::match_row_count(const IntTerm& term) const

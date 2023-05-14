@@ -52,8 +52,10 @@ std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg)
 
 		else if (cmd == "include") return std::make_shared<IncludeQuery>(StringTerm{ arg });
 
-		else throw InvalidQuery("Invalid command");
+		else throw InvalidQuery("Invalid command: ", cmd);
 	}
+	catch (InvalidQuery& e)
+	{ throw e; }
 	catch (std::exception& e)
-	{ throw InvalidQuery("Invalid argument: ", e.what()); }
+	{ throw InvalidQuery("Invalid argument: ", cmd + " [" + arg + "]"); }
 }
