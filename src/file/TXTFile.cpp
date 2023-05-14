@@ -203,11 +203,17 @@ std::vector<std::pair<std::string, int>> get_most_frequent_words(const std::file
 	std::unordered_map<std::string, int> word_counts;
 	std::string word;
 	while (file >> word)
-		++word_counts[word];
+		++word_counts[str_tolower(word)];
 
 	std::vector<std::pair<std::string, int>> sorted_words(word_counts.begin(), word_counts.end());
 	std::sort(sorted_words.begin(), sorted_words.end(), [](const auto& a, const auto& b)
 	{ return a.second > b.second; });
 
 	return { sorted_words.begin(), std::min(sorted_words.begin() + n, sorted_words.end()) };
+}
+
+std::string& str_tolower(std::string& str)
+{
+	transform(str.begin(), str.end(), str.begin(), tolower);
+	return str;
 }

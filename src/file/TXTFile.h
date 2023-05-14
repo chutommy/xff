@@ -67,3 +67,5 @@ double get_readability_score(const std::filesystem::path& path);
  * @return vector of most frequent words with its count
  */
 std::vector<std::pair<std::string, int>> get_most_frequent_words(const std::filesystem::path& path, int n);
+
+std::string& str_tolower(std::string& str);
