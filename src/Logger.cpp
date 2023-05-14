@@ -4,6 +4,7 @@
  */
 
 #include "Logger.h"
+#include "Font.h"
 
 #include <iostream>
 #include <iomanip>
@@ -14,7 +15,8 @@ Logger::Logger(std::ostream& new_os) : os(new_os)
 
 void Logger::log(LogAction action, const std::string& str) const
 {
-	os << std::setw(LOG_WIDTH)
+	os << BOLD
+	   << std::setw(LOG_WIDTH)
 	   << std::setfill(' ')
 	   << std::left;
 	switch (action)
@@ -32,19 +34,21 @@ void Logger::log(LogAction action, const std::string& str) const
 		os << "unfollow";
 		break;
 	}
-	os << str << std::endl;
+	os << RESET << str << std::endl;
 }
 
 void Logger::log_err(const std::string& context, const std::exception& e) const
 {
 	std::string opt = e.what();
 	if (opt.empty()) opt = "[null]";
-	os << "\n  [ERROR] (" << context << ") " << opt << "\n" << std::endl;
+	os << "\n  " << BOLD << "[ERROR]" << RESET
+	   << " (" << context << ") "
+	   << opt << "\n" << std::endl;
 }
 
 void Logger::print_file(const std::shared_ptr<File>& file, int index) const
 {
-	file->print(os << index << ") ") << std::endl;
+	file->print(os << BOLD << index << ") " << RESET) << std::endl;
 }
 
 std::ostream& operator<<(const Logger& logger, const std::string& str)

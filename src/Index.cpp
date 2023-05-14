@@ -8,6 +8,7 @@
 #include "CPPFile.h"
 #include "TXTFile.h"
 #include "CSVFile.h"
+#include "Font.h"
 
 #include <fstream>
 #include <set>
@@ -136,15 +137,14 @@ void Index::search(std::shared_ptr<MainQuery>& query) const
 			if (idx == 1)
 			{
 				std::string result_title = "\n=== Search results ===";
-				logger << result_title << "\n\n";
+				logger << BOLD << result_title << RESET << "\n\n";
 			}
 			logger.print_file(file, idx++);
 		}
 	}
 
-	logger << static_cast<std::string>("\n")
-		   << "=== Search complete. Matched files: ["
-		   << idx - 1 << "/" << count << "] ===\n\n";
+	logger << BOLD << "\n=== Search complete. Matched files: ["
+		   << idx - 1 << "/" << count << "] ===\n\n" << RESET;
 }
 
 void Index::reset() const
