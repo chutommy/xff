@@ -32,3 +32,13 @@ void Logger::log(LogAction action, const std::string& str) const
 	}
 	os << str << std::endl;
 }
+
+void Logger::print_file(const std::shared_ptr<File>& file, int index) const
+{
+	file->print(os << index << ") ") << std::endl;
+}
+
+std::ostream& operator<<(const Logger& logger, const std::string& str)
+{
+	return logger.os << str;
+}

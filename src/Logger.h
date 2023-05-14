@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "File.h"
+
 #include <iosfwd>
 
 const int LOG_WIDTH = 15;
@@ -34,4 +36,13 @@ public:
 	 * @param str additional log string
 	 */
 	void log(LogAction action, const std::string& str) const;
+
+	/**
+	 * Prints out a formatted file.
+	 * @param file file to print out
+	 * @param index index of the file
+	 */
+	void print_file(const std::shared_ptr<File>& file, int index) const;
+
+	friend std::ostream& operator<<(const Logger& logger, const std::string& str);
 };
