@@ -45,7 +45,10 @@ CSVFile::CSVFile(File& file, std::istringstream& iss) : File(file)
 
 	if (!only_digits(row_count_str))
 		throw DataFileCorrupted("Invalid row count");
-	row_count = std::stoi(row_count_str);
+	try
+	{ row_count = std::stoi(row_count_str); }
+	catch (std::exception& e)
+	{ throw DataFileCorrupted("Invalid row count: ", e.what()); }
 }
 
 bool CSVFile::match_row_count(const IntTerm& term) const

@@ -9,8 +9,8 @@
 
 struct InvalidQuery : public std::invalid_argument
 {
-	explicit InvalidQuery(const std::string& message)
-			: std::invalid_argument(message)
+	explicit InvalidQuery(const std::string& message, const std::string& optional = "")
+			: std::invalid_argument(message + optional)
 	{
 	}
 };

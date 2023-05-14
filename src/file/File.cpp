@@ -45,7 +45,10 @@ File::File(std::istringstream& iss)
 
 	if (!only_digits(size_str))
 		throw DataFileCorrupted("Invalid size value (illegal digit)");
-	size = std::stoi(size_str);
+	try
+	{ size = std::stoi(size_str); }
+	catch (std::exception& e)
+	{ throw DataFileCorrupted("Invalid size value: ", e.what()); }
 }
 
 const std::filesystem::path& File::get_path() const

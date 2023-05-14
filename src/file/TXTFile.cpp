@@ -67,11 +67,17 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 
 	if (!only_digits(word_count_str))
 		throw DataFileCorrupted("Invalid word count");
-	word_count = std::stoi(word_count_str);
+	try
+	{ word_count = std::stoi(word_count_str); }
+	catch (std::exception& e)
+	{ throw DataFileCorrupted("Invalid word count: ", e.what()); }
 
 	if (!only_digits(readability_str))
 		throw DataFileCorrupted("Invalid readability score");
-	readability = std::stod(readability_str);
+	try
+	{ readability = std::stod(readability_str); }
+	catch (std::exception& e)
+	{ throw DataFileCorrupted("Invalid readability score: ", e.what()); }
 
 	std::stringstream mf_ss(most_frequent_str);
 	while (mf_ss.rdbuf()->in_avail())
@@ -84,7 +90,11 @@ TXTFile::TXTFile(File& file, std::istringstream& iss) : File(file)
 
 		if (!only_digits(readability_str))
 			throw DataFileCorrupted("Invalid frequent word count");
-		int count = std::stoi(count_str);
+		int count;
+		try
+		{ count = std::stoi(count_str); }
+		catch (std::exception& e)
+		{ throw DataFileCorrupted("Invalid frequent count: ", e.what()); }
 
 		most_frequent_words.emplace_back(word, count);
 	}
