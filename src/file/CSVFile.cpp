@@ -58,8 +58,6 @@ bool CSVFile::match_row_count(const IntTerm& term) const
 		return row_count == term.value;
 	case gt:
 		return row_count > term.value;
-	default:
-		throw std::runtime_error("Unexpected integer term option value");
 	}
 }
 
