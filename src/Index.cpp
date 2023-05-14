@@ -32,14 +32,10 @@ void index_filepath(std::ofstream& os, const std::filesystem::path& path)
 {
 	const std::filesystem::path& ext = path.extension();
 	std::shared_ptr<File> file;
-	if (ext == ".txt")
-		file = std::make_shared<TXTFile>(path);
-	else if (ext == ".csv")
-		file = std::make_shared<CSVFile>(CSVFile(path));
-	else if (ext == ".cpp")
-		file = std::make_shared<CPPFile>(path);
-	else
-		file = std::make_shared<File>(File(path));
+	if (ext == ".txt") file = std::make_shared<TXTFile>(path);
+	else if (ext == ".csv") file = std::make_shared<CSVFile>(CSVFile(path));
+	else if (ext == ".cpp") file = std::make_shared<CPPFile>(path);
+	else file = std::make_shared<File>(File(path));
 	file->store(os);
 }
 
@@ -48,14 +44,10 @@ std::shared_ptr<File> load_file(std::istringstream& iss)
 	std::shared_ptr<File> file;
 	File f(iss);
 	const std::filesystem::path& ext = f.extension();
-	if (ext == ".cpp")
-		file = std::make_shared<CPPFile>(f, iss);
-	else if (ext == ".txt")
-		file = std::make_shared<TXTFile>(f, iss);
-	else if (ext == ".csv")
-		file = std::make_shared<CSVFile>(f, iss);
-	else
-		file = std::make_shared<File>(f);
+	if (ext == ".cpp") file = std::make_shared<CPPFile>(f, iss);
+	else if (ext == ".txt") file = std::make_shared<TXTFile>(f, iss);
+	else if (ext == ".csv") file = std::make_shared<CSVFile>(f, iss);
+	else file = std::make_shared<File>(f);
 	return file;
 }
 
@@ -86,6 +78,7 @@ void Index::update() const
 			logger.log(no_support_file, absolute(filepath));
 			continue;
 		}
+
 		if (file->up_to_date())
 		{
 			file->store(new_xff);
