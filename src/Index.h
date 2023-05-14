@@ -18,6 +18,7 @@ class Index
 private:
 	std::filesystem::path dir_path;
 	std::filesystem::path index_path;
+	std::filesystem::path temp_index_path;
 	Logger logger;
 
 	/**

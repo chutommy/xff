@@ -17,10 +17,15 @@ const char* INDEX_NAME = ".xff";
 const char* NEW_TEMP_EXT = ".new";
 
 Index::Index(const std::filesystem::path& new_dir_path, Logger new_logger)
-		: dir_path(new_dir_path), index_path(new_dir_path / INDEX_NAME), logger(new_logger)
+		: dir_path(new_dir_path),
+		  index_path(new_dir_path / INDEX_NAME),
+		  temp_index_path(index_path.string() + NEW_TEMP_EXT),
+		  logger(new_logger)
 {
+	std::remove(temp_index_path.c_str());
 	if (!exists(index_path))
 		std::ofstream f(index_path.string());
+
 }
 
 void index_filepath(std::ofstream& os, const std::filesystem::path& path)
@@ -56,9 +61,8 @@ std::shared_ptr<File> load_file(std::istringstream& iss)
 
 bool Index::update() const
 {
-	std::string new_index_path = index_path.string() + NEW_TEMP_EXT;
 	std::ifstream orig_xff(index_path);
-	std::ofstream new_xff(new_index_path);
+	std::ofstream new_xff(temp_index_path);
 	if (!orig_xff.is_open() || !new_xff.is_open())
 		return false;
 
@@ -97,7 +101,7 @@ bool Index::update() const
 
 	complement_index(new_xff, indexed);
 	std::remove(index_path.c_str());
-	std::rename(new_index_path.c_str(), index_path.c_str());
+	std::rename(temp_index_path.c_str(), index_path.c_str());
 
 	return true;
 }
@@ -111,7 +115,7 @@ void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>
 		if (is_regular_file(filepath)
 			&& !indexed.count(absolute(filepath))
 			&& filepath != index_path
-			&& filepath != index_path.string() + NEW_TEMP_EXT)
+			&& filepath != temp_index_path)
 		{
 			logger.log(index_file, filepath.filename());
 			index_filepath(new_xff, filepath);
