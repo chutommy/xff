@@ -39,8 +39,7 @@ std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv)
 	for (int i = 1; i < argc; i++)
 	{
 		size_t remaining = argc - i;
-		if (remaining == 0)
-			break;
+		if (remaining == 0) break;
 		if (remaining == 1)
 			throw InvalidQuery("Invalid number of arguments");
 		query->add(parse(argv[i], argv[i + 1]));
