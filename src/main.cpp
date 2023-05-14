@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+// TODO: help message, terminal colors, fs, const config, complete comments, docs, tests
+
 int main(int argc, char** argv)
 {
 	// TODO: split (create root app)
