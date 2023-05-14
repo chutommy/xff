@@ -10,6 +10,7 @@
 #include <iostream>
 
 // TODO: replace filesystem (experimental for C++14)
+//       help for joining (and, or)
 //       complete comments + docs
 //       create root class
 //       add examples

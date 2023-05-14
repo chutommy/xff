@@ -2,8 +2,6 @@
 
 ## Zadání - Progtest
 
-Tato semestrální práce patří do kategorie konzolových utilit. Vaším cílem je vytvořit nástroj, který uživatel z terminálu spustí (s různými parametry). Případné parametry nástroje se nesnažte definovat přímo v kódu (a to ani pomocí konstant). Umístěte je do konfiguračních souborů (jednoho nebo více), které váš program bude načítat.
-
 Vaším úkolem je vytvořit nástroj pro indexaci a vyhledávání obsahu (souborů a dalších adresářů) v zadaném adresáři. Nástroj bude mít dvě části. První z nich bude obstarávat indexační část, tj. vytvoří vhodně reprezentovaný index. Druhá část programu umožňí nad indexem efektivně vyhledávat soubory.
 
 Implementujte následující funcionality:
@@ -33,52 +31,53 @@ Implementujte následující funcionality:
 
 ### Indexace
 
-Indexuje se adresář specifikovaný v environment variable `XFF_DIR`. Soubor s uloženým indexem se nachází v adresáři, který indexuje (tj. `$XFF_DIR/.xff`). Full (úplná) indexace probíhá, pokud index neexistuje nebo je narušený (má obsah v neplatném formátu). V případě, že index existuje a lze úspěšně nahrát do paměti, dojde k přeindexování pozměněných souborů. To jsou soubory, které jsou nové, byly odstraněny, nebo u kterých od poslední indexace došlo ke změně.
+Vždy se indexuje pracovní adresář `$PWD` (adresář, ve kterém se uživatel nachází). Indexový soubor se nachází v adresáři, který indexuje (tj. `$PWD/.xff`). Kompletní (úplná) reindexace probíhá, pokud index neexistuje, je narušený (má obsah v neplatném formátu) nebo v případě, že ji uživatel manuálně spustí. Pokud index existuje, ale není aktuální, dochází k částečné indexaci, tj. indexace nových souborů, smazání odstraněných a reindexace modifikovaných. Soubory se indexují rekurzivně i ve vnořených adresářů, indexační soubor je nicméně dostupný jen v daném adresáři.
 
-Chce-li uživatel provést manuální reindexaci, spustí nástroj bez argumentů: `xff`.
+Chce-li uživatel provést manuální reindexaci, spustí příkaz reset: `xff reset`, pro aktualizace existujícího (nebo vytvoření neexistujícího) indexu, stačí spustit nástroj bez argumentů: `xff`. Pro zobrazení help zprávy zadá uživatel příkaz help: `xxf help` (po neplatném použití nástroje se uživateli tento příkaz nabídne).
 
-V indexu jsou uložené následující údaje (v hranatých závorkách je zobrazen formát):
+V indexu jsou uložené následující údaje:
 
-1. typ souboru `[string]`
-    * `txt` = TXT soubor
-    * `csv` = CSV soubor
-    * `cpp` = CPP soubor
-    * `*` = ostatní
-2. název souboru `[string]`
-3. cesta adresáře, ve kterém soubor existuje `[string]`
-4. velikost v bajtech `[int]`
-5. čas poslední modifikace `[time]`
+1. název a adresa souboru
+2. velikost v bajtech
+3. čas poslední modifikace
 
-Tyto atributy se evidují u všech souborů. Nicméně existují i speciální typy souborů (txt, csv, cpp), u kterých navíc indexuje speciální atributy:
+Tyto atributy se evidují u všech souborů. U souborů `txt`, `csv` a `cpp` se navíc indexuje speciální atributy:
 
-1. TXT soubor:
-    1. počet slov `[int]`
-    2. čitelnost obsahu (skóre Flesch-Kincaid testu) `[float]`
-    3. 5 nejpoužívanějších slov a jejich četnost `[string (int), ...]`
+1. textový soubor:
+    1. počet slov
+    2. čitelnost obsahu (skóre Flesch-Kincaid testu)
+    3. 5 nejpoužívanějších slov a jejich četnost
 
 
-2. CSV soubor:
-    1. počet záznamů (řádků) `[int]`
+2. csv soubor:
+    1. počet záznamů
 
 
-3. CPP soubor:
-    1. počet použitých C++ keywordů `[int]`
-    2. seznam includovaných souborů (#include direktivů) `[string, ...]`
+3. C++ soubor:
+    1. počet použitých C++ keywordů
+    2. seznam includovaných souborů
 
 Indexují se pouze takzvané `regular files`, tzn. adresáře, symbolické linky, sockety, či jiné Linux soubory spadající do kategorie `special files` (character, FIFO, descriptor, system console, ...) nástroj ignoruje.
 
-Index je uložený jako čitelný soubor a jednotlivé položky jsou oddělené novou řádkou. Fragment z obsahu souboru `$XFF_DIR/.xff` by mohl vypadat takto:
+Index je uložený jako čitelný soubor a jednotlivé položky jsou oddělené novou řádkou. Fragment z obsahu souboru `$XFF_DIR/.xff` vypadá takto:
 
 ```
 ... konec předcházejícího záznamu ...
-txt                                       // typ souboru
-file1.txt                                 // název souboru
-dir1/dir2                                 // relativní cesta od $XFF_DIR/ k rodičovskému adresáři
-13328                                     // velikost v B(ytes)
-2023-03-28 19:54:59 +0200                 // naposledny modifikován
-2430                                      // (txt) počet slov
-68 ahoj 32 jak 20 se 13 mas 6 ?           // (txt) nejčastější slova
-56.73                                     // (txt) Flesh-Kincaid skóre
+"./hello.txt"                             // relativní adresa souboru
+143237                                    // velikost souboru v B(ytes)
+2023-05-14 12:10:09                       // čas poslední modifikace
+23237                                     // počet slov
+31.8157                                   // Flesh-Kincaid skóre
+a 6 the 6 she 6 sees 5 is 2               // nejčastější slova a příslušná četnost
+"./pa2/pa2-semestral/src/main.cpp"        // další soubor
+1273                                      // ...
+2023-05-14 12:10:09
+930
+algorithm cassert cctype cmath cstdio
+  cstdlib cstring functional iomanip
+  iostream list map memory set sstream
+  string type_traits typeinfo unistd.h
+  unordered_map unordered_set vector
 ... začátek následujícího záznamu ...
 ```
 
@@ -87,65 +86,55 @@ dir1/dir2                                 // relativní cesta od $XFF_DIR/ k rod
 #### Podle společných atributů
 
 * Soubory s názvem: `xxf name file1.json`
-* Soubory s názvem odpovídající regular expression: `xxf like file1.*`:
+* Soubory s názvem odpovídající regular expression: `xxf like ".*myfile.*"`:
 * Soubory o velikosti rovno/menší než/větší než v B: `xxf size/size-/size+ 108`
 * Soubory naposledy upravené rovno/před/po: `xxf time/time-/time+ 2022-11-09 13:53:03`
 
-Možný výstup:
+Příklad dotazu na všechny soubory:
 
 ```
-$ xxf like file1.*
+$ xxf like ".*"
 
-1) ====== /home/pepa/Documents/file1.txt                        // TXT soubor
-       file: file1.txt
-       type: TXT
-       size: 13328 B
-     modify: 2023-03-28 19:54:59 +0200
-      words: 2430
-        (68) ahoj
-        (32) jak
-        (20) se
-        (13) mas
-         (6) ?
-readability: (56.73) Fairly difficult to read.
+=== Search results ===
 
-2) ====== /home/pepa/Desktop/for-kids/file1.txt                 // TXT soubor
-       file: file1.txt
-       type: TXT
-       size: 108 B
-     modify: 2023-05-03 13:53:03 +0200
-      words: 24
-        (10) mama
-         (8) tata
-         (4) kocicka
-         (2) pejsek
-         (0)
-readability: (3.14) Extremely difficult to read.
+1) "/home/chutommy/CLionProjects/pa2-semestral/playground/./data2.json"
+        File: "data2.json"
+        Type: JSON
+        Size: 43
+      Modify: 2023-05-14 12:10:09
 
-3) ====== /home/pepa/CLionProjects/file1.cpp                    // CPP soubor
-       file: file1.cpp
-       type: CPP
-       size: 2038 B
-     modify: 2022-11-09 13:53:03 +0200
-   keyword_count: 304
-   includes: <cstdlib>,<cstdio>,<cassert>,<cctype>,<cmath>,
-             <iostream>,<iomanip>,<sstream>,<set>,<list>,
-             <map>,<vector>,<queue>,<string>,<stack>,
-             <queue>,<deque>,<algorithm>,<unordered_map>,<unordered_set>,
-             <memory>,<functional>,<iterator>,<stdexcept>
+2) "/home/chutommy/CLionProjects/pa2-semestral/playground/./main.cpp"
+        File: "main.cpp"
+        Type: CPP
+        Size: 1507
+      Modify: 2023-05-15 01:03:39
+    Keywords: 10
+    Includes: CPPFile.h CSVFile.h DoubleTerm.h File.h IntTerm.h 
+              StringTerm.h TXTFile.h Timestamp.h TimestampTerm.h filesystem 
+              iostream string vector 
 
-4) ====== /home/pepa/DataGripProjects/file1.csv                 // CSV soubor
-       file: file1.csv
-       type: CSV
-       size: 64543500 B
-     modify: 2021-11-09 13:53:03 +0200
-       rows: 76403
+3) "/home/chutommy/CLionProjects/pa2-semestral/playground/./paper.txt"
+        File: "paper.txt"
+        Type: TXT
+        Size: 7024
+      Modify: 2023-05-15 01:02:20
+       Words: 1066
+         (72) the
+         (38) of
+         (30) and
+         (27) quantum
+         (25) a
+ Readability: 66.8658
 
-5) ====== /home/pepa/DataGripProjects/file1.json                // ostatní soubory
-       file: file1.json
-       type: JSON
-       size: 95450 B
-     modify: 2020-11-10 13:53:03 +0200
+4) "/home/chutommy/CLionProjects/pa2-semestral/playground/./heights.csv"
+        File: "heights.csv"
+        Type: CSV
+        Size: 3734
+      Modify: 2023-05-15 01:00:39
+        Rows: 201
+
+
+=== Search complete. Matched files: [4/4] ===
 ```
 
 #### Podle individuálních atributů
@@ -163,22 +152,19 @@ readability: (3.14) Extremely difficult to read.
 
 #### Spojování dotazů
 
-* a zároveň: `xxf name file.txt && size 30 && words- 6`
+* a zároveň: `xxf name file.txt and size 30 and words- 6`
     * soubory s názvem `file.txt` mající velikost `30 B` a méně než `6 slov`
 
 
-* nebo: `xxf name file.txt || size 30 || words- 6 `
+* nebo: `xxf name file.txt or size 30 or words- 6 `
     * soubory s názvem `file.txt` nebo s velikostí `30 B` nebo mající méně než `6 slov`
 
-Typy spojek nelze kombinovat (povolené jsou dotazy pouze s && nebo pouze s ||).
-
-#### Help
-
-Help se zobrazení po spuštění nástroje s argumentem help: `xxf help` nebo po zadání neplatného dotazu: `xxf párek.json` (místo `xxf name párek.json`).
+Typy spojek nelze kombinovat (povolené jsou dotazy spojující pouze `and` nebo pouze `or`).
 
 ## Kde mám polymorfismus?
 
-1. file - CPPFile, TXTFile, CSVFile
-   - matchAttribute, store, load, print
-2. query - NameQuery, SizeQuery, IncludeQuery
-   - evaluate
+Polymorfismus používám především u trídy `File` reprezentující soubor, ze které dědí třídy `CPPFile`, `CSVFile` a `TXTFile` (speciální soubory). Po vytvoření jednotlivých instancí se na soubory již odkazuji přes rodičovskou třídu `File`, která má (pokud to dědící třída vyžaduje) příslušně přetížené metody `print`, `store` a odpovídající filtrační metody.
+
+Polymorfická instance `File` se také předává jako vstup metodě `evaluate` třídy `Query`, která vyhodnocuje, zda daný soubor splňuje specifikovaný dotaz, přes virtuální metody `File`. Samotná třída `Query` (reprezentující jeden logický term) je virtuální a dědí z ní napříklady třídy `RegexNameQuery`, `SizeQuery`, `WordCountQuery`, které virtuální metodu `evaluate` přetěžují tak, aby ověřovaly specifickou podmínku s určitým parametrem (regularní výraz, velikost, počet slov). 
+
+Dotazy se slučují v ultimátní virtuální třídě `MainQuery`, která drží jednotlivé atomické dotazy. Může být instancí buď `ANDQuery` nebo `ORQuery`, podle toho, zda uložené termy spojuje logickou konjunkcí nebo disjunkcí. Jedná se o podtřídu `Query`, tedy opět vyhodnocuje přes přetíženou metodu `evaluate`. Atomické dotazy `Query` se dají vkládat přes virtuální metodu `add`. Chová se tedy opět polymorficky (pracuji s `MainQuery`, se kterou pracuji nezávisle na tom, zda se jedná o `ANDQuery` nebo `ORQuery`).
