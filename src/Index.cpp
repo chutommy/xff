@@ -78,12 +78,12 @@ bool Index::update() const
 		std::filesystem::path filepath = file->get_path();
 		if (!exists(filepath))
 		{
-			logger.log(remove_file, filepath);
+			logger.log(remove_file, absolute(filepath));
 			continue;
 		}
 		if (!is_regular_file(filepath))
 		{
-			logger.log(no_support_file, filepath);
+			logger.log(no_support_file, absolute(filepath));
 			continue;
 		}
 		if (file->up_to_date())
@@ -93,7 +93,7 @@ bool Index::update() const
 		}
 		else
 		{
-			logger.log(reindex_file, filepath);
+			logger.log(reindex_file, absolute(filepath));
 			index_filepath(new_xff, filepath);
 			indexed.insert(absolute(filepath));
 		}
@@ -117,7 +117,7 @@ void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>
 			&& filepath != index_path
 			&& filepath != temp_index_path)
 		{
-			logger.log(index_file, filepath);
+			logger.log(index_file, absolute(filepath));
 			index_filepath(new_xff, filepath);
 		}
 	}
