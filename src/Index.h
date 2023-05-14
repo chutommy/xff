@@ -6,6 +6,7 @@
 #pragma once
 
 #include "Logger.h"
+#include "MainQuery.h"
 
 #include <filesystem>
 #include <set>
@@ -36,4 +37,10 @@ public:
 	 * @return true if success, false otherwise
 	 */
 	bool update() const;
+
+	/**
+	 * Queries over the index and finds matching files.
+	 * @param query query for the file
+	 */
+	void search(std::shared_ptr<MainQuery>& query) const;
 };

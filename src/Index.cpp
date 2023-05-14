@@ -122,3 +122,34 @@ void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>
 		}
 	}
 }
+
+void Index::search(std::shared_ptr<MainQuery>& query) const
+{
+	std::ifstream index(index_path);
+	std::stringstream buffer;
+	buffer << index.rdbuf();
+	std::string file_contents = buffer.str();
+	std::istringstream iss(file_contents);
+
+	int idx = 1;
+	int count = 0;
+
+	while (iss.rdbuf()->in_avail())
+	{
+		count++;
+		std::shared_ptr<File> file = load_file(iss);
+		if (query->evaluate(file))
+		{
+			if (idx == 1)
+			{
+				std::string result_title = "\n=== Search results ===";
+				logger << result_title << "\n\n";
+			}
+			logger.print_file(file, idx++);
+		}
+	}
+
+	logger << static_cast<std::string>("===")
+		   << " Search complete. Matched files: ["
+		   << idx - 1 << "/" << count << "] ===\n\n";
+}
