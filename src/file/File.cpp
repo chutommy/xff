@@ -105,7 +105,7 @@ std::ostream& File::print(std::ostream& os) const
 
 std::ostream& File::store(std::ostream& os) const
 {
-	return os << absolute(path) << "\n"
+	return os << path.relative_path() << "\n"
 			  << size << "\n"
 			  << last_write_time.str() << "\n";
 }

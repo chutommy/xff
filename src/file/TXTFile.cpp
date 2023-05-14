@@ -140,6 +140,7 @@ bool TXTFile::match_readability(const DoubleTerm& term) const
 
 double flesh_kincaid_score(int words, int sentences, int syllables)
 {
+	if (!words) return 100;
 	double avg_words_per_sentence = static_cast<double>(words) / std::max(sentences, 1);
 	double avg_syllables_per_word = static_cast<double>(syllables) / words;
 	double score = 206.835 - 1.015 * avg_words_per_sentence - 84.6 * avg_syllables_per_word;
