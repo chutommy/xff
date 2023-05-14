@@ -120,6 +120,8 @@ bool File::match_size(const IntTerm& term) const
 		return size == term.value;
 	case gt:
 		return size > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
 	}
 }
 
@@ -133,6 +135,8 @@ bool File::match_last_write_time(const TimestampTerm& term) const
 		return last_write_time == term.value;
 	case gt:
 		return last_write_time > term.value;
+	default:
+		throw std::runtime_error("Unexpected timestamp term option value");
 	}
 }
 

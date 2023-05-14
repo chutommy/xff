@@ -100,6 +100,8 @@ bool TXTFile::match_word_count(const IntTerm& term) const
 		return word_count == term.value;
 	case gt:
 		return word_count > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
 	}
 }
 
@@ -121,6 +123,8 @@ bool TXTFile::match_readability(const DoubleTerm& term) const
 		return readability == term.value;
 	case gt:
 		return readability > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
 	}
 }
 

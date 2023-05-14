@@ -94,6 +94,8 @@ bool CPPFile::match_keyword_count(const IntTerm& term) const
 		return keyword_count == term.value;
 	case gt:
 		return keyword_count > term.value;
+	default:
+		throw std::runtime_error("Unexpected integer term option value");
 	}
 }
 
