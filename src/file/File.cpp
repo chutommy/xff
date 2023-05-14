@@ -74,8 +74,8 @@ bool only_digits(const std::string& str)
 std::string format_type(const std::string& extension)
 {
 	int size = static_cast<int>(extension.size());
-	if (size < 2)
-		return "[unspecified]";
+	if (size < 2) return "[unspecified]";
+
 	std::string type = extension.substr(1, size - 1);
 	std::transform(type.begin(), type.end(), type.begin(), toupper);
 	return type;
