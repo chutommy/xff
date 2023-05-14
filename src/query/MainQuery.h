@@ -23,3 +23,10 @@ public:
 	virtual void add(const std::shared_ptr<Query>& q);
 };
 
+/**
+ * Parses query from the command line arguments.
+ * @param argc argument count
+ * @param argv argument vector
+ * @return complete query
+ */
+std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv);
