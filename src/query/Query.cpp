@@ -14,6 +14,7 @@
 #include "RowCountQuery.h"
 #include "KeywordCountQuery.h"
 #include "IncludeQuery.h"
+#include "InvalidQuery.h"
 
 std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg)
 {
@@ -62,5 +63,5 @@ std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg)
 	else if (cmd == "include")
 		return std::make_shared<IncludeQuery>(StringTerm{ arg });
 	else
-		throw std::runtime_error("Invalid command");
+		throw InvalidQuery("Invalid command");
 }

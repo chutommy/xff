@@ -3,11 +3,12 @@
  * @date 7.5.23
  */
 
-#include <cstring>
 #include "MainQuery.h"
 #include "ANDQuery.h"
 #include "ORQuery.h"
 #include "InvalidQuery.h"
+
+#include <cstring>
 
 void MainQuery::add(const std::shared_ptr<Query>& q)
 {

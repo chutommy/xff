@@ -38,7 +38,6 @@ std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 Timestamp::Timestamp(const std::filesystem::file_time_type& filetime)
 		: Timestamp(fs_time_to_str(filetime))
 {
-	verify();
 }
 
 std::string Timestamp::str() const

@@ -59,12 +59,12 @@ std::shared_ptr<File> load_file(std::istringstream& iss)
 	return file;
 }
 
-bool Index::update() const
+void Index::update() const
 {
 	std::ifstream orig_xff(index_path);
 	std::ofstream new_xff(temp_index_path);
 	if (!orig_xff.is_open() || !new_xff.is_open())
-		return false;
+		throw std::runtime_error("File can't be opened");
 
 	std::stringstream buffer;
 	buffer << orig_xff.rdbuf();
@@ -102,8 +102,6 @@ bool Index::update() const
 	complement_index(new_xff, indexed);
 	std::remove(index_path.c_str());
 	std::rename(temp_index_path.c_str(), index_path.c_str());
-
-	return true;
 }
 
 void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>& indexed) const

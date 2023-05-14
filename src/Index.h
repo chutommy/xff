@@ -34,9 +34,9 @@ public:
 
 	/**
 	 * Updates indexation and log out changes.
-	 * @return true if success, false otherwise
+	 * Throws runtime error if index files can't be opened.
 	 */
-	bool update() const;
+	void update() const;
 
 	/**
 	 * Queries over the index and finds matching files.
