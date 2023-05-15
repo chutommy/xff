@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for readability score.
+ */
 class ReadabilityQuery : public Query
 {
 private:

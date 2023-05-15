@@ -11,6 +11,9 @@
 
 const int LOG_WIDTH = 12;
 
+/**
+ * Represents an action to be logged.
+ */
 enum LogAction
 {
 	index_file,

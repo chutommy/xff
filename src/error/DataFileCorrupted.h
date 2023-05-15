@@ -7,6 +7,9 @@
 
 #include <stdexcept>
 
+/**
+ * Indicates corrupted index file.
+ */
 struct DataFileCorrupted : public std::runtime_error
 {
 	explicit DataFileCorrupted(const std::string& message, const std::string& optional = "")

@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for text file word count.
+ */
 class WordCountQuery : public Query
 {
 private:

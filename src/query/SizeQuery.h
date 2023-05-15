@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for file size.
+ */
 class SizeQuery : public Query
 {
 private:

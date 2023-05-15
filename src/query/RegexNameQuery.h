@@ -9,6 +9,9 @@
 
 #include <utility>
 
+/**
+ * Represents query for regular expression filename.
+ */
 class RegexNameQuery : public Query
 {
 private:

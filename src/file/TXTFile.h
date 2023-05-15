@@ -68,4 +68,9 @@ double get_readability_score(const std::filesystem::path& path);
  */
 std::vector<std::pair<std::string, int>> get_most_frequent_words(const std::filesystem::path& path, int n);
 
+/**
+ * Transforms string to lowercase.
+ * @param str string to transform (inplace modification)
+ * @return transformed value
+ */
 std::string& str_tolower(std::string& str);

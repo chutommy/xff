@@ -7,6 +7,9 @@
 
 #include <stdexcept>
 
+/**
+ * Indicates invalid user query.
+ */
 struct InvalidQuery : public std::invalid_argument
 {
 	explicit InvalidQuery(const std::string& message, const std::string& optional = "")

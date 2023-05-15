@@ -9,6 +9,9 @@
 
 #include <utility>
 
+/**
+ * Represents query for filename.
+ */
 class NameQuery : public Query
 {
 private:

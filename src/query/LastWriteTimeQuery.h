@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for last time write (time of last modification).
+ */
 class LastWriteTimeQuery : public Query
 {
 private:

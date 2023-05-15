@@ -7,6 +7,9 @@
 
 #include <stdexcept>
 
+/**
+ * Indicates invalid timestamp value.
+ */
 struct InvalidTimestamp : public std::logic_error
 {
 	explicit InvalidTimestamp(const std::string& message, const std::string& optional = "")

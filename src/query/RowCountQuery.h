@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for csv record count.
+ */
 class RowCountQuery : public Query
 {
 private:

@@ -9,6 +9,9 @@
 
 #include <utility>
 
+/**
+ * Represents query for include directive.
+ */
 class IncludeQuery : public Query
 {
 private:

@@ -9,6 +9,9 @@
 
 #include <utility>
 
+/**
+ * Represents query for frequent word.
+ */
 class MostFrequentWordsQuery : public Query
 {
 private:

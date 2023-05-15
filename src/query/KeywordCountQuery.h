@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+/**
+ * Represents query for keyword count.
+ */
 class KeywordCountQuery : public Query
 {
 private:
