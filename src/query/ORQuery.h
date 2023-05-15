@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "Query.h"
 #include "MainQuery.h"
 
 /**

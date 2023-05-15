@@ -9,7 +9,6 @@
 #include <utility>
 #include <unordered_set>
 #include <fstream>
-#include <cstring>
 
 const int INCLUDE_LINE_COUNT = 5;
 
