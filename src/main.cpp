@@ -7,13 +7,9 @@
 
 #include <iostream>
 
-// TODO: replace filesystem (experimental for C++14)
-//       help for joining (and, or)
-//       comments + doxy
+// TODO: help for joining (and, or)
 //       add examples
 //       check files open
-//       import clean up
-
 
 int main(int argc, char** argv)
 {
