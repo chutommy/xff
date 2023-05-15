@@ -10,6 +10,6 @@
  */
 struct DoubleTerm
 {
-	double value;
+	double value = 0;
 	CompareOpt opt = eq;
 };

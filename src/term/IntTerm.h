@@ -12,6 +12,6 @@
  */
 struct IntTerm
 {
-	int value;
+	int value = 0;
 	CompareOpt opt = eq;
 };

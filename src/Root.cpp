@@ -6,6 +6,7 @@
 #include "Root.h"
 #include "DataFileCorrupted.h"
 #include "InvalidQuery.h"
+#include "MainQuery.h"
 
 const std::string HELP_MESSAGE = R"(
 Usage: xff ( | reset | help )
@@ -30,7 +31,7 @@ Commands:
   include                   Find C++ files that include specified keyword.
 
 Examples:
-  xff name myfile.txt                  # files named "myfile.txt"
+  xff name file.txt                  # files named "file.txt"
   xff like ".*[0-9].*"                 # files containing a digit
   xff size+ 42                         # files larger than 42 bytes
   xff time "2021-05-01 00:00:00"       # files modified at midnight on May 1, 2021
