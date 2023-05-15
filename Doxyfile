@@ -1,16 +1,9 @@
-# Doxyfile 1.9.1
-
-#---------------------------------------------------------------------------
-# Project related configuration options
-#---------------------------------------------------------------------------
-
 DOXYFILE_ENCODING = UTF-8
 PROJECT_NAME      = "XFF"
 PROJECT_BRIEF     = "Directory indexing CLI tool"
 
-INPUT     = "src"
-RECURSIVE = YES
-
+INPUT          = "src"
+RECURSIVE      = YES
 GENERATE_LATEX = NO
 
 EXTRACT_ALL          = YES
