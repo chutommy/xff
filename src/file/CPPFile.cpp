@@ -78,7 +78,6 @@ CPPFile::CPPFile(File& file, std::istringstream& iss) : File(file)
 	catch (std::exception& e)
 	{ throw DataFileCorrupted("Invalid keyword count: ", keyword_count_str); }
 
-
 	std::stringstream includes_ss(includes_str);
 	while (includes_ss.rdbuf()->in_avail())
 	{
