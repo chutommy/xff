@@ -10,6 +10,9 @@
 // TODO: help for joining (and, or)
 //       add examples
 //       check files open
+//       create makefile
+//       make doc
+//       indexing dir in ENV
 
 int main(int argc, char** argv)
 {
