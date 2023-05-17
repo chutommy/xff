@@ -95,7 +95,10 @@ void Index::update() const
 	}
 
 	complement_index(new_xff, indexed);
+
+	orig_xff.close();
 	std::remove(index_path.c_str());
+	new_xff.close();
 	std::rename(temp_index_path.c_str(), index_path.c_str());
 }
 
