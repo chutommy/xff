@@ -19,6 +19,8 @@ private:
 	Logger logger;
 	Index index;
 
+	int update() const;
+
 public:
 	Root(const std::string& new_root_dir, std::ostream& ostream);
 

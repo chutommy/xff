@@ -57,6 +57,11 @@ Root::Root(const std::string& new_root_dir, std::ostream& ostream)
 
 int Root::run(int argc, char** argv) const
 {
+	if (argc == 1)
+	{
+		if (!update()) return 1;
+		return 0;
+	}
 	if (argc == 2 && argv[1] == static_cast<std::string>("help"))
 	{
 		logger << HELP_MESSAGE << std::endl;
@@ -78,6 +83,13 @@ int Root::run(int argc, char** argv) const
 		return 1;
 	}
 
+	if (!update()) return 1;
+	index.search(query);
+	return 0;
+}
+
+int Root::update() const
+{
 	try
 	{ index.update(); }
 	catch (DataFileCorrupted& e)
@@ -91,9 +103,6 @@ int Root::run(int argc, char** argv) const
 		logger.log_err("unexpected error", e);
 		return 0;
 	}
-	if (argc == 1) return 0;
 
-	index.search(query);
-
-	return 0;
+	return 1;
 }
