@@ -12,7 +12,7 @@
 //       check files open
 //       create makefile
 //       make doc
-//       indexing dir in ENV
+//       indexing dir in ENV, add private comment
 
 int main(int argc, char** argv)
 {

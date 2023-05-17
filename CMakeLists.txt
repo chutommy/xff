@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.24)
 project(pa2_semestral)
 
 set(CMAKE_CXX_STANDARD 17)
