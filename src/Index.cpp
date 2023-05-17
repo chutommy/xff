@@ -23,6 +23,7 @@ Index::Index(const std::filesystem::path& new_dir_path, Logger new_logger)
 		  temp_index_path(index_path.string() + NEW_TEMP_EXT),
 		  logger(new_logger)
 {
+// TODO
 	std::remove(temp_index_path.c_str());
 	if (!exists(index_path))
 		std::ofstream f(index_path.string());

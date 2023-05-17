@@ -7,12 +7,11 @@
 
 #include <iostream>
 
-// TODO: help for joining (and, or)
-//       add examples
-//       check files open
+// TODO: add examples (replace playground)
+//       check files open, remove, rename
 //       create makefile
 //       make doc
-//       indexing dir in ENV, add private comment
+//       file and query builders
 
 int main(int argc, char** argv)
 {
