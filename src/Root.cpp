@@ -21,7 +21,7 @@ Commands:
 
   name                      Find files that match the specified filename (any file extension if not specified).
   like                      Find files that match the specified regular expression.
-  size(-| |+)               Find files (smaller than | with exact | greater than) specified size.
+  size(-| |+)               Find files (smaller than | with exact | greater than) specified size (B).
   time(-| |+)               Find files modified (before | at | after) specified time.
   rows(-| |+)               Find comma-separated files with (fewer than | exact | more than) specified rows.
   words(-| |+)              Find text files with (fewer than | exact | more than) specified words.
@@ -30,8 +30,12 @@ Commands:
   keyword(-| |+)            Find C++ files with (fewer than | exact | more than) specified number of C++ keywords.
   include                   Find C++ files that include specified keyword.
 
+Joining:
+  and                       Join filters with logical operator 'and'.
+  or                        Join filters with logical operator 'or'.
+
 Examples:
-  xff name file.txt                  # files named "file.txt"
+  xff name file.txt                    # files named "file.txt"
   xff like ".*[0-9].*"                 # files containing a digit
   xff size+ 42                         # files larger than 42 bytes
   xff time "2021-05-01 00:00:00"       # files modified at midnight on May 1, 2021
@@ -42,10 +46,14 @@ Examples:
   xff keyword 42                       # C++ files that contain 42 keywords
   xff include Logger.h                 # C++ files that include "Logger.h" header file
 
+  xff like ".*[0-9].*" and size+ 42 and include vector
+  xff name foo or name bar
+
 Note:
   * File size are specified in bytes (B).
-  * Readability score ranges from 0 to 100, with higher scores indicating easier-to-read text.
+  * Only one type of logical joining can be used in a single query (only ANDs or only ORs).
   * Time is specified in ISO 8601 format "YYYY-MM-DD hh:mm:ss" (e.g., 2023-04-29 14:56:03).
+  * Readability score ranges from 0 to 100, with higher scores indicating easier-to-read text.
 )";
 
 Root::Root(const std::string& new_root_dir, std::ostream& ostream)
