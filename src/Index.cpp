@@ -39,7 +39,7 @@ void index_filepath(std::ofstream& os, const std::filesystem::path& path)
 	const std::filesystem::path& ext = path.extension();
 	std::shared_ptr<File> file;
 	if (ext == ".txt") file = std::make_shared<TXTFile>(path);
-	else if (ext == ".csv") file = std::make_shared<CSVFile>(CSVFile(path));
+	else if (ext == ".csv") file = std::make_shared<CSVFile>(path);
 	else if (ext == ".cpp") file = std::make_shared<CPPFile>(path);
 	else file = std::make_shared<File>(File(path));
 	file->store(os);
