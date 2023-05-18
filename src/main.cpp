@@ -8,7 +8,6 @@
 #include <iostream>
 
 // TODO: add examples (replace playground)
-//       check files open, remove, rename
 //       create makefile
 //       make doc
 //       file and query builders

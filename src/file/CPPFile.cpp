@@ -5,6 +5,7 @@
 
 #include "CPPFile.h"
 #include "DataFileCorrupted.h"
+#include "FileInaccessible.h"
 
 #include <utility>
 #include <unordered_set>
@@ -110,8 +111,11 @@ bool CPPFile::match_include(const StringTerm& term) const
 
 std::set<std::string> get_includes(const std::filesystem::path& path)
 {
-	std::set<std::string> includes;
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
+	std::set<std::string> includes;
 	std::string line;
 	while (std::getline(file, line))
 		if (line.rfind("#include", 0) == 0)
@@ -147,9 +151,11 @@ const std::unordered_set<std::string>& get_keywords()
 
 int get_keyword_count(const std::filesystem::path& path)
 {
-	const std::unordered_set<std::string>& keywords = get_keywords();
-
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
+	const std::unordered_set<std::string>& keywords = get_keywords();
 	std::string word;
 	int count = 0;
 	while (file >> word)

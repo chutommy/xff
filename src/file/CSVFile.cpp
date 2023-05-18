@@ -5,6 +5,7 @@
 
 #include "CSVFile.h"
 #include "DataFileCorrupted.h"
+#include "FileInaccessible.h"
 
 #include <algorithm>
 #include <fstream>
@@ -69,6 +70,9 @@ bool CSVFile::match_row_count(const IntTerm& term) const
 long get_row_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
 	return std::count(std::istreambuf_iterator<char>(file),
 			std::istreambuf_iterator<char>(), '\n');
 }

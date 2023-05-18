@@ -9,6 +9,7 @@
 #include "TXTFile.h"
 #include "CSVFile.h"
 #include "Font.h"
+#include "FileInaccessible.h"
 
 #include <fstream>
 #include <set>
@@ -23,10 +24,14 @@ Index::Index(const std::filesystem::path& new_dir_path, Logger new_logger)
 		  temp_index_path(index_path.string() + NEW_TEMP_EXT),
 		  logger(new_logger)
 {
-// TODO
-	std::remove(temp_index_path.c_str());
+	if (exists(temp_index_path) && std::remove(temp_index_path.c_str()) != 0)
+		throw FileInaccessible("Inaccessible file: ", temp_index_path);
 	if (!exists(index_path))
+	{
 		std::ofstream f(index_path.string());
+		if (!f.is_open())
+			throw FileInaccessible("Open file: ", index_path);
+	}
 }
 
 void index_filepath(std::ofstream& os, const std::filesystem::path& path)
@@ -55,11 +60,12 @@ std::shared_ptr<File> load_file(std::istringstream& iss)
 void Index::update() const
 {
 	std::ifstream orig_xff(index_path);
-	std::ofstream new_xff(temp_index_path);
 	if (!orig_xff.is_open())
-		throw std::runtime_error("File inaccessible: " + index_path.string());
+		throw FileInaccessible("Open file: ", index_path);
+
+	std::ofstream new_xff(temp_index_path);
 	if (!new_xff.is_open())
-		throw std::runtime_error("File inaccessible: " + temp_index_path.string());
+		throw FileInaccessible("Open file: ", temp_index_path);
 
 	std::stringstream buffer;
 	buffer << orig_xff.rdbuf();
@@ -98,9 +104,13 @@ void Index::update() const
 	complement_index(new_xff, indexed);
 
 	orig_xff.close();
-	std::remove(index_path.c_str());
+	if (std::remove(index_path.c_str()) != 0)
+		throw FileInaccessible("Remove failure: ", index_path);
+
 	new_xff.close();
-	std::rename(temp_index_path.c_str(), index_path.c_str());
+	if (std::rename(temp_index_path.c_str(), index_path.c_str()) != 0)
+		throw FileInaccessible("Rename failure: ",
+				temp_index_path.string() + " -> " + index_path.string());
 }
 
 void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>& indexed) const
@@ -123,6 +133,9 @@ void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>
 void Index::search(std::shared_ptr<MainQuery>& query) const
 {
 	std::ifstream index(index_path);
+	if (!index.is_open())
+		throw FileInaccessible("Open file: ", index_path);
+
 	std::stringstream buffer;
 	buffer << index.rdbuf();
 	std::string file_contents = buffer.str();
@@ -152,8 +165,13 @@ void Index::search(std::shared_ptr<MainQuery>& query) const
 
 void Index::reset() const
 {
-	std::remove(index_path.c_str());
+	if (std::remove(index_path.c_str()) != 0)
+		throw FileInaccessible("Remove failure: ", index_path);
+
 	std::ofstream f(index_path.string());
+	if (!f.is_open())
+		throw FileInaccessible("Open file: ", index_path);
 	f.close();
+
 	update();
 }

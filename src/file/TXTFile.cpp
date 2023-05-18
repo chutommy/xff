@@ -5,6 +5,7 @@
 
 #include "TXTFile.h"
 #include "DataFileCorrupted.h"
+#include "FileInaccessible.h"
 
 #include <utility>
 #include <fstream>
@@ -185,16 +186,23 @@ int count_syllables(const std::string& word)
 int get_word_count(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
 	std::string word;
 	int word_count = 0;
 	while (file >> word)
 		++word_count;
+
 	return word_count;
 }
 
 double get_readability_score(const std::filesystem::path& path)
 {
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
 	int words = 0, sentences = 0, syllables = 0;
 	std::string word;
 	while (file >> word)
@@ -211,6 +219,9 @@ double get_readability_score(const std::filesystem::path& path)
 std::vector<std::pair<std::string, int>> get_most_frequent_words(const std::filesystem::path& path, int n)
 {
 	std::ifstream file(path);
+	if (!file.is_open())
+		throw FileInaccessible("Open file: ", path);
+
 	std::unordered_map<std::string, int> word_counts;
 	std::string word;
 	while (file >> word)
