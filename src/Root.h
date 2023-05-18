@@ -19,7 +19,11 @@ private:
 	Logger logger;
 	Index index;
 
-	int update() const;
+	bool update() const;
+
+	bool reset() const;
+
+	bool query(int argc, char** argv) const;
 
 public:
 	Root(const std::string& new_root_dir, std::ostream& ostream);

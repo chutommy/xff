@@ -7,6 +7,7 @@
 #include "DataFileCorrupted.h"
 #include "InvalidQuery.h"
 #include "MainQuery.h"
+#include "FileInaccessible.h"
 
 const std::string HELP_MESSAGE = R"(
 Usage: xff ( | reset | help )
@@ -50,7 +51,7 @@ Examples:
   xff name foo or name bar
 
 Note:
-  * File size are specified in bytes (B).
+  * File size is specified in bytes (B).
   * Only one type of logical joining can be used in a single query (only ANDs or only ORs).
   * Time is specified in ISO 8601 format "YYYY-MM-DD hh:mm:ss" (e.g., 2023-04-29 14:56:03).
   * Readability score ranges from 0 to 100, with higher scores indicating easier-to-read text.
@@ -77,10 +78,14 @@ int Root::run(int argc, char** argv) const
 	}
 	else if (argc == 2 && argv[1] == static_cast<std::string>("reset"))
 	{
-		index.reset();
-		return 0;
+		return reset();
 	}
 
+	return query(argc, argv);
+}
+
+bool Root::query(int argc, char** argv) const
+{
 	std::shared_ptr<MainQuery> query;
 	try
 	{ query = parse_query(argc, argv); }
@@ -88,15 +93,22 @@ int Root::run(int argc, char** argv) const
 	{
 		logger.log_err("invalid query", e);
 		logger << "Type 'xxf help' to see help.\n" << std::endl;
-		return 1;
+		return false;
 	}
 
-	if (!update()) return 1;
-	index.search(query);
-	return 0;
+	if (!update()) return false;
+	try
+	{ index.search(query); }
+	catch (FileInaccessible& e)
+	{
+		logger.log_err("file inaccessible", e);
+		return false;
+	}
+
+	return true;
 }
 
-int Root::update() const
+bool Root::update() const
 {
 	try
 	{ index.update(); }
@@ -104,13 +116,31 @@ int Root::update() const
 	{
 		logger.log_err("corrupted index file", e);
 		logger << "Recovering by complete re-indexation...\n\n";
-		index.reset();
+		return reset();
+	}
+	catch (FileInaccessible& e)
+	{
+		logger.log_err("file inaccessible", e);
+		return false;
 	}
 	catch (std::runtime_error& e)
 	{
 		logger.log_err("unexpected error", e);
-		return 0;
+		return false;
 	}
 
-	return 1;
+	return true;
+}
+
+bool Root::reset() const
+{
+	try
+	{ index.reset(); }
+	catch (FileInaccessible& e)
+	{
+		logger.log_err("file inaccessible", e);
+		return false;
+	}
+
+	return true;
 }
