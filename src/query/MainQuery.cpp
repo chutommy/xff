@@ -7,6 +7,7 @@
 #include "ANDQuery.h"
 #include "ORQuery.h"
 #include "InvalidQuery.h"
+#include "QueryParser.h"
 
 #include <cstring>
 
@@ -46,7 +47,8 @@ std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv)
 			throw InvalidQuery("Invalid argument: "
 							   + static_cast<std::string> (argv[i])
 							   + " (" + std::to_string(argc - 1) + ")");
-		query->add(parse(argv[i], argv[i + 1]));
+		QueryParser parser;
+		query->add(parser(argv[i], argv[i + 1]));
 		i += 2;
 	}
 

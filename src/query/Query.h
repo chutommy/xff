@@ -16,11 +16,3 @@ struct Query
 	 */
 	virtual bool evaluate(std::shared_ptr<File> file) = 0;
 };
-
-/**
- * Handles and parses the command into a query.
- * @param cmd command name
- * @param arg query argument
- * @return Query
- */
-std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg);

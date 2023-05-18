@@ -8,9 +8,7 @@
 #include <iostream>
 
 // TODO: add examples (replace playground)
-//       create makefile
-//       make doc
-//       file and query builders
+//       create makefile (https://courses.fit.cvut.cz/BI-PA2/semestral.html#_soubor-makefile)
 
 int main(int argc, char** argv)
 {

@@ -3,7 +3,7 @@
  * @date 7.5.23
  */
 
-#include "Query.h"
+#include "QueryParser.h"
 #include "NameQuery.h"
 #include "RegexNameQuery.h"
 #include "SizeQuery.h"
@@ -16,7 +16,7 @@
 #include "IncludeQuery.h"
 #include "InvalidQuery.h"
 
-std::shared_ptr<Query> parse(const std::string& cmd, const std::string& arg)
+std::shared_ptr<Query> QueryParser::operator()(const std::string& cmd, const std::string& arg)
 {
 	try
 	{
