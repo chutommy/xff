@@ -7,9 +7,6 @@
 
 #include <iostream>
 
-// TODO: add examples (replace playground)
-//       create makefile (https://courses.fit.cvut.cz/BI-PA2/semestral.html#_soubor-makefile)
-
 int main(int argc, char** argv)
 {
 	Root(".", std::cout).run(argc, argv);
