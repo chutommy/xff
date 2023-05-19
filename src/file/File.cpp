@@ -96,7 +96,7 @@ std::string format_type(const std::string& extension)
 
 std::ostream& File::print(std::ostream& os) const
 {
-	return os << BOLD << absolute(path) << RESET << "\n"
+	return os << BOLD << path.relative_path() << RESET << "\n"
 			  << std::setw(LABEL_WIDTH) << std::right << "File: " << path.filename() << "\n"
 			  << std::setw(LABEL_WIDTH) << std::right << "Type: " << format_type(path.extension()) << "\n"
 			  << std::setw(LABEL_WIDTH) << std::right << "Size: " << size << "\n"
