@@ -121,7 +121,7 @@ void Index::complement_index(std::ofstream& new_xff, const std::set<std::string>
 			&& filepath != index_path
 			&& filepath != temp_index_path)
 		{
-			logger.log(index_file, absolute(filepath));
+			logger.log(index_file, filepath.relative_path());
 			index_filepath(new_xff, filepath);
 		}
 	}
