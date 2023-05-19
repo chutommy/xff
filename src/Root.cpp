@@ -9,7 +9,7 @@
 #include "query/MainQuery.h"
 #include "error/FileInaccessible.h"
 
-static const char* HELP_MESSAGE = R"(
+const char* const HELP_MESSAGE = R"(
 Usage: xff ( | reset | help )
    or: xff ( CMD ARG ) [ ( and | or ) ( CMD ARG ) ... ]
 

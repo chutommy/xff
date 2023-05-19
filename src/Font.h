@@ -7,5 +7,5 @@
 
 #include <string>
 
-static const char* RESET = "\033[0m";
-static const char* BOLD = "\033[1m";
+const char* const RESET = "\033[0m";
+const char* const BOLD = "\033[1m";

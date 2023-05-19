@@ -16,28 +16,28 @@
 #include "IncludeQuery.h"
 #include "error/InvalidQuery.h"
 
-static const char* CMD_NAME = "name";
-static const char* CMD_LIKE = "like";
-static const char* CMD_SIZE_LT = "size-";
-static const char* CMD_SIZE = "size";
-static const char* CMD_SIZE_GT = "size+";
-static const char* CMD_TIME_LT = "time-";
-static const char* CMD_TIME = "time";
-static const char* CMD_TIME_GT = "time+";
-static const char* CMD_WORDS_LT = "words-";
-static const char* CMD_WORDS = "words";
-static const char* CMD_WORDS_GT = "words+";
-static const char* CMD_TOP = "top";
-static const char* CMD_READABILITY_LT = "readability-";
-static const char* CMD_READABILITY = "readability";
-static const char* CMD_READABILITY_GT = "readability+";
-static const char* CMD_ROWS_LT = "rows-";
-static const char* CMD_ROWS = "rows";
-static const char* CMD_ROWS_GT = "rows+";
-static const char* CMD_KEYWORDS_LT = "keywords-";
-static const char* CMD_KEYWORDS = "keywords";
-static const char* CMD_KEYWORDS_GT = "keywords+";
-static const char* CMD_INCLUDE = "include";
+const char* const CMD_NAME = "name";
+const char* const CMD_LIKE = "like";
+const char* const CMD_SIZE_LT = "size-";
+const char* const CMD_SIZE = "size";
+const char* const CMD_SIZE_GT = "size+";
+const char* const CMD_TIME_LT = "time-";
+const char* const CMD_TIME = "time";
+const char* const CMD_TIME_GT = "time+";
+const char* const CMD_WORDS_LT = "words-";
+const char* const CMD_WORDS = "words";
+const char* const CMD_WORDS_GT = "words+";
+const char* const CMD_TOP = "top";
+const char* const CMD_READABILITY_LT = "readability-";
+const char* const CMD_READABILITY = "readability";
+const char* const CMD_READABILITY_GT = "readability+";
+const char* const CMD_ROWS_LT = "rows-";
+const char* const CMD_ROWS = "rows";
+const char* const CMD_ROWS_GT = "rows+";
+const char* const CMD_KEYWORDS_LT = "keywords-";
+const char* const CMD_KEYWORDS = "keywords";
+const char* const CMD_KEYWORDS_GT = "keywords+";
+const char* const CMD_INCLUDE = "include";
 
 std::shared_ptr<Query> QueryParser::operator()(const std::string& cmd, const std::string& arg)
 {

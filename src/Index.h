@@ -11,8 +11,8 @@
 #include <filesystem>
 #include <set>
 
-static const char* INDEX_NAME = ".xff";
-static const char* NEW_TEMP_EXT = ".new";
+const char* const INDEX_NAME = ".xff";
+const char* const NEW_TEMP_EXT = ".new";
 
 /**
  * Represents a filesystem index.
