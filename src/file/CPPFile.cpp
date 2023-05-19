@@ -103,7 +103,10 @@ bool CPPFile::match_keyword_count(const IntTerm& term) const
 bool CPPFile::match_include(const StringTerm& term) const
 {
 	for (const std::string& s: includes)
-		if (s == term.value) return true;
+	{
+		std::filesystem::path path(s);
+		if (path.filename() == term.value) return true;
+	}
 	return false;
 }
 
