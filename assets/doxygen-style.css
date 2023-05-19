@@ -4,26 +4,26 @@
 
 :root {
     /* Content */
-    --bgcolor: #ffffff;
-    --bgfont: #303030;
-    --bgfont2: #f3c60a;
-    --bgfont-hover: #f3c60a;
+    --bgcolor: #FFFFFF;
+    --bgfont: #000000;
+    --bgfont2: #42B1E1;
+    --bgfont-hover: #42B1E1;
     --bgfont-hover-text-decoration: none;
-    --bgborder: #7d7d7d;
-    --bgborder2: #f6f6f6;
+    --bgborder: #FFFFFF;
+    --bgborder2: #EEF7FF;
     /* Main Header */
-    --bg1color: #303030;
-    --bg1font: #ffffff;
-    --bg1font2: #f3c60a;
+    --bg1color: #000000;
+    --bg1font: #FFFFFF;
+    --bg1font2: #42B1E1;
     /* Second header */
     --bg2color: #E2E2E2;
     --bg2font: #7D7D7D;
-    --bg2-hover-bg: #ffffff;
-    --bg2-hover-font: #303030;
-    --bg2-hover-topborder: #f3c60a;
+    --bg2-hover-bg: #FFFFFF;
+    --bg2-hover-font: #000000;
+    --bg2-hover-topborder: #42B1E1;
     /* Third header */
-    --bg3color: #f6f6f6;
-    --bg3font: #303030;
+    --bg3color: #eeeeee;
+    --bg3font: #000000;
     --bg3font2: #7D7D7D;
     /* Code */
     --code-bg: #f6f6f6;
@@ -31,42 +31,40 @@
     --code-keyword: #d73a49;
     --code-preprocessor: #d73a49;
     --code-keywordtype: #d73a49;
-    --code-text: #303030;
+    --code-text: #000000;
     --code-code: #6f42c1;
     --code-line: #7D7D7D;
     --code-line-bg: #D8D8D8;
     /* Namespace List, Class List icon */
-    --icon-bg: #303030;
-    --icon-font: #f3c60a;
+    --icon-bg: #000000;
+    --icon-font: #42B1E1;
     /* Class Index */
-    --qindex-menu-bg: #303030;
-    --qindex-menu-font: #ffffff;
-    --qindex-menu-font-hover: #f3c60a;
-    --qindex-icon-bg: #f3c60a;
-    --qindex-icon-font: #303030;
+    --qindex-menu-bg: #000000;
+    --qindex-menu-font: #FFFFFF;
+    --qindex-menu-font-hover: #42B1E1;
+    --qindex-icon-bg: #42B1E1;
+    --qindex-icon-font: #000000;
     /* Member table */
-    --mem-title-bg: #303030;
-    --mem-title-font: #ffffff;
-    --mem-subtitle-bg: #f3c60a;
-    --mem-subtitle-font: #303030;
-    --mem-subtitle-font-hover: #303030;
-    --mem-content-bg: #ffffff;
-    --mem-content-font: #303030;
+    --mem-title-bg: #000000;
+    --mem-title-font: #FFFFFF;
+    --mem-subtitle-bg: #42B1E1;
+    --mem-subtitle-font: #000000;
+    --mem-subtitle-font-hover: #000000;
+    --mem-content-bg: #FFFFFF;
+    --mem-content-font: #000000;
     --mem-content-border: #f6f6f6;
     /* Nav Tree */
     --nav-tree-bg: #E2E2E2;
-    --nav-tree-bg-hover: #ffffff;
+    --nav-tree-bg-hover: #FFFFFF;
     --nav-tree-font: #7D7D7D;
-    --nav-tree-font-hover: #303030;
-    --nav-tree-bg-selected: #f3c60a;
-    --nav-tree-font-selected: #303030;
+    --nav-tree-font-hover: #000000;
+    --nav-tree-bg-selected: #42B1E1;
+    --nav-tree-font-selected: #000000;
 }
 
 body, table, div, p, dl {
     color: var(--bgfont);
     background-color: var(--bgcolor);
-    line-height: 150%;
-    font: 14px/22px, Roboto, Arial;
 }
 
 div.contents {
@@ -95,15 +93,15 @@ div.contents ul {
 }
 
 #projectname {
-    padding: 0px 40px !important;
+    padding: 0 40px !important;
 }
 
 #projectbrief {
-    padding: 0px 40px !important;
+    padding: 0 40px !important;
 }
 
 #projectalign {
-    padding: 0px !important;
+    padding: 0 !important;
 }
 
 /***********************************/
@@ -115,7 +113,7 @@ div.contents ul {
 /* Margin */
 
 #main-menu {
-    padding: 0px 30px;
+    padding: 0 30px;
 }
 
 #main-menu a, #main-menu a:hover {
@@ -127,14 +125,14 @@ div.contents ul {
 
 #main-menu li a {
     background-image: none;
-    font-family: Arial;
+    font-family: Arial, serif;
     text-transform: uppercase;
     text-shadow: none;
     font-size: 14px;
     font-weight: 700;
 }
 
-#main-menu, #main-menu>li>a {
+#main-menu, #main-menu > li > a {
     background-image: none;
     background-color: var(--bg2color);
     color: var(--bg2font);
@@ -143,17 +141,17 @@ div.contents ul {
 
 /* hover Effect */
 
-#main-menu>li {
+#main-menu > li {
     border-top: 5px solid var(--bg2color);
 }
 
-#main-menu>li:hover {
+#main-menu > li:hover {
     color: var(--bg2-hover-font);
     background-color: var(--bg2-hover-bg);
     border-top: 5px solid var(--bg2-hover-topborder);
 }
 
-#main-menu>li:hover, #main-menu>li>a:hover, #main-menu>li>a.highlighted {
+#main-menu > li:hover, #main-menu > li > a:hover, #main-menu > li > a.highlighted {
     color: var(--bg2-hover-font);
     background-color: var(--bg2-hover-bg);
 }
@@ -165,17 +163,17 @@ div.contents ul {
     box-shadow: none;
 }
 
-#MSearchBox>span {
+#MSearchBox > span {
     margin: 10px;
 }
 
-#main-menu>li:last-child {
-    padding: 25px 0px;
+#main-menu > li:last-child {
+    padding: 25px 0;
 }
 
 /* Reset search hover color*/
 
-#main-menu>li:last-child:hover {
+#main-menu > li:last-child:hover {
     color: var(--bg2font);
     background-color: var(--bg2color);
     border-top: 5px solid var(--bg2color);
@@ -188,28 +186,28 @@ div.contents ul {
 }
 
 body.SRPage, body.SRPage * {
-    font-family: Arial;
+    font-family: Arial, serif;
 }
 
 /* Sub Menu  */
 
-#main-menu>li ul {
+#main-menu > li ul {
     transition: max-height 0.2s ease-in-out;
-    padding: 0px;
-    border-radius: 0px !important;
+    padding: 0;
+    border-radius: 0 !important;
 }
 
-#main-menu>li ul:before, #main-menu>li ul:after {
-    border-width: 0px;
+#main-menu > li ul:before, #main-menu > li ul:after {
+    border-width: 0;
 }
 
-#main-menu>li>ul li a, #main-menu>li>ul li {
+#main-menu > li > ul li a, #main-menu > li > ul li {
     background-color: var(--bgcolor);
     color: var(--bgfont);
     background-image: none;
 }
 
-#main-menu>li>ul li a:hover, #main-menu>li>ul li:hover {
+#main-menu > li > ul li a:hover, #main-menu > li > ul li:hover {
     background-color: var(--bgfont2);
     color: var(--bgfont);
 }
@@ -268,7 +266,7 @@ a:hover, .contents a:hover, body.SRPage a:hover {
     color: var(--bg3font2);
     background-color: var(--bg3color);
     border: none;
-    font-family: Arial;
+    font-family: Arial, serif;
 }
 
 li.navelem {
@@ -289,8 +287,8 @@ li.navelem a {
 .memtitle {
     padding: 15px;
     margin-top: 30px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .memtitle, .memtitle *, .memtitle a:visited {
@@ -301,12 +299,11 @@ li.navelem a {
 }
 
 .memproto {
-    padding: 10px;
     text-shadow: none;
     padding: 20px;
-    border-top-right-radius: 0px;
-    -moz-border-radius-topright: 0px;
-    -webkit-border-top-right-radius: 0px;
+    border-top-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
 }
 
 .memproto, .memproto *, .memproto a:visited {
@@ -328,16 +325,16 @@ li.navelem a {
     border-right: 1px solid var(--mem-content-border);
     background-color: var(--mem-content-bg);
     color: var(--mem-content-font);
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    -moz-border-radius-bottomleft: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -webkit-border-bottom-left-radius: 0px;
-    -webkit-border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
 }
 
 .memdoc p, .memdoc dt {
-    padding: 0px 20px;
+    padding: 0 20px;
 }
 
 /***********************************/
@@ -357,7 +354,7 @@ a.anchor {
 /***********************************/
 
 h2.groupheader {
-    color: #303030;
+    color: #000000;
     font-size: 200%;
     font-weight: bold;
     border-bottom: none;
@@ -368,7 +365,6 @@ h2.groupheader {
 div.fragment, pre.fragment {
     border: none;
     padding: 20px;
-    margin: none;
     background-color: var(--code-bg);
 }
 
@@ -400,14 +396,14 @@ span.mlabel {
     border-right: none;
     border-bottom: none;
     padding: 10px;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 a.code {
     color: var(--code-code);
 }
 
-span.lineno, span.lineno>* {
+span.lineno, span.lineno > * {
     color: var(--code-line);
     border-right: none;
     background-color: var(--code-bg);
@@ -433,22 +429,25 @@ span.lineno a:hover {
 }
 
 .iconfclosed {
+    /*noinspection CssUnknownTarget*/
     background-image: url(closed-folder.png);
     margin-right: 10px;
 }
 
 .iconfopen {
+    /*noinspection CssUnknownTarget*/
     background-image: url(opened-folder.png);
     margin-right: 10px;
 }
 
 .icondoc {
+    /*noinspection CssUnknownTarget*/
     background-image: url(document.png);
     margin-right: 10px;
 }
 
 .arrow {
-    color: #7d7d7d;
+    color: #FFFFFF;
 }
 
 .icona {
@@ -472,8 +471,8 @@ div.ah {
     background-image: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
     border: none;
 }
 
@@ -515,23 +514,23 @@ table.classindex a.el {
 div.directory {
     border-top: 1px solid var(--bgborder);
     border-bottom: none;
-    margin: 20px 0px;
+    margin: 20px 0;
 }
 
 div.directory a.el {
     font-weight: normal;
 }
 
-div.directory>table {
-    margin: 20px 0px;
+div.directory > table {
+    margin: 20px 0;
 }
 
 hr.footer {
     border: none;
 }
 
-.contents>hr {
-    border-top: 0px;
+.contents > hr {
+    border-top: 0;
 }
 
 /***********************************/
@@ -546,7 +545,7 @@ hr.footer {
 }
 
 .mdescRight {
-    padding: 0px 30px 10px 30px;
+    padding: 0 30px 10px 30px;
 }
 
 .memberdecls * {
@@ -569,7 +568,7 @@ hr.footer {
 
 #nav-tree-contents {
     background-color: var(--nav-tree-bg);
-    margin: 0px;
+    margin: 0;
 }
 
 #side-nav, #nav-tree {
@@ -579,7 +578,7 @@ hr.footer {
 
 #nav-tree .item {
     background-color: var(--nav-tree-bg);
-    font-family: Arial;
+    font-family: Arial, serif;
     text-transform: uppercase;
     text-shadow: none;
     font-size: 14px;
@@ -619,11 +618,13 @@ hr.footer {
     background-color: transparent;
 }
 
-#nav-sync>img {
+#nav-sync > img {
+    /*noinspection CssUnknownTarget*/
     content: url(off_sync.png);
 }
 
-#nav-sync.sync>img {
+#nav-sync.sync > img {
+    /*noinspection CssUnknownTarget*/
     content: url(on_sync.png);
 }
 
