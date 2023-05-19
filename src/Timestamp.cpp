@@ -22,7 +22,7 @@ Timestamp::Timestamp(const std::string& str) : Timestamp()
 
 std::string fs_time_to_str(const std::filesystem::file_time_type& filetime)
 {
-	// convert filetime to time
+	// convert filetime to time (https://stackoverflow.com/q/61030383/13022894)
 	auto sys_time = std::chrono::time_point_cast<std::chrono::system_clock::duration>(
 			filetime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
 	auto filetime_t = std::chrono::system_clock::to_time_t(sys_time);
