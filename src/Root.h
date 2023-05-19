@@ -5,9 +5,10 @@
 
 #pragma once
 
-#include <filesystem>
 #include "Logger.h"
 #include "Index.h"
+
+#include <filesystem>
 
 /**
  * Handles command-line actions.

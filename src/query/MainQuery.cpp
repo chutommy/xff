@@ -6,7 +6,7 @@
 #include "MainQuery.h"
 #include "ANDQuery.h"
 #include "ORQuery.h"
-#include "InvalidQuery.h"
+#include "error/InvalidQuery.h"
 #include "QueryParser.h"
 
 #include <cstring>

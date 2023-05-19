@@ -6,7 +6,7 @@
 #pragma once
 
 #include "Logger.h"
-#include "MainQuery.h"
+#include "query/MainQuery.h"
 
 #include <filesystem>
 #include <set>

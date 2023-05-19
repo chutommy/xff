@@ -4,12 +4,12 @@
  */
 
 #include "Index.h"
-#include "File.h"
-#include "CPPFile.h"
-#include "TXTFile.h"
-#include "CSVFile.h"
+#include "file/File.h"
+#include "file/CPPFile.h"
+#include "file/TXTFile.h"
+#include "file/CSVFile.h"
 #include "Font.h"
-#include "FileInaccessible.h"
+#include "error/FileInaccessible.h"
 
 #include <fstream>
 #include <set>

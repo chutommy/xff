@@ -10,10 +10,10 @@
 #include <vector>
 
 #include "Timestamp.h"
-#include "IntTerm.h"
-#include "StringTerm.h"
-#include "DoubleTerm.h"
-#include "TimestampTerm.h"
+#include "term/IntTerm.h"
+#include "term/StringTerm.h"
+#include "term/DoubleTerm.h"
+#include "term/TimestampTerm.h"
 
 const int LABEL_WIDTH = 14;
 
