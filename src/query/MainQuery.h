@@ -7,6 +7,9 @@
 
 #include "Query.h"
 
+static const char* AND_OP = "and";
+static const char* OR_OP = "or";
+
 /**
  * Represents the top layer query.
  */

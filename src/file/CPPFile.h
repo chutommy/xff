@@ -9,6 +9,8 @@
 
 #include <set>
 
+const int INCLUDE_LINE_COUNT = 5;
+
 /**
  * Represents a C++ source file.
  */

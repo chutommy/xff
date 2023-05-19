@@ -7,5 +7,5 @@
 
 #include <string>
 
-const std::string RESET = "\033[0m";
-const std::string BOLD = "\033[1m";
+static const char* RESET = "\033[0m";
+static const char* BOLD = "\033[1m";

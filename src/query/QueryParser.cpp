@@ -16,41 +16,64 @@
 #include "IncludeQuery.h"
 #include "InvalidQuery.h"
 
+static const char* CMD_NAME = "name";
+static const char* CMD_LIKE = "like";
+static const char* CMD_SIZE_LT = "size-";
+static const char* CMD_SIZE = "size";
+static const char* CMD_SIZE_GT = "size+";
+static const char* CMD_TIME_LT = "time-";
+static const char* CMD_TIME = "time";
+static const char* CMD_TIME_GT = "time+";
+static const char* CMD_WORDS_LT = "words-";
+static const char* CMD_WORDS = "words";
+static const char* CMD_WORDS_GT = "words+";
+static const char* CMD_TOP = "top";
+static const char* CMD_READABILITY_LT = "readability-";
+static const char* CMD_READABILITY = "readability";
+static const char* CMD_READABILITY_GT = "readability+";
+static const char* CMD_ROWS_LT = "rows-";
+static const char* CMD_ROWS = "rows";
+static const char* CMD_ROWS_GT = "rows+";
+static const char* CMD_KEYWORDS_LT = "keywords-";
+static const char* CMD_KEYWORDS = "keywords";
+static const char* CMD_KEYWORDS_GT = "keywords+";
+static const char* CMD_INCLUDE = "include";
+
 std::shared_ptr<Query> QueryParser::operator()(const std::string& cmd, const std::string& arg)
 {
 	try
 	{
-		if (cmd == "name") return std::make_shared<NameQuery>(StringTerm{ arg });
+		if (cmd == CMD_NAME) return std::make_shared<NameQuery>(StringTerm{ arg });
 
-		else if (cmd == "like") return std::make_shared<RegexNameQuery>(StringTerm{ arg });
+		else if (cmd == CMD_LIKE) return std::make_shared<RegexNameQuery>(StringTerm{ arg });
 
-		else if (cmd == "size-") return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), lt });
-		else if (cmd == "size") return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), eq });
-		else if (cmd == "size+") return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), gt });
+		else if (cmd == CMD_SIZE_LT) return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), lt });
+		else if (cmd == CMD_SIZE) return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), eq });
+		else if (cmd == CMD_SIZE_GT) return std::make_shared<SizeQuery>(IntTerm{ std::stoi(arg), gt });
 
-		else if (cmd == "time-") return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), lt });
-		else if (cmd == "time") return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), eq });
-		else if (cmd == "time+") return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), gt });
+		else if (cmd == CMD_TIME_LT) return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), lt });
+		else if (cmd == CMD_TIME) return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), eq });
+		else if (cmd == CMD_TIME_GT) return std::make_shared<LastWriteTimeQuery>(TimestampTerm{ Timestamp(arg), gt });
 
-		else if (cmd == "words-") return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), lt });
-		else if (cmd == "words") return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), eq });
-		else if (cmd == "words+") return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), gt });
+		else if (cmd == CMD_WORDS_LT) return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), lt });
+		else if (cmd == CMD_WORDS) return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), eq });
+		else if (cmd == CMD_WORDS_GT) return std::make_shared<WordCountQuery>(IntTerm{ std::stoi(arg), gt });
 
-		else if (cmd == "top") return std::make_shared<MostFrequentWordsQuery>(StringTerm{ arg });
+		else if (cmd == CMD_TOP) return std::make_shared<MostFrequentWordsQuery>(StringTerm{ arg });
 
-		else if (cmd == "readability-") return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), lt });
-		else if (cmd == "readability") return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), eq });
-		else if (cmd == "readability+") return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), gt });
+		else if (cmd == CMD_READABILITY_LT) return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), lt });
+		else if (cmd == CMD_READABILITY) return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), eq });
+		else if (cmd == CMD_READABILITY_GT) return std::make_shared<ReadabilityQuery>(DoubleTerm{ std::stod(arg), gt });
 
-		else if (cmd == "rows-") return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), lt });
-		else if (cmd == "rows") return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), eq });
-		else if (cmd == "rows+") return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), gt });
+		else if (cmd == CMD_ROWS_LT) return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), lt });
+		else if (cmd == CMD_ROWS) return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), eq });
+		else if (cmd == CMD_ROWS_GT) return std::make_shared<RowCountQuery>(IntTerm{ std::stoi(arg), gt });
 
-		else if (cmd == "keywords-") return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), lt });
-		else if (cmd == "keywords") return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), eq });
-		else if (cmd == "keywords+") return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), gt });
+		else if (cmd == CMD_KEYWORDS_LT) return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), lt });
+		else if (cmd == CMD_KEYWORDS) return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), eq });
+		else if (cmd == CMD_KEYWORDS_GT) return std::make_shared<KeywordCountQuery>(IntTerm{ std::stoi(arg), gt });
 
-		else if (cmd == "include") return std::make_shared<IncludeQuery>(StringTerm{ arg });
+		else if (cmd == CMD_INCLUDE) return std::make_shared<IncludeQuery>(StringTerm{ arg });
 
 		else throw InvalidQuery("Invalid command: ", cmd);
 	}

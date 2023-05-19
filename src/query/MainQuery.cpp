@@ -27,9 +27,9 @@ std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv)
 	bool conjunction = true, disjunction = true;
 	for (int i = 3; i < argc; i += 3)
 	{
-		if (conjunction && strcmp(argv[i], "and") != 0)
+		if (conjunction && strcmp(argv[i], AND_OP) != 0)
 			conjunction = false;
-		if (disjunction && strcmp(argv[i], "or") != 0)
+		if (disjunction && strcmp(argv[i], OR_OP) != 0)
 			disjunction = false;
 	}
 	if (conjunction)

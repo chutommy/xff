@@ -9,7 +9,7 @@
 #include "MainQuery.h"
 #include "FileInaccessible.h"
 
-const std::string HELP_MESSAGE = R"(
+static const char* HELP_MESSAGE = R"(
 Usage: xff ( | reset | help )
    or: xff ( CMD ARG ) [ ( and | or ) ( CMD ARG ) ... ]
 

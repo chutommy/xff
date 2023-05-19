@@ -15,9 +15,6 @@
 #include <set>
 #include <iostream>
 
-const char* INDEX_NAME = ".xff";
-const char* NEW_TEMP_EXT = ".new";
-
 Index::Index(const std::filesystem::path& new_dir_path, Logger new_logger)
 		: dir_path(new_dir_path),
 		  index_path(new_dir_path / INDEX_NAME),

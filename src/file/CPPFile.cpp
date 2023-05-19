@@ -11,8 +11,6 @@
 #include <unordered_set>
 #include <fstream>
 
-const int INCLUDE_LINE_COUNT = 5;
-
 CPPFile::CPPFile(std::filesystem::path new_path,
 		const Timestamp& new_last_write_time,
 		int new_size,
