@@ -58,7 +58,8 @@ HTML_OUTPUT            = .
 HTML_FILE_EXTENSION    = .html
 HTML_EXTRA_STYLESHEET  = "assets/doxygen-style.css"
 HTML_EXTRA_FILES       = "assets/img"
-GENERATE_TREEVIEW      = YES
+GENERATE_TREEVIEW      = NO
+USE_MDFILE_AS_MAINPAGE = README.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to the LaTeX output
