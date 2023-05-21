@@ -1,0 +1,29 @@
+Tato semestrální práce patří do kategorie konzolových utilit. Vaším cílem je vytvořit nástroj, který uživatel z terminálu spustí (s různými parametry). Případné parametry nástroje se nesnažte definovat přímo v kódu (a to ani pomocí konstant). Umístěte je do konfiguračních souborů (jednoho nebo více), které váš program bude načítat.
+
+Vaším úkolem je vytvořit nástroj pro indexaci a vyhledávání obsahu (souborů a dalších adresářů) v zadaném adresáři. Nástroj bude mít dvě části. První z nich bude obstarávat indexační část, tj. vytvoří vhodně reprezentovaný index. Druhá část programu umožňí nad indexem efektivně vyhledávat soubory.
+
+Implementujte následující funcionality:
+
+1. Pokud neexistuje index, nebo byly soubory pozměněny, nástroj na začátku svého spuštění provede indexaci. Během této fáze projde soubory, pro které to dává smysl, a zaindexuje jejich informace (vytvoří soubor/y, které budou obsahovat pomocné informace pro následné hledání). Tato část by měla jít spustit i manuálně v případě potřeby kompletní reindexace.
+    a. Vytvořte vhodný souborový formát a strukturu pro tento index.
+    b. Zobrazte, které soubory bylo nutné přeindexovat.
+
+2. Pro každý soubor si bude pamatovat alespoň název, velikost a čas poslední modifikace (příp. vytvoření).
+
+3. Pro alespoň 3 různé typy souborů implementuje speciální indexační atributy (př. textový soubor - slova a jejich frekvence, obrázek - velikost obrázku, barevný histogram, HTML dokument - seznam dokumentů, které na něj odkazují, …)
+
+4. Umožněte vyhledávat právě podle těchto atributů (společných i individuálních), včetně různých kombinací (např. obsahuje slovo "auto" a je menší než 3KB). Implementujte vyhledávání alespoň podle dotazů:
+    a. definovaných indexačními atributy,
+    b. dvou dotazů ve smyslu "a zároveň platí",
+    c. dvou dotazů ve smyslu "nebo platí".
+
+5. Vyhledávání by mělo být efektivnější než manuální prohledávání všech souborů (samozřejmě bez indexační fáze, která se provádí jen pokud je to nezbytné).
+
+Kde lze využít polymorfismus? (doporučené)
+    - skládání dotazů nad indexem: rovnost, soubor obsahuje slovo, menší než, a zároveň, …
+    - jednotlivé druhy indexů: textový soubor (slova, frekvence, termy, …), obrázek (histogramy, LBP, patterny, …), HTML (cross-reference, použité knihovny, …), adresáře, odkazy, …
+    - reprezentace indexu: binární formát, textový formát, …
+
+Další informace:
+    - Jako další rozšíření můžete např. využít různých regulárních výrazů (pro definování indexované podmnožiny nebo pro indexaci samotnou). Například "najít všechny soubory jejichž jméno odpovídá regulárnímu výrazu a obsahují slovo "test".
+    - Využít můžete i napojení na databázi, či nástroje pro práci s multimédii či jiné povolené knihovny (možnost indexovat šifrované soubory šifrovaným indexem).
