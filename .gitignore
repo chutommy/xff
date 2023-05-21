@@ -1,6 +1,11 @@
 cmake-build-debug/
 .git/
 .idea/
-html/
-docs/
+
+doc/
 bin/
+build/
+*.d
+
+chutommy
+.xff
