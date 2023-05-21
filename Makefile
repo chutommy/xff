@@ -7,11 +7,11 @@ CXX_FLAGS  = -Wall -pedantic -Wextra -std=c++17 -g -fsanitize=address
 MKDIR      = mkdir -p
 
 STDERR_OUT = /dev/null
-SOURCE     = src
-BUILD      = build
+SOURCE_DIR = src
+BUILD_DIR  = build
 
-SOURCES    = $(wildcard $(SOURCE)/*.cpp $(SOURCE)/*/*.cpp)
-HEADERS    = $(wildcard $(SOURCE)/*.h $(wildcard $(SOURCE)/*/*.h))
+SOURCES    = $(wildcard $(SOURCE_DIR)/*.cpp)
+HEADERS    = $(wildcard $(SOURCE_DIR)/*.h)
 OBJECTS    = $(SOURCES:$(SOURCE_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 DEPS       = Makefile.d
@@ -21,7 +21,7 @@ DEPS       = Makefile.d
 all: compile doc
 
 .PHONY: compile
-compile: $(DEPS) $(TARGET)
+compile: $(DEPS) $(BUILD_DIR) $(TARGET)
 
 .PHONY: run
 run: $(TARGET)
@@ -30,20 +30,22 @@ run: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(CXX) $^ -o $@
 
-$(BUILD)/%.o: $(SOURCE)/%.cpp
-	$(MKDIR) $(BUILD)
+$(BUILD_DIR):
+	$(MKDIR) $(BUILD_DIR)
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $< -c -o $@
 
 $(DEPS):
-	$(CXX) -MM $(SOURCE)/*.cpp | sed -r 's|^(.*\.o)|build/\1|' > Makefile.d
+	$(CXX) -MM $(SOURCE_DIR)/*.cpp | sed -r 's|^(.*\.o)|build/\1|' > Makefile.d
 
 .PHONY: clean
 clean:
 	rm -rf Makefile.d \
-	$(BUILD) doc/ \
 	$(TARGET) .xff \
 	$(TARGET).zip .archive \
-	$(BUILD) 2>$(STDERR_OUT)
+	$(BUILD_DIR) doc \
+	$(BUILD_DIR) 2>$(STDERR_OUT)
 
 .PHONY: doc
 doc: Doxyfile README.md $(HEADERS)
