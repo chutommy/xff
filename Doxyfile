@@ -31,7 +31,7 @@ RESOLVE_UNNAMED_PARAMS = YES
 # Configuration options related to warning and progress messages
 #---------------------------------------------------------------------------
 
-QUIET                  = NO
+QUIET                  = YES
 WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = NO
 WARN_IF_DOC_ERROR      = YES
