@@ -44,7 +44,7 @@ $(DEPS):
 .PHONY: clean
 clean:
 	rm -rf Makefile.d \
-	$(TARGET) .xff \
+	$(TARGET) xff .xff \
 	$(TARGET).zip .archive \
 	$(BUILD_DIR) doc \
 	$(BUILD_DIR) 2>$(STDERR_OUT)
@@ -61,5 +61,10 @@ ASSETS     = $(wildcard assets/*)
 $(TARGET).zip: README.md zadani.txt prohlaseni.txt Makefile Doxyfile $(HEADERS) $(SOURCES) $(EXAMPLES) $(ASSETS)
 	$(MKDIR) -p .archive/$(TARGET)/
 	cp -r README.md zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/ .archive/$(TARGET)/
-	cd .archive/; zip -r ../$(TARGET).zip $(TARGET)/
+	cd .archive/; zip -q -r ../$(TARGET).zip $(TARGET)/
 	rm -r .archive/
+
+.PHONY: addpath
+addpath: $(TARGET)
+	mv $(TARGET) xff
+	export PATH="$(shell pwd):$PATH"
