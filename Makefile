@@ -3,7 +3,9 @@
 TARGET     = chutommy
 
 CXX        = g++
+LD         = g++
 CXX_FLAGS  = -Wall -pedantic -Wextra -std=c++17 -g -fsanitize=address
+LD_FLAGS   = -g -fsanitize=address -lstdc++fs
 MKDIR      = mkdir -p
 
 STDERR_OUT = /dev/null
@@ -28,7 +30,7 @@ run: $(TARGET)
 	./$(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) -o $@ $^ -lstdc++fs
+	$(LD) -o $@ $^ $(LD_FLAGS)
 
 $(BUILD_DIR):
 	$(MKDIR) $(BUILD_DIR)
