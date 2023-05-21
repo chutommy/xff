@@ -4,10 +4,10 @@
  */
 
 #include "Root.h"
-#include "error/DataFileCorrupted.h"
-#include "error/InvalidQuery.h"
-#include "query/MainQuery.h"
-#include "error/FileInaccessible.h"
+#include "DataFileCorrupted.h"
+#include "InvalidQuery.h"
+#include "MainQuery.h"
+#include "FileInaccessible.h"
 
 const char* const HELP_MESSAGE = R"(
 Usage: xff ( | reset | help )

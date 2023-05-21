@@ -4,8 +4,8 @@
  */
 
 #include "File.h"
-#include "error/DataFileCorrupted.h"
-#include "error/InvalidTimestamp.h"
+#include "DataFileCorrupted.h"
+#include "InvalidTimestamp.h"
 #include "Font.h"
 
 #include <utility>

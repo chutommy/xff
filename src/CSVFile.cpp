@@ -4,8 +4,8 @@
  */
 
 #include "CSVFile.h"
-#include "error/DataFileCorrupted.h"
-#include "error/FileInaccessible.h"
+#include "DataFileCorrupted.h"
+#include "FileInaccessible.h"
 
 #include <algorithm>
 #include <fstream>

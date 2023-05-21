@@ -4,8 +4,8 @@
  */
 
 #include "CPPFile.h"
-#include "error/DataFileCorrupted.h"
-#include "error/FileInaccessible.h"
+#include "DataFileCorrupted.h"
+#include "FileInaccessible.h"
 
 #include <utility>
 #include <unordered_set>

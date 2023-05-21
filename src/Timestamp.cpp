@@ -4,7 +4,7 @@
  */
 
 #include "Timestamp.h"
-#include "error/InvalidTimestamp.h"
+#include "InvalidTimestamp.h"
 
 #include <stdexcept>
 #include <chrono>

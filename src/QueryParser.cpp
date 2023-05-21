@@ -14,7 +14,7 @@
 #include "RowCountQuery.h"
 #include "KeywordCountQuery.h"
 #include "IncludeQuery.h"
-#include "error/InvalidQuery.h"
+#include "InvalidQuery.h"
 
 const char* const CMD_NAME = "name";
 const char* const CMD_LIKE = "like";
