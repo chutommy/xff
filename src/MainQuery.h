@@ -32,4 +32,4 @@ public:
  * @param argv argument vector
  * @return complete query
  */
-std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv);
+std::shared_ptr<MainQuery> parse_query(int argc, char** argv);

@@ -16,7 +16,7 @@ void MainQuery::add(const std::shared_ptr<Query>& q)
 	queries.push_back(q);
 }
 
-std::shared_ptr<MainQuery> parse_query(int argc, char* const* argv)
+std::shared_ptr<MainQuery> parse_query(int argc, char** argv)
 {
 	if (argc % 3 != 0)
 		throw InvalidQuery("Invalid argument: "

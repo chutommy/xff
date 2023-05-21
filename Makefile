@@ -28,13 +28,13 @@ run: $(TARGET)
 	./$(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $^ -o $@
+	$(CXX) -o $@ $^ -lstdc++fs
 
 $(BUILD_DIR):
 	$(MKDIR) $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $< -c -o $@
+	$(CXX) $(CXX_FLAGS) $< -c -o $@
 
 $(DEPS):
 	$(CXX) -MM $(SOURCE_DIR)/*.cpp | sed -r 's|^(.*\.o)|build/\1|' > Makefile.d
