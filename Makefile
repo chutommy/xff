@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := all
+
 TARGET     = "chutommy"
 
 CXX        = g++
