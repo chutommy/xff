@@ -153,32 +153,32 @@ bool File::match_last_write_time(const TimestampTerm& term) const
 	}
 }
 
-bool File::match_word_count(const IntTerm& term) const
+bool File::match_word_count(const IntTerm&) const
 {
 	return false;
 }
 
-bool File::match_frequent_word(const StringTerm& term) const
+bool File::match_frequent_word(const StringTerm&) const
 {
 	return false;
 }
 
-bool File::match_readability(const DoubleTerm& term) const
+bool File::match_readability(const DoubleTerm&) const
 {
 	return false;
 }
 
-bool File::match_row_count(const IntTerm& term) const
+bool File::match_row_count(const IntTerm&) const
 {
 	return false;
 }
 
-bool File::match_keyword_count(const IntTerm& term) const
+bool File::match_keyword_count(const IntTerm&) const
 {
 	return false;
 }
 
-bool File::match_include(const StringTerm& term) const
+bool File::match_include(const StringTerm&) const
 {
 	return false;
 }
