@@ -1,9 +1,9 @@
 .DEFAULT_GOAL := all
 
-TARGET     = "chutommy"
+TARGET     = chutommy
 
 CXX        = g++
-CXX_FLAGS  = -Wall -pedantic -Wextra -std=c++17
+CXX_FLAGS  = -Wall -pedantic -Wextra -std=c++17 -g -fsanitize=address
 MKDIR      = mkdir -p
 
 STDERR_OUT = /dev/null
@@ -15,7 +15,7 @@ HEADERS    = $(wildcard $(SOURCE)/*.h $(wildcard $(SOURCE)/*/*.h))
 OBJECTS    = $(SOURCES:$(SOURCE_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 DEPS       = Makefile.d
--include $(DEPS)
+-include     $(DEPS)
 
 .PHONY: all
 all: compile doc
@@ -34,8 +34,7 @@ $(BUILD)/%.o: $(SOURCE)/%.cpp
 	$(MKDIR) $(BUILD)
 	$(CXX) $(CXXFLAGS) $< -c -o $@
 
-.PHONY: deps
-Makefile.d:
+$(DEPS):
 	$(CXX) -MM $(SOURCE)/*.cpp | sed -r 's|^(.*\.o)|build/\1|' > Makefile.d
 
 .PHONY: clean
@@ -56,7 +55,7 @@ zip: $(TARGET).zip
 EXAMPLES   = $(wildcard examples/*)
 ASSETS     = $(wildcard assets/*)
 $(TARGET).zip: README.md zadani.txt prohlaseni.txt Makefile Doxyfile $(HEADERS) $(SOURCES) $(EXAMPLES) $(ASSETS)
-	mkdir -p .archive/$(TARGET)/
+	$(MKDIR) -p .archive/$(TARGET)/
 	cp -r README.md zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/ .archive/$(TARGET)/
 	cd .archive/; zip -r ../$(TARGET).zip $(TARGET)/
 	rm -r .archive/
