@@ -11,7 +11,6 @@ CREATE_SUBDIRS         = YES
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
 
-OUTPUT_TEXT_DIRECTION  = None
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
 
@@ -21,11 +20,9 @@ REPEAT_BRIEF           = YES
 
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
-EXTRACT_PRIV_VIRTUAL   = YES
 EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = YES
-RESOLVE_UNNAMED_PARAMS = YES
 
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
@@ -82,7 +79,7 @@ INCLUDE_PATH           = src
 #---------------------------------------------------------------------------
 
 CLASS_DIAGRAMS         = YES
-HAVE_DOT               = YES
+HAVE_DOT               = NO
 DOT_FONTNAME           = Helvetica
 DOT_FONTSIZE           = 10
 CLASS_GRAPH            = YES
@@ -92,7 +89,6 @@ UML_LOOK               = YES
 UML_LIMIT_NUM_FIELDS   = 100
 TEMPLATE_RELATIONS     = YES
 CALL_GRAPH             = YES
-DOT_UML_DETAILS        = YES
 DOT_IMAGE_FORMAT       = svg
 INTERACTIVE_SVG        = YES
 DOT_TRANSPARENT        = YES
