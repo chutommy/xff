@@ -6,6 +6,8 @@ doc/
 bin/
 build/
 *.d
+.archive
+chutommy.zip
 
 chutommy
 .xff
