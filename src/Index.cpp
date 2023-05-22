@@ -76,12 +76,12 @@ void Index::update() const
 		std::filesystem::path filepath = file->get_path();
 		if (!exists(filepath))
 		{
-			logger.log(remove_file, absolute(filepath));
+			logger.log(remove_file, filepath.relative_path());
 			continue;
 		}
 		if (!is_regular_file(filepath))
 		{
-			logger.log(no_support_file, absolute(filepath));
+			logger.log(no_support_file, filepath.relative_path());
 			continue;
 		}
 
@@ -92,7 +92,7 @@ void Index::update() const
 		}
 		else
 		{
-			logger.log(reindex_file, absolute(filepath));
+			logger.log(reindex_file, filepath.relative_path());
 			index_filepath(new_xff, filepath);
 			indexed.insert(absolute(filepath));
 		}
