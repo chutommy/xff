@@ -44,7 +44,7 @@ $(DEPS):
 .PHONY: clean
 clean:
 	rm -rf Makefile.d \
-	$(TARGET) xff .xff \
+	$(TARGET) xff .xff */.xff \
 	$(TARGET).zip .archive \
 	$(BUILD_DIR) doc \
 	$(BUILD_DIR) 2>$(STDERR_OUT)
