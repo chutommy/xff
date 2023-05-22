@@ -13,9 +13,6 @@
 using namespace std;
 #endif /* __PROGTEST__ */
 
-//TODO check: UTF8 a FIB znak je mimo rozmezi 0 - 0x10ffff
-//TODO: add comments for future reviews
-
 class InputBuffer {
 private:
     istream &in;
