@@ -28,7 +28,7 @@ Commands:
   words(-| |+)              Find text files with (fewer than | exact | more than) specified words.
   readability(-| |+)        Find text files with (lower than | exact | higher than) specified readability score.
   top                       Find text files that contain the specified word in their most frequent words.
-  keyword(-| |+)            Find C++ files with (fewer than | exact | more than) specified number of C++ keywords.
+  keywords(-| |+)           Find C++ files with (fewer than | exact | more than) specified number of C++ keywords.
   include                   Find C++ files that include specified keyword.
 
 Joining:
@@ -44,7 +44,7 @@ Examples:
   xff top foo                          # text files with a word "foo" among most frequent words
   xff readability- 50                  # text files with lower than 50 readability score
   xff rows+ 10                         # comma-separated files with more than 10 rows
-  xff keyword 42                       # C++ files that contain 42 keywords
+  xff keywords 42                      # C++ files that contain 42 keywords
   xff include Logger.h                 # C++ files that include "Logger.h" header file
 
   xff like ".*[0-9].*" and size+ 42 and include vector
