@@ -1,6 +1,4 @@
-/* This doxygen theme is free to use. If you like this, please Star https://github.com/kcwongjoe/doxygen_theme_flat_design */
-
-/* Color Pattern. You can change this pattern to design your theme. */
+/* Source: https://github.com/kcwongjoe/doxygen_theme_flat_design */
 
 :root {
     /* Content */
@@ -155,8 +153,6 @@ div.contents ul {
     color: var(--bg2-hover-font);
     background-color: var(--bg2-hover-bg);
 }
-
-/* Search Bar */
 
 #main-menu > li:last-child {
     visibility: hidden;
@@ -405,24 +401,6 @@ span.lineno a:hover {
     background-color: inherit;
 }
 
-.iconfclosed {
-    /*noinspection CssUnknownTarget*/
-    background-image: url(closed-folder.png);
-    margin-right: 10px;
-}
-
-.iconfopen {
-    /*noinspection CssUnknownTarget*/
-    background-image: url(opened-folder.png);
-    margin-right: 10px;
-}
-
-.icondoc {
-    /*noinspection CssUnknownTarget*/
-    background-image: url(document.png);
-    margin-right: 10px;
-}
-
 .arrow {
     color: #FFFFFF;
 }
@@ -593,24 +571,4 @@ hr.footer {
 
 #nav-sync {
     background-color: transparent;
-}
-
-#nav-sync > img {
-    /*noinspection CssUnknownTarget*/
-    content: url(off_sync.png);
-}
-
-#nav-sync.sync > img {
-    /*noinspection CssUnknownTarget*/
-    content: url(on_sync.png);
-}
-
-/***********************************/
-
-/*********** Plant UML ***********/
-
-/***********************************/
-
-.plantumlgraph > img {
-    width: 80%;
 }

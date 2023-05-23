@@ -33,4 +33,3 @@ GENERATE_LATEX         = NO
 HAVE_DOT               = NO
 
 HTML_EXTRA_STYLESHEET  = assets/doxygen-style.css
-HTML_EXTRA_FILES       = assets/img
