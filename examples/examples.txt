@@ -9,7 +9,7 @@ xff words+ 1000 and words- 6000
 xff readability- 10
 xff top quantum or top tumour
 xff keywords+ 200
-xff include set and include map
+xff include set and include map and include deque
 
 === joining ===
 ===============
