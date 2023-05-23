@@ -54,7 +54,7 @@ Note:
   * File size is specified in bytes (B).
   * Only one type of logical joining can be used in a single query (only ANDs or only ORs).
   * Time is specified in ISO 8601 format "YYYY-MM-DD hh:mm:ss" (e.g., 2023-04-29 14:56:03).
-  * Readability score ranges from 0 to 100, with higher scores indicating easier-to-read text.
+  * Readability (Flesh-Kingcaid) score ranges from 0 to 100, with higher score indicating easier-to-read text.
 )";
 
 Root::Root(const std::string& new_root_dir, std::ostream& ostream)
