@@ -158,35 +158,12 @@ div.contents ul {
 
 /* Search Bar */
 
-#MSearchBox {
-    border-radius: 0;
-    box-shadow: none;
-}
-
-#MSearchBox > span {
-    margin: 10px;
-}
-
 #main-menu > li:last-child {
-    padding: 25px 0;
+    visibility: hidden;
 }
 
-/* Reset search hover color*/
-
-#main-menu > li:last-child:hover {
-    color: var(--bg2font);
-    background-color: var(--bg2color);
-    border-top: 5px solid var(--bg2color);
-}
-
-#MSearchResultsWindow {
-    border: 1px solid var(--bg3font2);
-    background-color: var(--bg3color);
-    padding: 10px;
-}
-
-body.SRPage, body.SRPage * {
-    font-family: Arial, serif;
+#nav-sync {
+    visibility: hidden;
 }
 
 /* Sub Menu  */
