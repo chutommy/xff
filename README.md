@@ -1,75 +1,62 @@
-# xff (indexovací nástroj)
+# xff (Indexing Tool)
 
-## Zadání - Progtest
+## Introduction
+This project is an indexing and search tool for the content (files and directories) within a specified directory. It consists of two main parts: indexing and searching. The indexing part creates a well-represented index of the files, while the searching part allows efficient file retrieval based on the index.
 
-Vaším úkolem je vytvořit nástroj pro indexaci a vyhledávání obsahu (souborů a dalších adresářů) v zadaném adresáři. Nástroj bude mít dvě části. První z nich bude obstarávat indexační část, tj. vytvoří vhodně reprezentovaný index. Druhá část programu umožňí nad indexem efektivně vyhledávat soubory.
+## Features
+The tool provides the following functionalities:
 
-Implementujte následující funcionality:
+1. Automatic Indexing: If the index does not exist or if the files have been modified, the tool performs indexing at startup. During this phase, it traverses the files and indexes their information, creating auxiliary files for subsequent searching. Manual reindexing is also supported if a complete reindexation is needed.
 
-1. Pokud neexistuje index, nebo byly soubory pozměněny, nástroj na začátku svého spuštění provede indexaci. Během této fáze projde soubory, pro které to dává smysl, a zaindexuje jejich informace (vytvoří soubor/y, které budou obsahovat pomocné informace pro následné hledání). Tato část by měla jít spustit i manuálně v případě potřeby kompletní reindexace.
+2. Suitable File Format and Structure: The tool uses a suitable file format and structure for the index. It keeps track of the files that needed to be reindexed and stores at least the file name, size, and last modification time.
 
+3. Special Attributes for Different File Types: The tool implements special indexing attributes for at least three different file types. For example, text files can include words and their frequencies, images can include image size and color histograms, and HTML documents can include a list of documents that reference them.
 
-2. Vytvořte vhodný souborový formát a strukturu pro tento index.
+4. Advanced Searching: The tool allows searching based on the indexing attributes, both individually and in combination. It supports queries defined by indexing attributes, logical AND combinations of two queries, and logical OR combinations of two queries.
 
-    1. Zobrazte, které soubory bylo nutné přeindexovat.
-    2. Pro každý soubor si bude pamatovat alespoň název, velikost a čas poslední modifikace (příp. vytvoření).
+5. Efficient Searching: The searching process is more efficient than manual searching through all the files, thanks to the indexing phase. The indexing is only performed when necessary, ensuring efficient retrieval of files.
 
+## Specifications
 
-3. Pro alespoň 3 různé typy souborů implementuje speciální indexační atributy (př. textový soubor - slova a jejich frekvence, obrázek - velikost obrázku, barevný histogram, HTML dokument - seznam dokumentů, které na něj odkazují, …)
+### Indexing
+- The working directory (`$PWD`) is always indexed. The index file is stored in the indexed directory (`$PWD/.xff`).
+- A complete reindexation is performed if the index does not exist, is corrupted, or if the user manually triggers it.
+- If the index exists but is not up-to-date, a partial reindexation is performed, indexing new files, removing deleted files, and reindexing modified files.
+- Files are indexed recursively, including nested directories. However, the index file is only accessible in the specific directory being indexed.
+- Manual reindexation can be triggered by running the `xff reset` command. To update an existing index or create a new one if it doesn't exist, the tool can be executed without any arguments (`xff`). The `xxf help` command displays the help message.
 
+The following information is stored in the index:
+1. File name and address.
+2. File size in bytes.
+3. Last modification time.
 
-4. Umožněte vyhledávat právě podle těchto atributů (společných i individuálních), včetně různých kombinací (např. obsahuje slovo "auto" a je menší než 3KB). Implementujte vyhledávání alespoň podle dotazů:
+These attributes are tracked for all files. Additionally, the following special attributes are indexed for specific file types:
 
-    1. definovaných indexačními atributy,
-    2. dvou dotazů ve smyslu "a zároveň platí",
-    3. dvou dotazů ve smyslu "nebo platí".
+- Text files:
+    1. Number of words.
+    2. Readability score (Flesch-Kincaid test).
+    3. Top 5 most used words and their frequencies.
 
+- CSV files:
+    1. Number of records.
 
-5. Vyhledávání by mělo být efektivnější než manuální prohledávání všech souborů (samozřejmě bez indexační fáze, která se provádí jen pokud je to nezbytné).
+- C++ files:
+    1. Number of C++ keywords used.
+    2. List of included files.
 
-## Specifikace (upřesnění) zadání
+Only "regular files" are indexed, while directories, symbolic links, and other Linux system files falling under the category of "special files" are ignored.
 
-### Indexace
-
-Vždy se indexuje pracovní adresář `$PWD` (adresář, ve kterém se uživatel nachází). Indexový soubor se nachází v adresáři, který indexuje (tj. `$PWD/.xff`). Kompletní (úplná) reindexace probíhá, pokud index neexistuje, je narušený (má obsah v neplatném formátu) nebo v případě, že ji uživatel manuálně spustí. Pokud index existuje, ale není aktuální, dochází k částečné indexaci, tj. indexace nových souborů, smazání odstraněných a reindexace modifikovaných. Soubory se indexují rekurzivně i ve vnořených adresářů, indexační soubor je nicméně dostupný jen v daném adresáři.
-
-Chce-li uživatel provést manuální reindexaci, spustí příkaz reset: `xff reset`, pro aktualizace existujícího (nebo vytvoření neexistujícího) indexu, stačí spustit nástroj bez argumentů: `xff`. Pro zobrazení help zprávy zadá uživatel příkaz help: `xxf help` (po neplatném použití nástroje se uživateli tento příkaz nabídne).
-
-V indexu jsou uložené následující údaje:
-
-1. název a adresa souboru
-2. velikost v bajtech
-3. čas poslední modifikace
-
-Tyto atributy se evidují u všech souborů. U souborů `txt`, `csv` a `cpp` se navíc indexuje speciální atributy:
-
-1. textový soubor:
-    1. počet slov
-    2. čitelnost obsahu (skóre Flesch-Kincaid testu)
-    3. 5 nejpoužívanějších slov a jejich četnost
-
-
-2. csv soubor:
-    1. počet záznamů
-
-
-3. C++ soubor:
-    1. počet použitých C++ keywordů
-    2. seznam includovaných souborů
-
-Indexují se pouze takzvané `regular files`, tzn. adresáře, symbolické linky, sockety, či jiné Linux soubory spadající do kategorie `special files` (character, FIFO, descriptor, system console, ...) nástroj ignoruje.
-
-Index je uložený jako čitelný soubor a jednotlivé položky jsou oddělené novou řádkou. Fragment z indexačního souboru `$XFF_DIR/.xff` vypadá takto:
+The index is stored as a human-readable file, with each item separated by a new line. An example fragment of the index file (`$XFF_DIR/.xff`) is shown below:
 
 ```
-... konec předcházejícího záznamu ...
-"./hello.txt"                             // relativní adresa souboru
-143237                                    // velikost souboru v B(ytes)
-2023-05-14 12:10:09                       // čas poslední modifikace
-23237                                     // počet slov
-31.8157                                   // Flesh-Kincaid skóre
-a 6 the 6 she 6 sees 5 is 2               // nejčastější slova a příslušná četnost
-"./pa2/pa2-semestral/src/main.cpp"        // další soubor
+... the end of the previous log ...
+"./hello.txt"                             // relative path to the file
+143237                                    // size of the file in B(ytes)
+2023-05-14 12:10:09                       // last write time
+23237                                     // word count
+31.8157                                   // Flesh-Kincaid score
+a 6 the 6 she 6 sees 5 is 2               // the most frequent words
+"./pa2/pa2-semestral/src/main.cpp"        // the next file
 1273                                      // ...
 2023-05-14 12:10:09
 930
@@ -78,19 +65,19 @@ algorithm cassert cctype cmath cstdio
   iostream list map memory set sstream
   string type_traits typeinfo unistd.h
   unordered_map unordered_set vector
-... začátek následujícího záznamu ...
+... the beginning of the next log ...
 ```
 
-### Vyhledávání
+### Searching
 
-#### Podle společných atributů
+#### Based on Common Attributes
 
-* Soubory s názvem: `xxf name file1.json`
-* Soubory s názvem odpovídající regular expression: `xxf like ".*myfile.*"`:
-* Soubory o velikosti rovno/menší než/větší než v B: `xxf size/size-/size+ 108`
-* Soubory naposledy upravené rovno/před/po: `xxf time/time-/time+ "2022-11-09 13:53:03"`
+- Files with a specific name: `xxf name file1.json`
+- Files with a name matching a regular expression: `xxf like ".*myfile.*"`
+- Files with size equal to/less than/greater than a specified size in bytes: `xxf size/size-/size+ 108`
+- Files last modified on/before/after a specified date and time: `xxf time/time-/time+ "2022-11-09 13:53:03"`
 
-Příklad dotazu na všechny soubory v daně větvi filesystemu:
+Example query for all files in a given branch of the filesystem:
 
 ```
 $ xxf like ".*"
@@ -137,36 +124,20 @@ $ xxf like ".*"
 === Search complete. Matched files: [4/4] ===
 ```
 
-#### Podle individuálních atributů
+#### Based on Individual Attributes
 
-* textové soubory s počtem slov rovno/méně než/více než: `xxf words/words-/words+ 42`
-* textové soubory se slovem v top 5 nejčastějších: `xxf top hello`
-* textové soubory s čítelností rovno/méně než/více než: `xxf readability/readability-/readability+ 50.00`
+- Text files with a specific word count/equal to/less than/greater than: `xxf words/words-/words+ 42`
+- Text files with a specific word in the top 5 most frequent words: `xxf top hello`
+- Text files with a specific readability score/equal to/less than/greater than: `xxf readability/readability-/readability+ 50.00`
+- CSV files with a specific number of records/equal to/less than/greater than: `xxf rows/rows-/rows+ 42`
+- C++ files with a specific number of keywords/equal to/less than/greater than: `xxf keyword/keyword-/keyword+ 42`
+- C++ files with a specific included library: `xxf include vector`
 
+#### Combining Queries
 
-* csv soubory s počtem záznamů rovno/méně než/více než: `xxf rows/rows-/rows+ 42`
-
-
-* C++ soubory s počtem keywordů rovno/méně než/více než: `xxf keyword/keyword-/keyword+ 42`
-* C++ soubory s includovanou knihovnou: `xxf include vector`
-
-#### Spojování dotazů
-
-* a zároveň: `xxf name file.txt and size 30 and words- 6`
-    * soubory s názvem `file.txt` mající velikost `30 B` a méně než `6 slov`
+- Logical AND: `xxf name file.txt and size 30 and words- 6`
+    - Files with the name `file.txt`, size of `30 B` or less, and less than `6 words`
 
 
-* nebo: `xxf name file.txt or size 30 or words- 6 `
-    * soubory s názvem `file.txt` nebo s velikostí `30 B` nebo mající méně než `6 slov`
-
-Typy spojek nelze kombinovat (povolené jsou dotazy spojující pouze `and`, nebo pouze `or`).
-
-## Kde mám polymorfismus?
-
-1. Polymorfismus používám především u trídy `File` reprezentující soubor, ze které dědí třídy `CPPFile`, `CSVFile` a `TXTFile` (speciální soubory). Po vytvoření jednotlivých instancí se na soubory již odkazuji přes rodičovskou třídu `File`, která má (pokud to dědící třída vyžaduje) příslušně přetížené metody `print`, `store` a odpovídající filtrační metody. Nemusím tedy řešit, o který typ souboru se jedná.
-
-
-2. Polymorfická instance `File` se předává jako vstup metodě `evaluate` třídy `Query`, která vyhodnocuje, zda daný soubor splňuje specifikovaný dotaz, přes virtuální metody `File` - `match_xxx`. Samotná třída `Query` (reprezentující jeden logický term) je virtuální a dědí z ní napříklady třídy `RegexNameQuery`, `SizeQuery`, `WordCountQuery`, které virtuální metodu `evaluate` přetěžují tak, aby ověřovaly specifickou podmínku s určitým parametrem (regularní výraz, velikost, počet slov). Opět nemusím řešit, o který typ dotazu se jedná, zajímá mě pouze, co vrací metoda `evaluate`.
-
-
-3. Dotazy se slučují v ultimátní virtuální třídě `MainQuery`, která drží jednotlivé atomické dotazy. Může být instancí buď `ANDQuery`, nebo `ORQuery`, podle toho, zda uložené termy spojuje logickou konjunkcí nebo disjunkcí. Jedná se o podtřídu `Query`, tedy opět vyhodnocuje přes přetíženou metodu `evaluate`. Atomické dotazy `Query` se dají vkládat přes virtuální metodu `add`. Chová se tedy opět polymorficky (pracuji s `MainQuery` nezávisle na tom, zda se jedná o `ANDQuery` nebo `ORQuery`).
+- Logical OR: `xxf name file.txt or size 30 or words- 6`
+    - Files with the name `file.txt`, size of `30
